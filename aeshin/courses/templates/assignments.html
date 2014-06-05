@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load markdown typogrify %}
+
+{% block title %}: Assignments{% endblock %}
+
+{% block content %}
+{% filter typogrify %}
+{% for assignment in course.assignments.all %}
+<h3 id="{{ assignment.slug }}"><span class="title">{{ assignment.title }}</span></h3>
+<div>
+{% if assignment.due_date %}
+<p class="assignment-due">Due {{ assignment.due_date|date:"F j" }}.</p>
+{% endif %}
+{% if assignment.is_handed_out %}
+<div class="description">
+  {{ assignment.description|markdown:"unsafe" }}
+</div>
+  {% if assignment.is_submitted_online %}
+  <p id="submit-{{ assignment.slug }}"><a href="{{ assignment.get_submit_url }}">Submit this assignment.</a></p>
+  {% endif %}
+{% else %}
+<p>To be handed out.</p>
+{% endif %}
+</div>
+{% endfor %}
+{% endfilter %}
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+{% load staticfiles %}
+  <head>
+    <title>{{ course }}{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "courses/base.css" %}" type="text/css"/>
+    {% block links %}{% endblock %}
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <div class="fluid_grid_layout">
+      {% load markdown typogrify %}
+      <nav>
+        <ul class="nav">
+          {% if user.is_superuser %}
+          <li><a href="/admin/courses/">Admin.</a>
+          {% endif %}
+          {% with course.get_absolute_url as course_url %}
+          <li><a href="{{ course_url }}">Basic info.</a></li>
+          <li><a href="{{ course_url }}schedule/{% if not course.is_archived %}#next{% endif %}">Schedule.</a></li>
+          <li><a href="{{ course_url }}assignments/">Assignments.</a></li>
+          {% if course.has_forum %}
+          <li><a target="_blank" href="{{ course.forum }}">Forum.</a></li>
+          {% endif %}
+          {% if course.has_blog %}
+          <li><a href="/courses/{{ course.blog_slug }}/blog/">Blog.</a></li>
+          {% endif %}
+          <li><a href="{{ course_url }}guidelines/">Guidelines.</a></li>
+          <li><a href="{{ course_url }}thanks/">Thanks.</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{{ course_url }}grades/">Grades.</a></li>
+          {% else %}
+          <li><a href="{% url 'django.contrib.auth.views.login' %}?next={{ request.path }}">Log in.</a></li>
+          {% endif %}
+          {% endwith %}
+        </ul>
+      </nav>    
+      <header>
+        <h1>{{ course.title }}</h1>
+        <h2>
+          {{ course.department }}, {{ course.number }}, 
+          {{ course.get_semester_display }} {{ course.get_year_display }}
+        </h2>
+      </header>
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>    
+<!--
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>    
+-->
+    {% block js %}{% endblock %}
+  </body>   
+</html>

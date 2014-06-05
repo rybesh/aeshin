@@ -1,0 +1,31 @@
+{% extends "boilerplate.html" %}
+
+{% block title %}Ryan Shaw's teaching{% endblock %}
+
+{% block description %}Courses Ryan Shaw has taught.{% endblock %}
+
+{% load markdown typogrify %}
+
+{% block main %}
+<div id="main">
+  <header>
+    <h1>Courses Taught</h1>
+  </header>
+  <ul class="courses index-list">
+    {% regroup courses by title as course_list %}
+    {% for title in course_list %}
+    <li class="course group">
+      <h2>{{ title.grouper }}</h2>
+      <div class="sweet-justice">
+        {{ title.list.0.blurb|typogrify }}
+      </div>
+      {% for course in title.list %}
+      <h3><a href="{{ course.get_absolute_url }}">
+        {{ course.get_semester_display }} {{ course.year }}
+      </a></h3>
+      {% endfor %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load markdown typogrify %}
+
+{% block title %}: Schedule{% endblock %}
+
+{% comment %}
+{% block css %}
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css" type="text/css" media="screen"/>
+{% endblock %}
+{% endcomment %}
+
+{% block content %}
+{% if in_flux %}
+<p><strong>This schedule is still in flux.</strong> Specifically, the parts in <span class="tentative">gray</span> are subject to change.</p>
+{% endif %}
+<div id="accordion">
+{% for entry in schedule %}
+{% if entry.next %}<span id="next"></span>{% endif %}
+<h3 id="on-{{ entry.date|date:"m-d" }}">
+{% if entry.is_holiday %}
+{% with entry as holiday %}
+  <!--<a href="#">-->
+    <span class="date">{{ holiday.date|date:"F j" }}</span><br/>
+    <span class="title">{{ holiday.name }}</span>
+  <!--</a>-->
+</h3>
+<div>
+  <p>No class.</p>
+  {% include "assignments_due.include" with assignments_due=holiday.assignments_due %}
+</div>
+{% endwith %}
+{% else %}
+{% with entry as meeting %}
+  <!--<a href="#">-->
+    <span class="date">{{ meeting.date|date:"F j" }}</span><br/>
+    <span class="title">{{ meeting.title|typogrify }}</span>
+  <!--</a>-->
+</h3>
+<div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">
+  {% filter typogrify %}
+  {% include "assignments_due.include" with assignments_due=meeting.assignments_due %}
+  <div class="description">{{ meeting.description|markdown }}</div>
+  {% if user_is_authorized %}
+  {% if meeting.slides %}
+  <p>Download <a href="{{ meeting.slides.url }}">slides</a> for this class.</p>
+  {% endif %}
+  {% endif %}
+  {% if meeting.has_readings %}
+  <p>To read <strong>before</strong> this class:</p>
+  <ol class="readings">
+    {% for assigned in meeting.reading_assignments.all %}
+    <li class="reading">
+      <p>
+        {{ assigned.reading.as_html }}
+      </p>
+      <div class="description">{{ assigned.reading.description|markdown }}</div>
+    </li>
+    {% endfor %}
+  </ol>
+  {% if meeting.has_ereserves %}
+  <p>Readings not linked above are available through <a href="http://eres.lib.unc.edu.libproxy.lib.unc.edu/eres/coursepage.aspx?cid={{ course.ereserves_id }}">ereserves</a>.</p>
+  {% endif %}
+  {% endif %}
+  {% endfilter %}
+</div>
+{% endwith %}
+{% endif %}
+{% endfor %}
+</div>
+{% endblock %}
+
+{% comment %}
+{% block js %}
+<script type="text/javascript" src="{% static "courses/schedule.js" %}"></script>
+{% endblock %}
+{% endcomment %}

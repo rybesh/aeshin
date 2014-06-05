@@ -1,0 +1,45 @@
+{% extends "boilerplate.html" %}
+
+{% block title %}Ryan Shaw{% endblock %}
+
+{% block description %}Assistant professor at the University of North Carolina at Chapel Hill.{% endblock %}
+
+{% load staticfiles %}
+{% load typogrify %}
+
+{% block links %}
+  <link rel="shortlink" href="http://aesh.in"/>{% endblock %}
+
+{% block main %}
+<article id="main">
+  <div class="bio group">
+    <dl>
+      <dt>Email</dt>
+      <dd>ryanshaw@unc.edu</dd>
+      <dt>Twitter</dt>
+      <dd><a href="http://twitter.com/rybesh">@rybesh</a></dd>
+      <dt>Phone</dt>
+      <dd>+1-919-636-9660</dd>
+      <dt>Office</dt>
+      <dd>214A Manning Hall</dd>
+<!--
+      <dt>Office hours</dt>
+      <dd><a href="http://ryanshaw.ycb.me/" title="Make an appointment">By appointment</a></dd>
+-->
+      <dd>I am on leave during the spring and summer of 2014 and will
+          not be holding regular office hours.</dd>
+    </dl>
+
+    <img class="representative" alt="Ryan Shaw" src="{% static "me_bw.jpg" %}" width="300" height="300"/>
+    <p class="sweet-justice">
+      I'm an assistant professor in the <a
+      href="http://sils.unc.edu/">School of Information and Library
+      Science</a> at the University of North Carolina at Chapel Hill,
+      where I <a href="/teaching/">teach</a> courses on information
+      organization, Web architecture, and digital humanities. I study
+      how people use information systems to conceptualize and model
+      their worlds and pasts.
+    </p>
+  </div>
+</article>
+{% endblock %}
