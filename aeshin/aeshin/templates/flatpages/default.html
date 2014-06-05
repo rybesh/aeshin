@@ -11,7 +11,7 @@ li { margin-bottom: 5px; }
 
 {% block description %}Ryan Shaw's thoughts {{ flatpage.title|lower }}.{% endblock %}
 
-{% load markdown typogrify timeago %}
+{% load markdown typogrify timeago staticfiles %}
 
 {% block links %}
 {% endblock %}
@@ -45,7 +45,7 @@ function openPopup(url, target) {
        onclick="return openPopup(this.href, this.target);">Comment via Twitter</a>
     <section id="tweets">
       <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
-      <script charset="utf-8" src="/media/js/twidget-patch.js"></script>
+      <script charset="utf-8" src="{% static "twidget-patch.js" %}"></script>
       <script>
 new TWTR.Widget({
   version: 2,

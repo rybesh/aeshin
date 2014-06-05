@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+{% load staticfiles %}
   <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="/media/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="{% static "courses/base.css" %}" type="text/css"/>
     {% block css %}{% endblock %}
   </head>
   <body>

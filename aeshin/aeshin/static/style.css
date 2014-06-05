@@ -146,12 +146,6 @@ h3 a:hover { color: #d33682; }
     margin-bottom: 10px;
 }
 
-.slidelink {
-    height: 30px;
-    width: 30px;
-    background-image: url(/media/img/slidelink.png);
-}
-
 dl {
     float: left;
     margin-right: 40px;
