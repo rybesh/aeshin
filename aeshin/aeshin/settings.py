@@ -34,7 +34,7 @@ EMAIL_USE_TLS = True
 # file uploads -----------------------------------------------------------------
 
 # MEDIA_ROOT = ''
-# MEDIA_URL = '/files/'
+MEDIA_URL = '/files/'
 
 # globalization ----------------------------------------------------------------
 

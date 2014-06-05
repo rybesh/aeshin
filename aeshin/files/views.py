@@ -6,15 +6,15 @@ from django.http import HttpResponse, Http404
 @login_required
 def sendfile(request, path):
     if path.endswith('.pdf'):
-        response = HttpResponse(mimetype='application/pdf')
+        response = HttpResponse(content_type='application/pdf')
     elif path.endswith('.zip'):
-        response = HttpResponse(mimetype='application/zip')
+        response = HttpResponse(content_type='application/zip')
     elif path.endswith('.html'):
-        response = HttpResponse(mimetype='text/html')
+        response = HttpResponse(content_type='text/html')
     elif path.endswith('.doc'):
-        response = HttpResponse(mimetype='application/msword')
+        response = HttpResponse(content_type='application/msword')
     elif path.endswith('.docx'):
-        response = HttpResponse(mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     else:
         raise Http404
     Download.objects.create(downloader=request.user, path=path)
