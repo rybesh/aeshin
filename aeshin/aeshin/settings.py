@@ -1,6 +1,7 @@
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(
+		os.path.abspath(__file__))))
 
 from secrets import *
 
@@ -33,8 +34,9 @@ EMAIL_USE_TLS = True
 
 # file uploads -----------------------------------------------------------------
 
-# MEDIA_ROOT = ''
-MEDIA_URL = '/files/'
+MEDIA_DIR = '/media/' # internal
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_DIR)
+MEDIA_URL = '/files/' # external
 
 # globalization ----------------------------------------------------------------
 
@@ -82,15 +84,9 @@ ALLOWED_HOSTS = []
 
 # templates --------------------------------------------------------------------
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
 TEMPLATE_DIRS = (
     os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates')),
 )
-
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -118,8 +114,8 @@ SITE_ID = 1
 
 # django.contrib.staticfiles ---------------------------------------------------
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (
     os.path.abspath(os.path.join(os.path.dirname(__file__), 'static')),
 )
