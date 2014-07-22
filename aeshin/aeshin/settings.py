@@ -53,7 +53,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'aeshin.middleware.ShortURLMiddleware',
     'aeshin.middleware.XUACompatibleMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
@@ -75,7 +74,6 @@ INSTALLED_APPS = (
     'shared',
     'courses',
     'files',
-    'brevisurl',
 )
 
 # security ---------------------------------------------------------------------
