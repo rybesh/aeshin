@@ -1,5 +1,7 @@
 *.pyc
 *.sqlite3
+*.crt
+*.key
 .Python
 bin
 include
