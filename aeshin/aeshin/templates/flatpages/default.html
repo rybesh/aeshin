@@ -33,6 +33,7 @@ li { margin-bottom: 5px; }
 -->
       </footer>
     </article>
+<!--
     <script>
 function openPopup(url, target) {
   window.popup = window.open(url, target, 'height=251,width=480');
@@ -44,7 +45,7 @@ function openPopup(url, target) {
        href="https://twitter.com/share?url={% filter urlencode %}{{ flatpage }}{% endfilter %}"
        onclick="return openPopup(this.href, this.target);">Comment via Twitter</a>
     <section id="tweets">
-      <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+      <script charset="utf-8" src="https://widgets.twimg.com/j/2/widget.js"></script>
       <script charset="utf-8" src="{% static "twidget-patch.js" %}"></script>
       <script>
 new TWTR.Widget({
@@ -84,4 +85,5 @@ new TWTR.Widget({
 }).render().start();        
       </script>
     </section>
+-->
 {% endblock %}
