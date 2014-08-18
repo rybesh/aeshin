@@ -44,7 +44,7 @@ class TableReader(HTMLParser):
 class Command(MyBaseCommand):
     args = '<student_info_file> <emails_file>'
     help = 'Creates student accounts and adds them to a course.'
-    @transaction.commit_on_success
+    @transaction.atomic
     def handle(self, *args, **options):
         if not len(args) == 2:
             raise CommandError(
