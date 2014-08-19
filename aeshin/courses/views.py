@@ -131,35 +131,6 @@ def get_current_course(slug):
         raise Course.DoesNotExist
     return courses[-1]
 
-def blog(request, slug, post_slug=None):
-    o = {}
-    o['blog'] = get_object_or_404(Blog, slug=slug)
-    o['domain'] = Site.objects.get_current().domain
-    o['course'] = get_current_course(slug)
-    o['user_is_authorized'] = o['course'].is_authorized(request.user)
-    if post_slug:
-        posts = o['blog'].posts.filter(slug=post_slug, published=True)
-        if len(posts) == 0:
-            raise Http404
-        if request.user.is_authenticated():
-            o['show_comment_form'] = True
-        o['next'] = posts[0].get_absolute_url()
-    elif 'mine' in request.GET:
-        posts = o['blog'].posts.filter(author=request.user).order_by('-updated_at')
-    else:
-        posts = o['blog'].posts.filter(published=True)
-    paginator = Paginator(posts, 10)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    try:
-        o['page'] = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        o['page'] = paginator.page(paginator.num_pages)
-    return render_to_response('blog.html', o,
-                              context_instance=RequestContext(request))
-
 def median(pool):
     if len(pool) == 0:
         return None
@@ -214,26 +185,6 @@ def grades(request, slug, year, semester):
             setdefault(leader)['discussion_count'] += 1
     o['discussion_count'] = setdefault(o['student'].username)['discussion_count']
     o['discussion_median'] = median([ v['discussion_count'] for v in counts.values() ])
-    try:
-        blog = Blog.objects.get(slug=o['course'].blog_slug)
-        o['blog_metrics'] = True
-        date_range = o['course'].get_date_range()
-        for poster in blog.posts\
-            .filter(published_at__range=date_range)\
-            .values_list('author__username', flat=True):
-            if poster in students:
-                setdefault(poster)['post_count'] += 1
-        for commenter in Comment.objects\
-            .filter(submit_date__range=date_range)\
-            .values_list('user__username', flat=True):
-            if commenter in students:
-                setdefault(commenter)['comment_count'] += 1
-        o['post_count'] = setdefault(o['student'].username)['post_count']
-        o['post_median'] = median([ v['post_count'] for v in counts.values() ])
-        o['comment_count'] = setdefault(o['student'].username)['comment_count']
-        o['comment_median'] = median([ v['comment_count'] for v in counts.values() ])
-    except Blog.DoesNotExist:
-        pass
     o['assignments'] = []
     for assignment in o['course'].assignments.filter(
         is_handed_out=True, is_graded=True):
