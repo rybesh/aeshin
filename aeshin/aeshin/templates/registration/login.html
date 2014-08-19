@@ -12,6 +12,7 @@ If you've forgotten your password, you can
 </p>
 {% endif %}
 
+<p>Note: your username should be the part of your email address before the @.</p>
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
 <h3><span class="title">{{ form.username.label_tag }}</span></h3>
