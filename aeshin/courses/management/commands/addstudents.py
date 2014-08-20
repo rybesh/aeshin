@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.management.base import CommandError
 from django.db import transaction
 from django.db.utils import IntegrityError
+from django.utils.crypto import get_random_string
 from courses.models import Course
 from utils import MyBaseCommand
 from HTMLParser import HTMLParser
@@ -76,6 +77,7 @@ class Command(MyBaseCommand):
                         self.stdout.write(
                             'New student: %s %s (%s)\n' 
                             % (first_name, last_name, email))
+                        student.set_password(get_random_string())
                         new_count += 1
                     else:
                         self.stdout.write(
