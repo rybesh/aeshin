@@ -18,6 +18,6 @@ def sendfile(request, path):
     else:
         raise Http404
     Download.objects.create(downloader=request.user, path=path)
-    response['X-Accel-Redirect'] = '%s%s' % (settings.MEDIA_DIR, path)
+    response['X-Accel-Redirect'] = '/%s%s' % (settings.MEDIA_DIR, path)
     return response
 

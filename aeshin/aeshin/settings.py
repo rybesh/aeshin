@@ -34,7 +34,7 @@ EMAIL_USE_TLS = True
 
 # file uploads -----------------------------------------------------------------
 
-MEDIA_DIR = '/media/' # internal
+MEDIA_DIR = 'media/' # internal
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_DIR)
 MEDIA_URL = '/files/' # external
 
