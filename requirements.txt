@@ -1,0 +1,8 @@
+Django==1.6.5
+South==1.0
+argparse==1.2.1
+isodate==0.5.0
+markdown2==2.2.1
+pytz==2014.4
+smartypants==1.8.6
+wsgiref==0.1.2
