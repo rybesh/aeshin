@@ -10,21 +10,22 @@ from courses.management.commands.utils import MyBaseCommand
 from courses.models import Submission
 
 def row_to_data(header, row):
-    return { 'email': row[header.index('Your email address')],
+    email = row[header.index('Your email address')].lower()    
+    return { 'username': email.split('@')[0],
              'grade': row[header.index('Total grade')],
              'comments': '\n\n'.join(row) }
 
 def create_submission(assignment, data):
     try:
-        submitter = User.objects.get(email=data['email'])
+        submitter = User.objects.get(username=data['username'])
         submission = Submission(
             assignment=assignment,
             submitter=submitter,
             grade=data['grade'],
             comments=data['comments'])
         submission.save()
-    except Submission.DoesNotExist: # pylint: disable=E1101
-        raise CommandError('Cannot find %s ' % data['email'])
+    except User.DoesNotExist: # pylint: disable=E1101
+        raise CommandError('Cannot find user: %s ' % data['username'])
 
 def sheets_connect():
     client = gdata.spreadsheet.service.SpreadsheetsService()

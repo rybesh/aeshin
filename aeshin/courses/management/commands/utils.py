@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from courses.models import Course
+from courses.models import Course, Assignment
 from datetime import date
 
 class MyBaseCommand(BaseCommand):
@@ -27,7 +27,7 @@ class MyBaseCommand(BaseCommand):
                 self.stdout.write('Please choose one of the course IDs listed above.\n')
 
     def input_assignment(self, course):
-        assignments = course.assignment_set.all()
+        assignments = course.assignments.all()
         for assignment in assignments:
             self.stdout.write('(%s) %s\n' % (assignment.id, assignment))
         while True:
