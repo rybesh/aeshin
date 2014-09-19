@@ -160,28 +160,30 @@ class Assignment(models.Model):
     class Meta:
         ordering = ('due_date','slug')
 
+def submission_upload_to(o, _):
+    return 'courses/%s/%s/%s/assignments/%s/%s.zip' % (
+        o.assignment.course.slug, 
+        o.assignment.course.year, 
+        o.assignment.course.semester, 
+        o.assignment.slug,
+        o.submitter.username)
+
 class Submission(models.Model):
     assignment = models.ForeignKey('Assignment', related_name='submissions')
     submitter = models.ForeignKey(User, related_name='submissions')
-    time_submitted = models.DateTimeField(auto_now=True)
-    def upload_to(o, filename):
-        return 'courses/%s/%s/%s/assignments/%s/%s.zip' % (
-            o.assignment.course.slug, 
-            o.assignment.course.year, 
-            o.assignment.course.semester, 
-            o.assignment.slug,
-            o.submitter.username)
-    zipfile = models.FileField(upload_to=upload_to, blank=True)
+    time_submitted = models.DateTimeField()
+    zipfile = models.FileField(upload_to=submission_upload_to, blank=True)
     grade = models.FloatField(default=0.0)
     letter_grade = models.CharField(blank=True, max_length=2)
     comments = models.TextField(blank=True)
     def get_grade(self):
-        if self.assignment.is_letter_graded:
-            return self.letter_grade
-        else:
-            return self.grade
+        return self.letter_grade or self.grade
+    def save(self, *args, **kwargs): # pylint: disable=E1002
+        if not kwargs.pop('skip_timestamp', False):
+            self.time_submitted = datetime.datetime.now()
+        super(Submission, self).save(*args, **kwargs) 
     def __unicode__(self):
-        return u'%s: %s' % (self.assignment, self.submitter.get_full_name())
+        return u'%s: %s' % (self.assignment, self.submitter)
 
 PROXY = 'http://libproxy.lib.unc.edu/login?url='
 
