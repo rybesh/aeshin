@@ -200,7 +200,7 @@ class Linky:
             if self.access_via_proxy:
                 anchor = self.stored_url[len(PROXY):]
             elif self.stored_url.startswith('/'):
-                anchor = 'PDF'
+                anchor = self.stored_url.split('.')[-1].upper()
             else:
                 anchor = self.stored_url
             html = re.sub(

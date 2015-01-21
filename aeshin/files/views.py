@@ -15,6 +15,8 @@ def sendfile(request, path):
         response = HttpResponse(content_type='application/msword')
     elif path.endswith('.docx'):
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    elif path.endswith('.epub'):
+        response = HttpResponse(content_type='application/epub+zip')
     else:
         raise Http404
     Download.objects.create(downloader=request.user, path=path)
