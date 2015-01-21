@@ -1,118 +1,202 @@
-# encoding: utf-8
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-class Migration(SchemaMigration):
-
-    def forwards(self, orm):
-        
-        # Adding model 'Department'
-        db.create_table('courses_department', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=80)),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
-        ))
-        db.send_create_signal('courses', ['Department'])
-
-        # Adding model 'Course'
-        db.create_table('courses_course', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('department', self.gf('django.db.models.fields.related.ForeignKey')(related_name='courses', to=orm['courses.Department'])),
-            ('number', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=80)),
-            ('semester', self.gf('django.db.models.fields.IntegerField')()),
-            ('year', self.gf('django.db.models.fields.IntegerField')()),
-            ('times', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('location', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('courses', ['Course'])
-
-        # Adding model 'Meeting'
-        db.create_table('courses_meeting', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('course', self.gf('django.db.models.fields.related.ForeignKey')(related_name='meetings', to=orm['courses.Course'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=80)),
-            ('date', self.gf('django.db.models.fields.DateField')()),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('courses', ['Meeting'])
-
-        # Adding M2M table for field readings on 'Meeting'
-        db.create_table('courses_meeting_readings', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('meeting', models.ForeignKey(orm['courses.meeting'], null=False)),
-            ('reading', models.ForeignKey(orm['courses.reading'], null=False))
-        ))
-        db.create_unique('courses_meeting_readings', ['meeting_id', 'reading_id'])
-
-        # Adding model 'Reading'
-        db.create_table('courses_reading', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('bibtex', self.gf('django.db.models.fields.TextField')()),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, blank=True)),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True)),
-        ))
-        db.send_create_signal('courses', ['Reading'])
+from django.db import models, migrations
+import courses.models
+from django.conf import settings
 
 
-    def backwards(self, orm):
-        
-        # Deleting model 'Department'
-        db.delete_table('courses_department')
+class Migration(migrations.Migration):
 
-        # Deleting model 'Course'
-        db.delete_table('courses_course')
+    dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
 
-        # Deleting model 'Meeting'
-        db.delete_table('courses_meeting')
-
-        # Removing M2M table for field readings on 'Meeting'
-        db.delete_table('courses_meeting_readings')
-
-        # Deleting model 'Reading'
-        db.delete_table('courses_reading')
-
-
-    models = {
-        'courses.course': {
-            'Meta': {'object_name': 'Course'},
-            'department': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'courses'", 'to': "orm['courses.Department']"}),
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'number': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'semester': ('django.db.models.fields.IntegerField', [], {}),
-            'times': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'year': ('django.db.models.fields.IntegerField', [], {})
-        },
-        'courses.department': {
-            'Meta': {'object_name': 'Department'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
-        },
-        'courses.meeting': {
-            'Meta': {'object_name': 'Meeting'},
-            'course': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'meetings'", 'to': "orm['courses.Course']"}),
-            'date': ('django.db.models.fields.DateField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'readings': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['courses.Reading']", 'symmetrical': 'False'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '80'})
-        },
-        'courses.reading': {
-            'Meta': {'object_name': 'Reading'},
-            'bibtex': ('django.db.models.fields.TextField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['courses']
+    operations = [
+        migrations.CreateModel(
+            name='Assignment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('slug', models.SlugField()),
+                ('due_date', models.DateField(blank=True)),
+                ('title', models.CharField(max_length=80)),
+                ('description', models.TextField()),
+                ('points', models.IntegerField(default=0)),
+                ('is_handed_out', models.BooleanField(default=False)),
+                ('is_submitted_online', models.BooleanField(default=False)),
+                ('is_letter_graded', models.BooleanField(default=False)),
+                ('is_graded', models.BooleanField(default=False, verbose_name=b'has been graded')),
+            ],
+            options={
+                'ordering': ('due_date', 'slug'),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Course',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('number', models.CharField(max_length=20)),
+                ('slug', models.CharField(max_length=20)),
+                ('title', models.CharField(max_length=80)),
+                ('semester', models.CharField(max_length=2, choices=[(b'sp', b'Spring'), (b'fa', b'Fall')])),
+                ('year', models.IntegerField(choices=[(2011, b'2011'), (2012, b'2012'), (2013, b'2013'), (2014, b'2014'), (2015, b'2015'), (2016, b'2016')])),
+                ('times', models.CharField(max_length=64)),
+                ('location', models.CharField(max_length=32)),
+                ('ereserves_id', models.CharField(max_length=8, blank=True)),
+                ('description', models.TextField()),
+                ('blurb', models.TextField(blank=True)),
+                ('evaluation', models.TextField(blank=True)),
+                ('participation', models.TextField(blank=True)),
+                ('thanks', models.TextField(blank=True)),
+                ('is_archived', models.BooleanField(default=False)),
+                ('blog_slug', models.CharField(max_length=20, blank=True)),
+                ('forum', models.URLField(blank=True)),
+            ],
+            options={
+                'ordering': ('-year', 'semester'),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Department',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=80)),
+                ('url', models.URLField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Holiday',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('date', models.DateField()),
+                ('name', models.CharField(max_length=80)),
+                ('course', models.ForeignKey(related_name='holidays', to='courses.Course')),
+            ],
+            options={
+                'ordering': ('date',),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Instructor',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=36)),
+                ('url', models.URLField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Meeting',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('date', models.DateField()),
+                ('title', models.CharField(max_length=80)),
+                ('description', models.TextField(blank=True)),
+                ('is_tentative', models.BooleanField(default=True)),
+                ('slides', models.FileField(null=True, upload_to=courses.models.upload_to, blank=True)),
+                ('course', models.ForeignKey(related_name='meetings', to='courses.Course')),
+            ],
+            options={
+                'ordering': ('course', 'date'),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Reading',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('zotero_id', models.CharField(max_length=16)),
+                ('citation_text', models.CharField(max_length=128, editable=False, blank=True)),
+                ('citation_html', models.TextField(editable=False, blank=True)),
+                ('description', models.TextField(blank=True)),
+                ('file', models.FileField(upload_to=b'courses/readings', blank=True)),
+                ('url', models.URLField(blank=True)),
+                ('access_via_proxy', models.BooleanField(default=False)),
+                ('access_via_ereserves', models.BooleanField(default=False)),
+                ('ignore_citation_url', models.BooleanField(default=False)),
+            ],
+            options={
+                'ordering': ('citation_text',),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ReadingAssignment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('order', models.IntegerField(null=True, blank=True)),
+                ('discussion_questions', models.TextField(blank=True)),
+                ('discussion_leader', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('meeting', models.ForeignKey(related_name='reading_assignments', to='courses.Meeting')),
+                ('reading', models.ForeignKey(to='courses.Reading')),
+            ],
+            options={
+                'ordering': ('order',),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Submission',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('time_submitted', models.DateTimeField()),
+                ('zipfile', models.FileField(upload_to=courses.models.submission_upload_to, blank=True)),
+                ('grade', models.FloatField(default=0.0)),
+                ('letter_grade', models.CharField(max_length=2, blank=True)),
+                ('comments', models.TextField(blank=True)),
+                ('assignment', models.ForeignKey(related_name='submissions', to='courses.Assignment')),
+                ('submitter', models.ForeignKey(related_name='submissions', to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='meeting',
+            name='readings',
+            field=models.ManyToManyField(to='courses.Reading', through='courses.ReadingAssignment', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='course',
+            name='assistant',
+            field=models.ForeignKey(related_name='courses_assisting', blank=True, to='courses.Instructor', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='course',
+            name='department',
+            field=models.ForeignKey(related_name='courses', to='courses.Department'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='course',
+            name='instructor',
+            field=models.ForeignKey(related_name='courses', to='courses.Instructor'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='course',
+            name='students',
+            field=models.ManyToManyField(related_name='courses', to=settings.AUTH_USER_MODEL),
+            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='course',
+            unique_together=set([('slug', 'semester', 'year')]),
+        ),
+        migrations.AddField(
+            model_name='assignment',
+            name='course',
+            field=models.ForeignKey(related_name='assignments', to='courses.Course'),
+            preserve_default=True,
+        ),
+    ]
