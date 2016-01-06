@@ -1,0 +1,569 @@
+{% extends "boilerplate.html" %}
+
+{% block title %}Ryan Shaw: Publications{% endblock %}
+
+{% block description %}Ryan Shaw's publications.{% endblock %}
+
+{% load staticfiles %}
+{% load typogrify %}
+
+{% block style %}
+<style>
+  .bibitem { padding-left: 2em; text-indent: -2em; }
+  .title { font-weight: bold; }
+</style>
+{% endblock %}
+
+{% block links %}
+  <link rel="shortlink" href="http://aesh.in/pubs"/>{% endblock %}
+
+{% block main %}
+<article id="main">
+  <header>
+    <h1>Publications</h1>
+  </header>
+  <form id="facets">
+    <dl>
+      <dt> Peer reviewed? </dt>
+      <dd id="peer-reviewed">
+        <label> <input type="checkbox" checked
+                       name="yes"> yes </label>
+        <label> <input type="checkbox" checked
+                       name="no"> no </label>
+      </dd>
+      <dt> Type </dt>
+      <dd id="type">
+        <label> <input type="checkbox" checked
+                       name="book-chapter"> book chapters </label><br>
+        <label> <input type="checkbox" checked
+                       name="journal-article"> journal articles </label><br>
+        <label> <input type="checkbox" checked
+                       name="conference-paper"> conference papers </label><br>
+        <label> <input type="checkbox" checked
+                       name="workshop-paper"> workshop papers </label><br>
+        <label> <input type="checkbox" checked
+                       name="other"> other </label><br>
+      </dd>
+    </dl>
+  </form>
+  <div id="bibitems">
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="journal-article"
+     >
+    Patrick Golden and Ryan Shaw.
+    <span class="title">Nanopublication beyond the sciences.</span>
+    <em>PeerJ Computer Science</em>, forthcoming 2016.&nbsp;<a href="{% static "pubs/Golden%2C%20Shaw%20-%202015%20-%20Nanopublication%20beyond%20the%20Sciences.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="book-chapter"
+     >
+    Ryan Shaw.
+    <span class="title">Gazetteers enriched: A conceptual basis for linking gazetteers with
+      other kinds of information.</span>
+    In Merrick&nbsp;Lex Berman, Ruth Mostern, and Humphrey Southall, editors,
+    <em>Placing Names: Enriching and Integrating Gazetteers</em>. Indiana University
+    Press, Bloomington, Indiana, forthcoming 2016.&nbsp;<a href="{% static "pubs/Shaw%20-%202016%20-%20Gazetteers%20Enriched%20A%20Conceptual%20Basis%20for%20Linking%20Gazetteers%20with%20Other%20Kinds%20of%20Information.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Patrick Golden and Ryan Shaw.
+    <span class="title">Period assertion as nanopublication: the PeriodO period gazetteer.</span>
+    In <em>Proceedings of the 24th International Conference on the World
+      Wide Web</em>, page 1013&ndash;1018. 2015.&nbsp;<a href="http://dl.acm.org/citation.cfm?id=2742021">http://dl.acm.org/citation.cfm?id=2742021</a>&nbsp;|&nbsp;<a href="{% static "pubs/Golden%20%26%20Shaw%20-%202015%20-%20Period%20assertion%20as%20nanopublication.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="journal-article"
+     >
+    Ryan Shaw.
+    <span class="title">Big Data and reality.</span>
+    <em>Big Data &amp; Society</em>, 2(2), 2015.&nbsp;<a href="http://doi.org/10.1177/2053951715608877">doi:10.1177/2053951715608877</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202015%20-%20Big%20Data%20and%20reality.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw.
+    <span class="title">Segmenting oral history transcripts.</span>
+    In <em>Research and Advanced Technology for Digital Libraries</em>, page
+    326&ndash;329, Poznan, Poland, 2015. Springer.&nbsp;<a href="http://doi.org/10.1007/978-3-319-24592-8_27">doi:10.1007/978-3-319-24592-8_27</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202015%20-%20Segmenting%20Oral%20History%20Transcripts.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="no"
+     data-type="other">
+    Ryan Shaw.
+    <span class="title">Automatically segmenting oral history transcripts.</span>
+    Technical report, 2015.&nbsp;<a href="http://arxiv.org/abs/1509.08842">arXiv</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="journal-article"
+     >
+    Ryan Shaw, Adam Rabinowitz, Patrick Golden, and Eric Kansa.
+    <span class="title">A sharing-oriented design strategy for networked knowledge
+      organization systems.</span>
+    <em>International Journal on Digital Libraries</em>, 2015.&nbsp;<a href="http://doi.org/10.1007/s00799-015-0164-0">doi:10.1007/s00799-015-0164-0</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20et%20al.%20-%202015%20-%20A%20sharing-oriented%20design%20strategy%20for%20networked%20knowledge%20organization%20systems.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="book-chapter"
+     >
+    Ryan Shaw, Patrick Golden, and Michael Buckland.
+    <span class="title">Using linked library data in working research notes.</span>
+    In Frank Cervone and Lars Svensson, editors,
+    <em>Linked Data and User Interaction</em>. De Gruyter Saur, Berlin, 2015.&nbsp;<a href="files%2FShaw%2C%20Golden%2C%20Buckland%20-%202015%20-%20Using%20Linked%20Library%20Data%20in%20Working%20Research%20Notes.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Patrick Golden, Ryan Shaw, and Michael Buckland.
+    <span class="title">Decentralized coordination of controlled vocabularies.</span>
+    <em>Proceedings of the American Society for Information Science and
+      Technology</em>, 51(1):1--4, 2014.&nbsp;<a href="http://dx.doi.org/10.1002/meet.2014.14505101146">doi:10.1002/meet.2014.14505101146</a>&nbsp;|&nbsp;<a href="{% static "pubs/Golden%2C%20Shaw%2C%20%26%20Buckland%20-%202014%20-%20Decentralized%20Coordination%20of%20Controlled%20Vocabularies.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw and Patrick Golden.
+    <span class="title">Taking entity reconciliation offline.</span>
+    <em>Proceedings of the American Society for Information Science and
+      Technology</em>, 50(1):1--4, 2013.&nbsp;<a href="http://dx.doi.org/10.1002/meet.14505001107">doi:10.1002/meet.14505001107</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20%26%20Golden%20-%202013%20-%20Taking%20Entity%20Reconciliation%20Offline.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Michael Buckland, Patrick Golden, Barry Pateman, and Ryan Shaw.
+    <span class="title">Editors' notes: An example of changed mediation.</span>
+    In <em>La m&eacute;diation num&eacute;rique : renouvellement et diversification des pratiques: 
+      Actes du colloque "Document num&eacute;rique et soci&eacute;t&eacute;"</em>, Zagreb, 2013.&nbsp;<a href="{% static "pubs/Buckland%2C%20Golden%2C%20Pateman%2C%20%26%20Shaw%20-%202013%20-%20Editors%27%20Notes%20An%20Example%20of%20Changed%20Mediation.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Ryan Shaw.
+    <span class="title">A semantic tool for historical events.</span>
+    In <em>Proceedings of the 1st Workshop on EVENTS: Definition,
+      Detection, Coreference, and Representation</em>, page 38&ndash;46, Atlanta, 2013.
+    Association for Computational Linguistics.&nbsp;<a href="http://aclweb.org/anthology/W/W13/W13-1205.pdf">http://aclweb.org/anthology/W/W13/W13-1205.pdf</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202013%20-%20A%20Semantic%20Tool%20for%20Historical%20Events.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="journal-article"
+     >
+    Ryan Shaw.
+    <span class="title">Information organization and the philosophy of history.</span>
+    <em>Journal of the American Society for Information Science and
+      Technology</em>, 64(6):1092&ndash;1103, 2013.&nbsp;<a href="http://doi.org/10.1002/asi.22843">doi:10.1002/asi.22843</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202013%20-%20Information%20organization%20and%20the%20philosophy%20of%20history.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes"
+     >
+    Ryan Shaw, Michael Buckland, and Patrick Golden.
+    <span class="title">Open notebook humanities: promise and problems.</span>
+    In <em>Digital Humanities Conference 2013</em>, Lincoln, Nebraska, 2013.
+    ADHO.&nbsp;<a href="http://dh2013.unl.edu/abstracts/ab-297.html">http://dh2013.unl.edu/abstracts/ab-297.html</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="book-chapter"
+     >
+    Ryan Shaw and Murray Maloney.
+    <span class="title">The forms of resource descriptions.</span>
+    In Robert&nbsp;J. Glushko, editor, <em>The Discipline of Organizing</em>,
+    chapter&nbsp;8, page 283&ndash;324. MIT Press, Cambridge, Massachusetts, 2013.&nbsp;<a href="{% static "pubs/Shaw%2C%20Maloney%20-%202013%20-%20The%20forms%20of%20resource%20descriptions.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Annie Chen, Ayoung Yoon, and Ryan Shaw.
+    <span class="title">People, places and emotions: Visually representing historical context in oral testimonies.</span>
+    In <em>Proc. of the LREC 2012 Workshop on Computational Models of Narrative</em>, Istanbul, 2012.&nbsp;<a href="http://narrative.csail.mit.edu/cmn12/">http://narrative.csail.mit.edu/cmn12/</a>&nbsp;|&nbsp;<a href="{% static "pubs/Chen%2C%20Yoon%2C%20%26%20Shaw%20-%202012%20-%20Visually%20Representing%20Historical%20Context%20in%20Oral%20Testimonies.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="other"
+     >
+    Tom Scheinfeldt and Ryan Shaw.
+    <span class="title">Words and code.</span> 
+    <em>Journal of Digital Humanities</em>, 1(1), 2012.&nbsp;<a href="http://journalofdigitalhumanities.org/1-1/words-and-code-by-tom-scheinfeld-and-ryan-shaw/">http://journalofdigitalhumanities.org/1-1/words-and-code-by-tom-scheinfeld-and-ryan-shaw/</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw, Patrick Golden, and Michael Buckland.
+    <span class="title">Integrating collaborative bibliography and research.</span>
+    In <em>Proceedings of the American Society for Information Science
+      and Technology</em>, volume&nbsp;49, page 1&ndash;4, Baltimore, 2012.&nbsp;<a href="http://doi.org/10.1002/meet.14504901245">doi:10.1002/meet.14504901245</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Golden%2C%20Buckland%20-%202012%20-%20Integrating%20collaborative%20bibliography%20and%20research.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw and Michael Buckland.
+    <span class="title">Editorial control over linked data.</span>
+    In <em>Proceedings of the American Society for Information Science
+      and Technology</em>, volume&nbsp;48, page 1&ndash;4, New Orleans, 2011. American Society
+    for Information Science and Technology.&nbsp;<a href="http://doi.org/10.1002/meet.2011.14504801296">doi:10.1002/meet.2011.14504801296</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Buckland%20-%202011%20-%20Editorial%20control%20over%20linked%20data.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Michael&nbsp;K. Buckland, Ryan&nbsp;B. Shaw, and Daniel&nbsp;F. Melia.
+    <span class="title">Rapid access to reference resources.</span>
+    In <em>Proceedings of the American Society for Information Science
+      and Technology</em>, volume&nbsp;47, page 1&ndash;2, 2010.&nbsp;<a href="http://doi.org/10.1002/meet.14504701427">doi:10.1002/meet.14504701427</a>&nbsp;|&nbsp;<a href="{% static "pubs/Buckland%2C%20Shaw%2C%20Melia%20-%202010%20-%20Rapid%20access%20to%20reference%20resources.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem">
+    Birger Hj&oslash;rland and Ryan Shaw.
+    <span class="title">Concepts: Classes and colligation.</span>
+    <em>Bulletin of the American Society for Information Science and
+      Technology</em>, 36(3):2&ndash;4, 2010.&nbsp;<a href="http://doi.org/10.1002/bult.2010.1720360301">doi:10.1002/bult.2010.1720360301</a>&nbsp;|&nbsp;<a href="{% static "pubs/Hjorland,%20Shaw%20-%202010%20-%20Concepts%20Classes%20and%20colligation.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="journal-article"
+     >
+    Ryan Shaw.
+    <span class="title">From facts to judgments: Theorizing history for information science.</span>
+    <em>Bulletin of the American Society for Information Science and
+      Technology</em>, 36(2):13&ndash;18, 2010.&nbsp;<a href="http://doi.org/10.1002/bult.2010.1720360207">doi:10.1002/bult.2010.1720360207</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202010%20-%20From%20facts%20to%20judgments%20Theorizing%20history%20for%20information%20science.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="no" 
+     data-type="other"
+     >
+    Ryan Shaw.
+    <span class="title">Events and periods as concepts for organizing historical knowledge.</span>
+    Ph.D. thesis, University of California, Berkeley, 2010.&nbsp;<a href="http://gradworks.umi.com/34/44/3444385.html">http://gradworks.umi.com/34/44/3444385.html</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202010%20-%20Events%20and%20Periods%20as%20Concepts%20for%20Organizing%20Historical%20Knowledge.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Rapha&euml;l Troncy, Ryan Shaw, and Lynda Hardman.
+    <span class="title">LODE: une ontologie pour repr&eacute;senter des
+      &eacute;v&eacute;nements dans le web de donn&eacute;es.</span>
+    In <em>21es Journ&eacute;es francophones d'Ing&eacute;nierie des
+      Connaissances (IC 2010)</em>, N&icirc;mes, 2010.&nbsp;<a href="http://hal.archives-ouvertes.fr/hal-00487630/">http://hal.archives-ouvertes.fr/hal-00487630/</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Michael Buckland, Ray Larson, and Ryan Shaw.
+    <span class="title">Finding explanations online: Easy queries AND trustworthy answers.</span>
+    In <em>Proceedings of the American Society for Information Science
+      and Technology</em>, volume&nbsp;46, page 1&ndash;6, 2009.&nbsp;<a href="http://doi.org/10.1002/meet.2009.1450460344">doi:10.1002/meet.2009.1450460344</a>&nbsp;|&nbsp;<a href="{% static "pubs/Buckland%2C%20Larson%2C%20Shaw%20-%202009%20-%20Finding%20explanations%20online%20Easy%20queries%20AND%20trustworthy%20answers.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Michael Buckland, Ryan Shaw, and Daniel Melia.
+    <span class="title">Contexte et connexions: L'Irlande et le patrimoine irlandais.</span>
+    In <em>Patrimoine 3.0. Actes du douzieme colloque international sur
+      le document electronique</em>, page 15&ndash;28, Montreal, 2009. Europia.&nbsp;<a href="{% static "pubs/Buckland%2C%20Shaw%2C%20Melia%20-%202009%20-%20Contexte%20et%20connexions%20L%27Irlande%20et%20le%20patrimoine%20irlandais.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ray&nbsp;R. Larson and Ryan Shaw.
+    <span class="title">Mapping life events.</span>
+    In <em>Proceedings of the 2009 joint international conference on
+      Digital libraries - JCDL '09</em>, page 471, New York, New York, USA, 2009. ACM
+    Press.&nbsp;<a href="http://doi.org/10.1145/1555400.1555519">doi:10.1145/1555400.1555519</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Ryan Shaw, Michael Buckland, and Ray Larson.
+    <span class="title">Integrating tools for synthesis into digital libraries.</span>
+    In <em>Proceedings the the JCDL 2009 Workshop on Integrating Digital
+      Library Content with Computational Tools and Services</em>, Austin, Texas, 2009.&nbsp;<a href="http://nema.lis.uiuc.edu/drupal/pdf/larson_abstract.pdf">http://nema.lis.uiuc.edu/drupal/pdf/larson_abstract.pdf</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Buckland%2C%20Larson%20-%202009%20-%20Integrating%20Tools%20for%20Synthesis%20into%20Digital%20Libraries.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw, Raphael Troncy, and Lynda Hardman.
+    <span class="title">LODE: Linking open descriptions of events.</span>
+    In Asunci&oacute;n G&oacute;mez-P&eacute;rez, Yong Yu, and Ying Ding,
+    editors, <em>The Semantic Web</em>, volume 5926 of <em>Lecture Notes in
+      Computer Science</em>, page 153&ndash;167, Berlin, 2009. Springer.&nbsp;<a href="http://doi.org/10.1007/978-3-642-10871-6_11">doi:10.1007/978-3-642-10871-6_11</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Troncy%2C%20Hardman%20-%202009%20-%20LODE%20Linking%20Open%20Descriptions%20of%20Events.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Michael Buckland and Ryan Shaw.
+    <span class="title">4W vocabulary mapping across diverse reference genres.</span>
+    In <em>Proceedings of the 10th International Conference of the
+      International Society for Knowledge Organization</em>, Montreal, 2008.
+    International Society for Knowledge Organization.&nbsp;<a href="{% static "pubs/Buckland%2C%20Shaw%20-%202008%20-%204W%20Vocabulary%20Mapping%20Across%20Diverse%20Reference%20Genres.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Fredric Gey, Ryan Shaw, Ray Larson, Michael Buckland, Barry Pateman, and Dan Melia.
+    <span class="title">Marking up cultural materials for time and geography.</span>
+    In <em>Proceedings of the ECDL 2008 Workshop on Information Access
+      to Cultural Heritage (IACH 2008)</em>, Aarhus, 2008.&nbsp;<a href="{% static "pubs/Gey%20et%20al.%20-%202008%20-%20Marking%20Up%20Cultural%20Materials%20for%20Time%20and%20Geography.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Michael&nbsp;K. Buckland, Ray&nbsp;R. Larson, and Ryan Shaw.
+    <span class="title">Finding and providing context online.</span>
+    In <em>Proceedings of the American Society for Information Science
+      and Technology</em>, volume&nbsp;45, page 1&ndash;3, 2008.&nbsp;<a href="http://doi.org/10.1002/meet.2008.14504503146">doi:10.1002/meet.2008.14504503146</a>
+  </p>
+  
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Fredric Gey, Ryan Shaw, Ray Larson, and Barry Pateman.
+    <span class="title">Biography as events in time and space.</span>
+    In <em>Proceedings of the 16th ACM SIGSPATIAL international
+      conference on Advances in geographic information systems - GIS '08</em>, page&nbsp;1,
+    New York, New York, USA, 2008. ACM Press.&nbsp;<a href="http://doi.org/10.1145/1463434.1463535">doi:10.1145/1463434.1463535</a>&nbsp;|&nbsp;<a href="{% static "pubs/Gey%20et%20al.%20-%202008%20-%20Biography%20as%20events%20in%20time%20and%20space.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Ryan Shaw.
+    <span class="title">Event gazetteers for navigating humanities resources.</span>
+    In <em>Proceeding of the 2nd PhD workshop on Information and
+      knowledge management - PIKM '08</em>, page&nbsp;89, New York, New York, USA, 2008. ACM
+    Press.&nbsp;<a href="http://doi.org/10.1145/1458550.1458567">doi:10.1145/1458550.1458567</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202008%20-%20Event%20gazetteers%20for%20navigating%20humanities%20resources.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw and Michael Buckland.
+    <span class="title">Open identification and linking of the four Ws.</span>
+    In <em>Proceedings of the 2008 International Conference on Dublin
+      Core and Metadata Applications</em>, Berlin, 2008.&nbsp;<a href="http://dcpapers.dublincore.org/pubs/article/view/942">http://dcpapers.dublincore.org/pubs/article/view/942</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw and Ray Larson.
+    <span class="title">Event representation in temporal and geographic context.</span>
+    In Birte Christensen-Dalsgaard, Donatella Castelli, Bolette
+    Ammitzb&oslash;ll Jurik, and Joan Lippincott, editors, <em>Research and
+      Advanced Technology for Digital Libraries</em>, volume 5173 of <em>Lecture Notes
+      in Computer Science</em>, page 415&ndash;418, Berlin, Heidelberg, 2008. Springer
+    Berlin Heidelberg.&nbsp;<a href="http://doi.org/10.1007/978-3-540-87599-4_50">doi:10.1007/978-3-540-87599-4_50</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Larson%20-%202008%20-%20Event%20Representation%20in%20Temporal%20and%20Geographic%20Context.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw and Ray&nbsp;R. Larson.
+    <span class="title">Bringing lives to light: lives and event representation in temporal
+      and geographic context.</span>
+    In <em>International Conference on Digital Libraries</em>, 2008.&nbsp;<a href="http://doi.org/10.1145/1378889.1378981">doi:10.1145/1378889.1378981</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Larson%20-%202008%20-%20Bringing%20lives%20to%20light%20lives%20and%20event%20representation%20in%20temporal%20and%20geographic%20context.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    David&nbsp;A. Shamma and Ryan Shaw.
+    <span class="title">Supporting creative acts beyond dissemination.</span>
+    In <em>Proceedings of the 6th ACM SIGCHI conference on Creativity
+      &amp; cognition - C&amp;C '07</em>, page 276, New York, New York, USA, 2007. ACM
+    Press.&nbsp;<a href="http://doi.org/10.1145/1254960.1255012">doi:10.1145/1254960.1255012</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shamma%2C%20Shaw%20-%202007%20-%20Supporting%20creative%20acts%20beyond%20dissemination.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    David&nbsp;A. Shamma, Ryan Shaw, Peter&nbsp;L. Shafton, and Yiming Liu.
+    <span class="title">Watch what I watch: using community activity to understand content.</span>
+    In <em>Proceedings of the international workshop on Workshop on
+      multimedia information retrieval - MIR '07</em>, page 275, New York, New York,
+    USA, 2007. ACM Press.&nbsp;<a href="http://doi.org/10.1145/1290082.1290120">doi:10.1145/1290082.1290120</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shamma%20et%20al.%20-%202007%20-%20Watch%20what%20I%20watch%20using%20community%20activity%20to%20understand%20content.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="no" 
+     data-type="other"
+     >
+    Ryan Shaw.
+    <span class="title">Review of <em>From Counterculture to Cyberculture: Stewart Brand, the
+        Whole Earth Network, and the Rise of Digital Utopianism</em>.</span>
+    <em>Business History</em>, 49(5):758&ndash;759, 2007.&nbsp;<a href="http://doi.org/10.1080/00076790701428778">doi:10.1080/00076790701428778</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202007%20-%20Review%20of%20From%20Counterculture%20to%20Cyberculture%20Stewart%20Brand%2C%20the%20Whole%20Earth%20Network%2C%20and%20the%20Rise%20of%20Digital%20Utopianism.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="no" 
+     data-type="other"
+     >
+    Ryan Shaw, Patrick Schmitz, Peter Shafton, and Brian Williams.
+    <span class="title">Identifying popular segments of media objects.</span>
+    U.S. patent application 11/687,940, filed March 19, 2007.&nbsp;<a href="http://www.google.com/patents/US20080235589">http://www.google.com/patents/US20080235589</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="no" 
+     data-type="other"
+     >
+    Peter Shafton, David Shamma, Ryan Shaw, and Patrick Schmitz.
+    <span class="title">Method and system for media-based event generation.</span>
+    U.S. patent application 11/763,383, filed June 14, 2007.&nbsp;<a href="http://www.google.com/patents/US20080313227">http://www.google.com/patents/US20080313227</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="no" 
+     data-type="other"
+     >
+    Peter Shafton, David Shamma, Ryan Shaw, and Patrick Schmitz.
+    <span class="title">Method and system for personalized segmentation and indexing of media.</span>
+    U.S. patent application 11/763,388, filed June 14, 2007.&nbsp;<a href="http://www.google.com/patents/US20080313541">http://www.google.com/patents/US20080313541</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="no" 
+     data-type="other"
+     >
+    Ryan Shaw and Erik Wilde.
+    <span class="title">Web-style multimedia annotations.</span>
+    Technical report, School of Information, UC Berkeley, 2007.&nbsp;<a href="http://escholarship.org/uc/item/42q341g6">http://escholarship.org/uc/item/42q341g6</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Wilde%20-%202007%20-%20Web-Style%20Multimedia%20Annotations.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Patrick Schmitz, Peter Shafton, Ryan Shaw, Samantha Tripodi, Brian Williams,
+    and Jeannie Yang.
+    <span class="title">International Remix: Video editing for the Web.</span>
+    In <em>Proceedings of the 14th annual ACM international conference
+      on Multimedia - MULTIMEDIA '06</em>, page 797, New York, New York, USA, 2006. ACM
+    Press.&nbsp;<a href="http://doi.org/10.1145/1180639.1180814">doi:10.1145/1180639.1180814</a>&nbsp;|&nbsp;<a href="{% static "pubs/Schmitz%20et%20al.%20-%202006%20-%20International%20Remix%20Video%20Editing%20for%20the%20Web.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw.
+    <span class="title">Recognition markets and visual privacy.</span>
+    In <em>UnBlinking: New Perspectives on Visual Privacy in the 21st
+      Century</em>, Berkeley, 2006.&nbsp;<a href="http://www.law.berkeley.edu/files/bclt_unblinking_shaw.pdf">http://www.law.berkeley.edu/files/bclt_unblinking_shaw.pdf</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%20-%202006%20-%20Recognition%20Markets%20and%20Visual%20Privacy.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Ryan Shaw and Patrick Schmitz.
+    <span class="title">Community annotation and remix.</span>
+    In <em>Proceedings of the 1st ACM international workshop on
+      Human-centered multimedia - HCM '06</em>, page&nbsp;89, New York, New York, USA, 2006.
+    ACM Press.&nbsp;<a href="http://doi.org/10.1145/1178745.1178761">doi:10.1145/1178745.1178761</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Schmitz%20-%202006%20-%20Community%20annotation%20and%20remix%20a%20research%20platform%20and%20pilot%20deployment.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Greg Niemeyer, Dan Perkel, Ryan Shaw, and Jane McGonigal.
+    <span class="title">Organum: individual presence through collaborative play.</span>
+    In <em>Proceedings of the 13th annual ACM international conference
+      on Multimedia - MULTIMEDIA '05</em>, page 594, New York, New York, USA, 2005. ACM
+    Press.&nbsp;<a href="http://doi.org/10.1145/1101149.1101286">doi:10.1145/1101149.1101286</a>&nbsp;|&nbsp;<a href="{% static "pubs/Niemeyer%20et%20al.%20-%202005%20-%20Organum%20individual%20presence%20through%20collaborative%20play.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Ryan Shaw.
+    <span class="title">Designing for community appropriation of media.</span>
+    In <em>Proceedings of the CHI 2005 Workshop on Designing Technology
+      for Community Appropriation</em>, Portland, Oregon, 2005.&nbsp;<a href="{% static "pubs/Shaw%20-%202005%20-%20Designing%20for%20Community%20Appropriation%20of%20Media.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="conference-paper"
+     >
+    Ryan Shaw and Marc Davis.
+    <span class="title">Toward emergent representations for video.</span>
+    In <em>Proceedings of the 13th annual ACM international conference
+      on Multimedia</em>, 2005.&nbsp;<a href="http://doi.org/10.1145/1101149.1101244">doi:10.1145/1101149.1101244</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw%2C%20Davis%20-%202005%20-%20Toward%20emergent%20representations%20for%20video.pdf" %}">pdf</a>
+  </p>
+
+  <p class="bibitem"
+     data-peer-reviewed="yes" 
+     data-type="workshop-paper"
+     >
+    Melanie Feinberg and Ryan Shaw.
+    <span class="title">Action: A framework for semantic annotation of events in video.</span>
+    In Siegfried Handschuh, Thierry Declerck, Marja-Riitta Koivunen, Rose
+    Dieng, Richard Benjamins, and Steffen Staab, editors, <em>Proceedings of the
+      4th International Workshop on Knowledge Markup and Semantic Annotation
+      (SEMANNOT'04)</em>, Hiroshima, 2004.&nbsp;<a href="http://sunsite.informatik.rwth-aachen.de/Publications/CEUR-WS/Vol-184/semAnnot04-14.pdf">http://sunsite.informatik.rwth-aachen.de/Publications/CEUR-WS/Vol-184/semAnnot04-14.pdf</a>&nbsp;|&nbsp;<a href="{% static "pubs/Feinberg%2C%20Shaw%20-%202004%20-%20Action%20A%20Framework%20for%20Semantic%20Annotation%20of%20Events%20in%20Video.pdf" %}">pdf</a>
+  </p>
+  </div>
+</article>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="{% static "facets.js" %}"></script>
+{% endblock %}

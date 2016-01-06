@@ -30,6 +30,8 @@ urlpatterns = patterns('',
      TemplateView.as_view(template_name='dissertation.html')),
     (r'^dhmeetsi/$',
      TemplateView.as_view(template_name='dhmeetsi.html')),
+    (r'^writing/$',
+     TemplateView.as_view(template_name='writing.html')),
 
     (r'^favicon.ico$',
       RedirectView.as_view(url='/static/favicon.ico')),
