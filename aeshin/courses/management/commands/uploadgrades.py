@@ -12,8 +12,8 @@ from courses.models import Submission
 def row_to_data(header, row):
     email = row[header.index('Your email address')].lower()    
     return { 'username': email.split('@')[0],
-             'grade': row[header.index('Total grade')],
-             'comments': '\n\n'.join(row) }
+             'grade': row[header.index('grade')],
+             'comments': row[header.index('comments')] }
 
 def create_submission(assignment, data):
     try:

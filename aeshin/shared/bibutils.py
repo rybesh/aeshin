@@ -6,9 +6,9 @@ from utils import truncate
 from xml.etree.ElementTree import ElementTree
 from xml.parsers.expat import ExpatError
 import json
-import logging
+#import logging
 
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 def format_zotero_as_html(zotero_item_id):
     return mark_safe(urlopen(
@@ -53,14 +53,15 @@ def load_zotero_atom(uri):
                 library.append(
                     (key, truncate(zotero_item_to_text(json.loads(content)))))
             except KeyError as e:
-                logger.warning(e)
+                #logger.warning(e)
                 continue
         for link in tree.findall('{http://www.w3.org/2005/Atom}link'):
             if link.attrib.get('rel', None) == 'next':
                 library.extend(load_zotero_atom(link.attrib['href']))
                 break
     except ExpatError as e:
-        logger.error(e)
+        #logger.error(e)
+        pass
     return library
 
 def load_zotero_library():
