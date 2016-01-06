@@ -3,10 +3,11 @@
 *.crt
 *.key
 .Python
-bin
-include
-lib
-local
-media
-share
+bin/
+include/
+lib/
+local/
+media/
+share/
 secrets.py
+static/
