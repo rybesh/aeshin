@@ -7,6 +7,7 @@ from django.http import HttpResponsePermanentRedirect
 special_paths = {
     '/': '',
     '/diss': 'dissertation/',
+    '/pubs': 'writing/',
 } 
 
 class ShortURLMiddleware:
