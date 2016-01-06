@@ -19,37 +19,35 @@ def loggedin(request):
 def server_error(request, template_name='500.html'):
     t = loader.get_template(template_name)
     return http.HttpResponseServerError(t.render(RequestContext(request, {})))
-handler500 = server_error 
+handler500 = server_error
 
 urlpatterns = patterns('',
     url(r'^deploy/$', 'shared.views.deploy', name='shared_deploy_view'),
 
-    (r'^$', 
+    (r'^$',
      TemplateView.as_view(template_name='bio.html')),
-    (r'^dissertation/$', 
+    (r'^dissertation/$',
      TemplateView.as_view(template_name='dissertation.html')),
-    (r'^dhmeetsi/$', 
+    (r'^dhmeetsi/$',
      TemplateView.as_view(template_name='dhmeetsi.html')),
 
-    (r'^favicon.ico$', 
+    (r'^favicon.ico$',
       RedirectView.as_view(url='/static/favicon.ico')),
 
     (r'^teaching/', include('courses.urls')),
-    (r'^courses/(?P<path>.*)$', 
+    (r'^courses/(?P<path>.*)$',
      RedirectView.as_view(url='/teaching/%(path)s')),
-   
-    (r'^files/', include('files.urls')),     
+
+    (r'^files/', include('files.urls')),
 
     (r'^admin/', include(admin.site.urls)),
 
     (r'^loggedin/$', loggedin),
     (r'', include('django.contrib.auth.urls')),
 
-    (r'^rcrforum/$', 
+    (r'^rcrforum/$',
      RedirectView.as_view(url='/textmining/')),
 
-    (r'^media/img/(?P<path>.*)$', 
+    (r'^media/img/(?P<path>.*)$',
      RedirectView.as_view(url='/static/%(path)s')),
 )
-
-
