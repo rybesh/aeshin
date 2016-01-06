@@ -1,8 +1,4 @@
 <!doctype html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 {% load staticfiles %}
 <head>
   <meta charset="utf-8"/>
@@ -12,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="google-site-verification" content="g8riOoFr9YcIVDuJArRaZn7iwy3ibL7fKZbdjv9sAAo" />
   <link rel="stylesheet" href="{% static "style.css" %}"/>{% block style %}{% endblock %}{% block links %}{% endblock %}
-  <script src="{% static "modernizr-1.7.min.js" %}"></script>
 </head>
 <body>
   <header>
@@ -29,18 +24,4 @@
   <div id="wrapper"{% block wrapperclass %}{% endblock %}>
     {% block main %}{% endblock %}
   </div>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
-  <script>window.jQuery || document.write("<script src='{% static "jquery-1.5.2.min.js" %}'>\x3C/script>")</script>
-  <script src="{% static "plugins.js" %}"></script>
-  <script src="{% static "script.js" %}"></script>
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24052364-1']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-  </script>
 </body>
