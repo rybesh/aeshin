@@ -9,5 +9,4 @@ lib
 local
 media
 share
-static
 secrets.py
