@@ -1,11 +1,11 @@
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(
-		os.path.abspath(__file__))))
+from secrets import * # noqa
 
-from secrets import *
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# database ---------------------------------------------------------------------
+
+# database --------------------------------------------------------------------
 
 DATABASES = {
     'default': {
@@ -14,16 +14,16 @@ DATABASES = {
     }
 }
 
-# debugging --------------------------------------------------------------------
+# debugging -------------------------------------------------------------------
 
 DEBUG = False
 TEMPLATE_DEBUG = False
 
-# logging ----------------------------------------------------------------------
+# logging ---------------------------------------------------------------------
 
 LOGGING_CONFIG = None
 
-# email ------------------------------------------------------------------------
+# email -----------------------------------------------------------------------
 
 ADMINS = (
     ('Ryan Shaw', 'ryanshaw@unc.edu'),
@@ -36,13 +36,13 @@ EMAIL_HOST_USER = 'ryan.b.shaw@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# file uploads -----------------------------------------------------------------
+# file uploads ----------------------------------------------------------------
 
-MEDIA_DIR = 'media/' # internal
+MEDIA_DIR = 'media/'  # internal
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_DIR)
-MEDIA_URL = '/files/' # external
+MEDIA_URL = '/files/'  # external
 
-# globalization ----------------------------------------------------------------
+# globalization ---------------------------------------------------------------
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'US/Eastern'
@@ -50,7 +50,7 @@ USE_I18N = False
 USE_L10N = False
 USE_TZ = True
 
-# http -------------------------------------------------------------------------
+# http ------------------------------------------------------------------------
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,7 +65,7 @@ MIDDLEWARE_CLASSES = (
 
 WSGI_APPLICATION = 'aeshin.wsgi.application'
 
-# models -----------------------------------------------------------------------
+# models ----------------------------------------------------------------------
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -81,14 +81,14 @@ INSTALLED_APPS = (
     'files',
 )
 
-# security ---------------------------------------------------------------------
+# security --------------------------------------------------------------------
 
 ALLOWED_HOSTS = [
     '.aeshin.org',
     '.aeshin.org.',
 ]
 
-# templates --------------------------------------------------------------------
+# templates -------------------------------------------------------------------
 
 TEMPLATE_DIRS = (
     os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates')),
@@ -104,21 +104,21 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
 
-# urls -------------------------------------------------------------------------
+# urls ------------------------------------------------------------------------
 
 ROOT_URLCONF = 'aeshin.urls'
 
-# django.contrib.auth ----------------------------------------------------------
+# django.contrib.auth ---------------------------------------------------------
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/loggedin/'
 LOGOUT_URL = '/logout/'
 
-# django.contrib.sites ---------------------------------------------------------
+# django.contrib.sites --------------------------------------------------------
 
 SITE_ID = 1
 
-# django.contrib.staticfiles ---------------------------------------------------
+# django.contrib.staticfiles --------------------------------------------------
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
@@ -126,7 +126,6 @@ STATICFILES_DIRS = (
     os.path.abspath(os.path.join(os.path.dirname(__file__), 'static')),
 )
 
-# shared -----------------------------------------------------------------------
+# shared ----------------------------------------------------------------------
 
 ZOTERO_GROUP_ID = '51755'
-
