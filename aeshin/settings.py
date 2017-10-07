@@ -7,7 +7,7 @@ from secrets import * # noqa
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/var/www/db.sqlite3'
+        'NAME': '/var/www/aeshin/db.sqlite3'
     }
 }
 
