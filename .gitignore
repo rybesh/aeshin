@@ -2,12 +2,6 @@
 *.sqlite3
 *.crt
 *.key
-.Python
-bin/
-include/
-lib/
-local/
-media/
-share/
 secrets.py
 static/
+venv/
