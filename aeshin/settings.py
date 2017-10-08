@@ -2,12 +2,14 @@ import os
 
 from secrets import * # noqa
 
+WWW_ROOT = '/var/www/aeshin'
+
 # database --------------------------------------------------------------------
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/var/www/aeshin/db.sqlite3'
+        'NAME': os.path.join(WWW_ROOT, 'db.sqlite3')
     }
 }
 
@@ -35,7 +37,8 @@ EMAIL_USE_TLS = True
 
 # file uploads ----------------------------------------------------------------
 
-MEDIA_ROOT = '/var/www/aeshin/media'
+MEDIA_DIR = 'media/'
+MEDIA_ROOT = os.path.join(WWW_ROOT, MEDIA_DIR)
 MEDIA_URL = '/files/'
 
 # globalization ---------------------------------------------------------------
@@ -116,7 +119,7 @@ SITE_ID = 1
 
 # django.contrib.staticfiles --------------------------------------------------
 
-STATIC_ROOT = '/var/www/aeshin/static'
+STATIC_ROOT = os.path.join(WWW_ROOT, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.abspath(os.path.join(os.path.dirname(__file__), 'static')),
