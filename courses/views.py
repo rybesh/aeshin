@@ -1,20 +1,15 @@
-from models import *
+from models import Course, Assignment, ReadingAssignment, Submission, User
 from django import forms
 from django.http import HttpResponse, HttpResponseForbidden, Http404
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.conf import settings
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.sites.models import Site
-from django.contrib.comments.models import Comment
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.db.models import Count
-from django.utils.safestring import mark_safe
 from zipfile import ZipFile, BadZipfile
 from StringIO import StringIO
 import datetime
 import csv
+
 
 def index(request):
     o = {}
@@ -22,12 +17,14 @@ def index(request):
     return render_to_response('courses.html', o,
                               context_instance=RequestContext(request))
 
+
 def info(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
     return render_to_response('info.html', o,
                               context_instance=RequestContext(request))
+
 
 def schedule(request, slug, year, semester):
     o = {}
@@ -37,7 +34,8 @@ def schedule(request, slug, year, semester):
     o['holidays'] = list(o['course'].holidays.all())
     assignments = {}
     for i, assignment in enumerate(
-        o['course'].assignments.filter(due_date__isnull=False)):
+            o['course'].assignments.filter(due_date__isnull=False)
+    ):
         assignment.number = (i + 1)
         assignments_due = assignments.get(assignment.due_date, [])
         assignments_due.append(assignment)
@@ -48,13 +46,14 @@ def schedule(request, slug, year, semester):
     today = datetime.date.today()
     for item in o['schedule']:
         item.assignments_due = assignments.get(item.date, [])
-        if hasattr(item, 'is_tentative') and item.is_tentative: 
+        if hasattr(item, 'is_tentative') and item.is_tentative:
             o['in_flux'] = True
         if item.date >= today:
             item.next = True
     o['user_is_authorized'] = o['course'].is_authorized(request.user)
     return render_to_response('schedule.html', o,
                               context_instance=RequestContext(request))
+
 
 def guidelines(request, slug, year, semester):
     o = {}
@@ -63,12 +62,14 @@ def guidelines(request, slug, year, semester):
     return render_to_response('guidelines.html', o,
                               context_instance=RequestContext(request))
 
+
 def thanks(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
     return render_to_response('thanks.html', o,
                               context_instance=RequestContext(request))
+
 
 def assignments(request, slug, year, semester):
     o = {}
@@ -77,14 +78,18 @@ def assignments(request, slug, year, semester):
     return render_to_response('assignments.html', o,
                               context_instance=RequestContext(request))
 
+
 class SubmissionForm(forms.Form):
-    zipfile = forms.FileField(help_text='Please upload a single zip archive containing all the required files for this assignment.')
+    zipfile = forms.FileField(
+        help_text='Please upload a single zip archive'
+        + ' containing all the required files for this assignment.')
+
 
 @login_required
 def submit_assignment(request, assignment_id):
     o = {}
     o['assignment'] = get_object_or_404(Assignment, id=assignment_id)
-    if not (o['assignment'].is_handed_out and 
+    if not (o['assignment'].is_handed_out and
             o['assignment'].is_submitted_online):
         raise Http404
     o['course'] = o['assignment'].course
@@ -96,17 +101,21 @@ def submit_assignment(request, assignment_id):
         if form.is_valid():
             zipfile = request.FILES['zipfile']
             try:
-                archive = ZipFile(zipfile)
-                submission, new = o['assignment'].submissions.get_or_create(submitter=request.user)
+                ZipFile(zipfile)
+                submission, new = o['assignment'].submissions.get_or_create(
+                    submitter=request.user)
                 if not new:
                     submission.zipfile.delete(save=False)
                 submission.zipfile = zipfile
                 submission.save()
-                messages.success(request, 'Your zip archive was successfully uploaded.')
+                messages.success(
+                    request, 'Your zip archive was successfully uploaded.')
             except BadZipfile:
-                messages.error(request, 'The file %s is not a valid zip archive.' % zipfile.name)
+                messages.error(
+                    request, 'The file %s is not a valid zip archive.'
+                    % zipfile.name)
     else:
-        submitter=request.user.username
+        submitter = request.user.username
         if request.user.is_superuser and 'username' in request.GET:
             submitter = request.GET['username']
         try:
@@ -125,11 +134,13 @@ def submit_assignment(request, assignment_id):
     return render_to_response('submit_assignment.html', o,
                               context_instance=RequestContext(request))
 
+
 def get_current_course(slug):
     courses = list(Course.objects.filter(blog_slug=slug).order_by('id'))
     if len(courses) == 0:
         raise Course.DoesNotExist
     return courses[-1]
+
 
 def median(pool):
     if len(pool) == 0:
@@ -141,9 +152,10 @@ def median(pool):
     else:
         return (copy[size/2 - 1] + copy[size/2]) / 2
 
+
 def grades_csv(course):
     assignments = course.assignments.filter(is_graded=True)
-    table = [ ['Name'] + [ a.title for a in assignments ] ] 
+    table = [['Name'] + [a.title for a in assignments]]
     for s in course.students.filter(is_active=True):
         row = [s.get_full_name()]
         for a in assignments:
@@ -152,9 +164,10 @@ def grades_csv(course):
             except Submission.DoesNotExist:
                 row.append('')
         table.append(row)
-    buf = StringIO() 
+    buf = StringIO()
     csv.writer(buf).writerows(table)
     return HttpResponse(buf.getvalue(), 'text/csv')
+
 
 @login_required
 def grades(request, slug, year, semester):
@@ -175,21 +188,25 @@ def grades(request, slug, year, semester):
         .filter(is_active=True)\
         .values_list('username', flat=True)
     counts = {}
+
     def setdefault(username):
-        return counts.setdefault(username, { 
-                'discussion_count': 0, 'post_count': 0, 'comment_count': 0 })
+        return counts.setdefault(username, {
+                'discussion_count': 0, 'post_count': 0, 'comment_count': 0})
     for leader in ReadingAssignment.objects\
             .filter(meeting__course=o['course'])\
             .values_list('discussion_leader__username', flat=True):
         if leader in students:
             setdefault(leader)['discussion_count'] += 1
-    o['discussion_count'] = setdefault(o['student'].username)['discussion_count']
-    o['discussion_median'] = median([ v['discussion_count'] for v in counts.values() ])
+    o['discussion_count'] = setdefault(
+        o['student'].username)['discussion_count']
+    o['discussion_median'] = median(
+        [v['discussion_count'] for v in counts.values()])
     o['assignments'] = []
     for assignment in o['course'].assignments.filter(
-        is_handed_out=True, is_graded=True):
+            is_handed_out=True, is_graded=True
+    ):
         grades = {}
-        data = { 'title': assignment.title }
+        data = {'title': assignment.title}
         for submission in assignment.submissions.all():
             if submission.submitter.username in students:
                 grades[submission.submitter.username] = submission.get_grade()
@@ -208,4 +225,3 @@ def grades(request, slug, year, semester):
         o['assignments'].append(data)
     return render_to_response('grades.html', o,
                               context_instance=RequestContext(request))
-
