@@ -8,3 +8,4 @@ pip-tools==0.3.5
 pytz==2014.10
 smartypants==1.8.6
 wsgiref==0.1.2
+python-magic==0.4.13

@@ -14,14 +14,14 @@
 <li>{{ file }}</li>
 {% endfor %}
 </ul>
-<p>Uploading a new zip archive will overwrite these files.</p>
-<p><a href="{{ zipfile_url }}">Download files.</a></p>
+<p>Uploading a new PDF or zip archive will overwrite these files.</p>
+<p><a href="{{ upload_url }}">Download files.</a></p>
 </div>
 {% else %}
 <p>You haven't uploaded any files yet.</p>
 {% endif %}
-<p>{{ form.zipfile.help_text }}</p>
-<p>{{ form.zipfile }}</p>
+<p>{{ form.upload.help_text }}</p>
+<p>{{ form.upload }}</p>
 <button type="submit">Submit</button>
 </form>
 {% endblock %}

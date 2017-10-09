@@ -5,10 +5,12 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.files.uploadedfile import SimpleUploadedFile
 from zipfile import ZipFile, BadZipfile
 from StringIO import StringIO
 import datetime
 import csv
+import magic
 
 
 def index(request):
@@ -80,41 +82,71 @@ def assignments(request, slug, year, semester):
 
 
 class SubmissionForm(forms.Form):
-    zipfile = forms.FileField(
-        help_text='Please upload a single zip archive'
+    upload = forms.FileField(
+        help_text='Please upload a either a PDF, or a single zip archive'
         + ' containing all the required files for this assignment.')
+
+
+def handleZipUpload(request, assignment, zipfile):
+    submission = None
+    try:
+        submission, new = assignment.submissions.get_or_create(
+            submitter=request.user)
+        if not new:
+            submission.zipfile.delete(save=False)
+        submission.zipfile = zipfile
+        submission.save()
+        messages.success(
+            request, 'Your submission was successfully uploaded.')
+    except BadZipfile:
+        messages.error(
+            request, 'The file %s is not a valid zip archive.'
+            % zipfile.name)
+    return submission
+
+
+def handlePDFUpload(request, assignment, pdf):
+    buffer = StringIO()
+    with ZipFile(buffer, mode='w') as zip:
+        zip.writestr(pdf.name, pdf.read())
+    buffer.seek(0)
+    return handleZipUpload(request, assignment, SimpleUploadedFile(
+        pdf.name, buffer.read(), content_type='application/zip'))
 
 
 @login_required
 def submit_assignment(request, assignment_id):
     o = {}
+
     o['assignment'] = get_object_or_404(Assignment, id=assignment_id)
     if not (o['assignment'].is_handed_out and
             o['assignment'].is_submitted_online):
         raise Http404
+
     o['course'] = o['assignment'].course
     if not o['course'].is_authorized(request.user):
         return HttpResponseForbidden()
+
     submission = None
+
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES)
         if form.is_valid():
-            zipfile = request.FILES['zipfile']
-            try:
-                ZipFile(zipfile)
-                submission, new = o['assignment'].submissions.get_or_create(
-                    submitter=request.user)
-                if not new:
-                    submission.zipfile.delete(save=False)
-                submission.zipfile = zipfile
-                submission.save()
-                messages.success(
-                    request, 'Your zip archive was successfully uploaded.')
-            except BadZipfile:
+            upload = request.FILES['upload']
+            mimetype = magic.from_buffer(upload.read(1024), mime=True)
+            print(mimetype)
+            upload.seek(0)  # since we read 1K
+            if mimetype == 'application/zip':
+                submission = handleZipUpload(request, o['assignment'], upload)
+            elif mimetype == 'application/pdf':
+                submission = handlePDFUpload(request, o['assignment'], upload)
+            else:
                 messages.error(
-                    request, 'The file %s is not a valid zip archive.'
-                    % zipfile.name)
+                    request, 'The file %s is not a PDF or zip archive.'
+                    % upload.name)
+
     else:
+        form = SubmissionForm()
         submitter = request.user.username
         if request.user.is_superuser and 'username' in request.GET:
             submitter = request.GET['username']
@@ -123,13 +155,15 @@ def submit_assignment(request, assignment_id):
                 submitter__username=submitter)
         except Submission.DoesNotExist:
             pass
-        form = SubmissionForm()
+
     if submission:
         try:
-            o['files'] = ZipFile(submission.zipfile).namelist()
+            o['files'] = [f for f in ZipFile(submission.zipfile).namelist()
+                          if not f.startswith('__MACOSX/')]
             o['zipfile_url'] = submission.zipfile.url
         except:
             pass
+
     o['form'] = form
     return render_to_response('submit_assignment.html', o,
                               context_instance=RequestContext(request))
