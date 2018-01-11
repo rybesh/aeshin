@@ -22,7 +22,7 @@ class TableReader(HTMLParser):
         self.rows = []
         self.keyindex = 0
         for line in f:
-            self.feed(line.strip())
+            self.feed(line.decode('utf8').strip())
         return self.rows
     def handle_starttag(self, tag, attrs):
         self.tag = tag
