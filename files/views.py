@@ -1,7 +1,8 @@
-from models import Download
+from .models import Download
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
+
 
 @login_required
 def sendfile(request, path):
@@ -14,7 +15,7 @@ def sendfile(request, path):
     elif path.endswith('.doc'):
         response = HttpResponse(content_type='application/msword')
     elif path.endswith('.docx'):
-        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')  # noqa
     elif path.endswith('.epub'):
         response = HttpResponse(content_type='application/epub+zip')
     else:
@@ -22,4 +23,3 @@ def sendfile(request, path):
     Download.objects.create(downloader=request.user, path=path)
     response['X-Accel-Redirect'] = '/%s%s' % (settings.MEDIA_DIR, path)
     return response
-

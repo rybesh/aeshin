@@ -4,15 +4,17 @@ from django.db import transaction
 from courses.models import Meeting, ReadingAssignment
 from utils import MyBaseCommand
 
+
 def push_from_weekend(date, days):
-    if date.weekday() > 3: # Friday or weekend
-        if days == 'MW': 
+    if date.weekday() > 3:  # Friday or weekend
+        if days == 'MW':
             nextday = 7
         else:    # TTH
-            nextday = 8 
+            nextday = 8
         return date + timedelta(days=(nextday-date.weekday()))
     return date
-        
+
+
 class Command(MyBaseCommand):
     help = 'Copies all meetings from an old course to a new course.'
 
@@ -26,7 +28,7 @@ class Command(MyBaseCommand):
         start_date = self.input_date('Start date of new course')
         delta = start_date - old_meetings[0].date
         self.stdout.write('What days does the new course meet?\n')
-        days = self.input_choices(['MW','TTH'])
+        days = self.input_choices(['MW', 'TTH'])
         pre_m = None
         for old_m in old_meetings:
             new_m = Meeting()
@@ -39,7 +41,7 @@ class Command(MyBaseCommand):
             new_m.description = old_m.description
             new_m.save()
             for ra in ReadingAssignment.objects.filter(meeting=old_m):
-                ra.pk = None # create a new ReadingAssignment with same props
+                ra.pk = None  # create a new ReadingAssignment with same props
                 ra.meeting = new_m
                 ra.save()
             self.stdout.write('%s\n' % new_m)

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-{% load staticfiles %}
+{% load static %}
   <head>
     <title>{{ course }}{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static "courses/base.css" %}" type="text/css"/>
@@ -30,7 +30,7 @@
           {% if user.is_authenticated %}
           <li><a href="{{ course_url }}grades/">Grades.</a></li>
           {% else %}
-          <li><a href="{% url 'django.contrib.auth.views.login' %}?next={{ request.path }}">Log in.</a></li>
+          <li><a href="{% url 'login' %}?next={{ request.path }}">Log in.</a></li>
           {% endif %}
           {% endwith %}
         </ul>

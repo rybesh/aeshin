@@ -4,12 +4,12 @@
 
 {% block description %}Publications Ryan Shaw has written or contributed to.{% endblock %}
 
-{% load staticfiles %}
+{% load static %}
 {% load typogrify %}
 
 {% block style %}
 <style>
-  .bibitem { padding-left: 2em; text-indent: -2em; }
+  .item { padding-left: 2em; text-indent: -2em; }
   .title { font-weight: bold; }
 </style>
 {% endblock %}
@@ -46,9 +46,9 @@
       </dd>
     </dl>
   </form>
-  <div id="bibitems">
+  <div id="items">
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes"
      data-type="conference-paper"
      >
@@ -57,7 +57,7 @@
     Forthcoming in <em>The 18th ACM Symposium on Document Engineering</em>, Halifax, Nova Scotia, Canada, 2018.
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes"
      data-type="other"
      >
@@ -66,7 +66,7 @@
     Forthcoming in <em>Digital Humanities Conference 2018</em>, Mexico City, 2018.
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes"
      data-type="book-chapter"
      >
@@ -75,7 +75,7 @@
     Forthcoming in <em>Digital Epigraphy</em></a>. De Gruyter Open, 2018.
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="journal-article"
      >
@@ -84,7 +84,7 @@
     <em>Bulletin of the Institute of Classical Studies</em> 59:2, 2016.&nbsp;<a href="https://doi.org/10.1111/j.2041-5370.2016.12037.x">doi:10.1111/j.2041-5370.2016.12037.x</a>
  </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="book-chapter"
      >
@@ -94,7 +94,7 @@
     <a href="http://www.worldcat.org/oclc/933437838"><em>Placing Names: Enriching and Integrating Gazetteers</em></a>. Indiana University Press, Bloomington, Indiana, 2016.&nbsp;<a href="{% static "pubs/Shaw - 2016 - Gazetteers Enriched A Conceptual Basis for Linking Gazetteers with Other Kinds of Information.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="journal-article"
      >
@@ -103,7 +103,7 @@
     <em>PeerJ Computer Science</em> 2:e44, 2016.&nbsp;<a href="http://doi.org/10.7717/peerj-cs.44">doi:10.7717/peerj-cs.44</a>&nbsp;|&nbsp;<a href="{% static "pubs/Golden, Shaw - 2015 - Nanopublication beyond the Sciences.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="journal-article"
      >
@@ -113,7 +113,7 @@
     <em>International Journal on Digital Libraries</em>, 17(1), 2016.&nbsp;<a href="http://doi.org/10.1007/s00799-015-0164-0">doi:10.1007/s00799-015-0164-0</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw et al. - 2015 - A sharing-oriented design strategy for networked knowledge organization systems.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -123,7 +123,7 @@
       Wide Web</em>, page 1013&ndash;1018. 2015.&nbsp;<a href="http://dl.acm.org/citation.cfm?id=2742021">http://dl.acm.org/citation.cfm?id=2742021</a>&nbsp;|&nbsp;<a href="{% static "pubs/Golden & Shaw - 2015 - Period assertion as nanopublication.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="journal-article"
      >
@@ -132,7 +132,7 @@
     <em>Big Data &amp; Society</em>, 2(2), 2015.&nbsp;<a href="http://doi.org/10.1177/2053951715608877">doi:10.1177/2053951715608877</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2015 - Big Data and reality.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -142,7 +142,7 @@
     326&ndash;329, Poznan, Poland, 2015. Springer.&nbsp;<a href="http://doi.org/10.1007/978-3-319-24592-8_27">doi:10.1007/978-3-319-24592-8_27</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2015 - Segmenting Oral History Transcripts.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="no"
      data-type="other"
      >
@@ -151,7 +151,7 @@
     Technical report, 2015.&nbsp;<a href="http://arxiv.org/abs/1509.08842">arXiv</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="book-chapter"
      >
@@ -161,7 +161,7 @@
     <em>Linked Data and User Interaction</em>. De Gruyter Saur, Berlin, 2015.&nbsp;<a href="{% static "pubs/Shaw, Golden, Buckland - 2015 - Using Linked Library Data in Working Research Notes.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -171,7 +171,7 @@
       Technology</em>, 51(1):1--4, 2014.&nbsp;<a href="http://dx.doi.org/10.1002/meet.2014.14505101146">doi:10.1002/meet.2014.14505101146</a>&nbsp;|&nbsp;<a href="{% static "pubs/Golden, Shaw, & Buckland - 2014 - Decentralized Coordination of Controlled Vocabularies.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -181,7 +181,7 @@
       Technology</em>, 50(1):1--4, 2013.&nbsp;<a href="http://dx.doi.org/10.1002/meet.14505001107">doi:10.1002/meet.14505001107</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw & Golden - 2013 - Taking Entity Reconciliation Offline.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -191,7 +191,7 @@
       Actes du colloque "Document num&eacute;rique et soci&eacute;t&eacute;"</em>, Zagreb, 2013.&nbsp;<a href="{% static "pubs/Buckland, Golden, Pateman, & Shaw - 2013 - Editors' Notes An Example of Changed Mediation.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -202,7 +202,7 @@
     Association for Computational Linguistics.&nbsp;<a href="http://aclweb.org/anthology/W/W13/W13-1205.pdf">http://aclweb.org/anthology/W/W13/W13-1205.pdf</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2013 - A Semantic Tool for Historical Events.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="journal-article"
      >
@@ -212,7 +212,7 @@
       Technology</em>, 64(6):1092&ndash;1103, 2013.&nbsp;<a href="http://doi.org/10.1002/asi.22843">doi:10.1002/asi.22843</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2013 - Information organization and the philosophy of history.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes"
      data-type="other"
      >
@@ -222,7 +222,7 @@
     ADHO.&nbsp;<a href="http://dh2013.unl.edu/abstracts/ab-297.html">http://dh2013.unl.edu/abstracts/ab-297.html</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="book-chapter"
      >
@@ -232,7 +232,7 @@
     chapter&nbsp;8, page 283&ndash;324. MIT Press, Cambridge, Massachusetts, 2013.&nbsp;<a href="{% static "pubs/Shaw, Maloney - 2013 - The forms of resource descriptions.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -241,7 +241,7 @@
     In <em>Proc. of the LREC 2012 Workshop on Computational Models of Narrative</em>, Istanbul, 2012.&nbsp;<a href="http://narrative.csail.mit.edu/cmn12/">http://narrative.csail.mit.edu/cmn12/</a>&nbsp;|&nbsp;<a href="{% static "pubs/Chen, Yoon, & Shaw - 2012 - Visually Representing Historical Context in Oral Testimonies.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="other"
      >
@@ -250,7 +250,7 @@
     <em>Journal of Digital Humanities</em>, 1(1), 2012.&nbsp;<a href="http://journalofdigitalhumanities.org/1-1/words-and-code-by-tom-scheinfeld-and-ryan-shaw/">http://journalofdigitalhumanities.org/1-1/words-and-code-by-tom-scheinfeld-and-ryan-shaw/</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -260,7 +260,7 @@
       and Technology</em>, volume&nbsp;49, page 1&ndash;4, Baltimore, 2012.&nbsp;<a href="http://doi.org/10.1002/meet.14504901245">doi:10.1002/meet.14504901245</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Golden, Buckland - 2012 - Integrating collaborative bibliography and research.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -271,7 +271,7 @@
     for Information Science and Technology.&nbsp;<a href="http://doi.org/10.1002/meet.2011.14504801296">doi:10.1002/meet.2011.14504801296</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Buckland - 2011 - Editorial control over linked data.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -281,7 +281,7 @@
       and Technology</em>, volume&nbsp;47, page 1&ndash;2, 2010.&nbsp;<a href="http://doi.org/10.1002/meet.14504701427">doi:10.1002/meet.14504701427</a>&nbsp;|&nbsp;<a href="{% static "pubs/Buckland, Shaw, Melia - 2010 - Rapid access to reference resources.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="no"
      data-type="other"
      >
@@ -291,7 +291,7 @@
       Technology</em>, 36(3):2&ndash;4, 2010.&nbsp;<a href="http://doi.org/10.1002/bult.2010.1720360301">doi:10.1002/bult.2010.1720360301</a>&nbsp;|&nbsp;<a href="{% static "pubs/Hjorland, Shaw - 2010 - Concepts Classes and colligation.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="journal-article"
      >
@@ -301,8 +301,8 @@
       Technology</em>, 36(2):13&ndash;18, 2010.&nbsp;<a href="http://doi.org/10.1002/bult.2010.1720360207">doi:10.1002/bult.2010.1720360207</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2010 - From facts to judgments Theorizing history for information science.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
-     data-peer-reviewed="no" 
+  <p class="item"
+     data-peer-reviewed="no"
      data-type="other"
      >
     Ryan Shaw.
@@ -310,7 +310,7 @@
     Ph.D. thesis, University of California, Berkeley, 2010.&nbsp;<a href="http://gradworks.umi.com/34/44/3444385.html">http://gradworks.umi.com/34/44/3444385.html</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2010 - Events and Periods as Concepts for Organizing Historical Knowledge.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -321,7 +321,7 @@
       Connaissances (IC 2010)</em>, N&icirc;mes, 2010.&nbsp;<a href="http://hal.archives-ouvertes.fr/hal-00487630/">http://hal.archives-ouvertes.fr/hal-00487630/</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -331,7 +331,7 @@
       and Technology</em>, volume&nbsp;46, page 1&ndash;6, 2009.&nbsp;<a href="http://doi.org/10.1002/meet.2009.1450460344">doi:10.1002/meet.2009.1450460344</a>&nbsp;|&nbsp;<a href="{% static "pubs/Buckland, Larson, Shaw - 2009 - Finding explanations online Easy queries AND trustworthy answers.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -341,7 +341,7 @@
       le document electronique</em>, page 15&ndash;28, Montreal, 2009. Europia.&nbsp;<a href="{% static "pubs/Buckland, Shaw, Melia - 2009 - Contexte et connexions L'Irlande et le patrimoine irlandais.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -352,7 +352,7 @@
     Press.&nbsp;<a href="http://doi.org/10.1145/1555400.1555519">doi:10.1145/1555400.1555519</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -362,7 +362,7 @@
       Library Content with Computational Tools and Services</em>, Austin, Texas, 2009.&nbsp;<a href="http://nema.lis.uiuc.edu/drupal/pdf/larson_abstract.pdf">http://nema.lis.uiuc.edu/drupal/pdf/larson_abstract.pdf</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Buckland, Larson - 2009 - Integrating Tools for Synthesis into Digital Libraries.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -373,7 +373,7 @@
       Computer Science</em>, page 153&ndash;167, Berlin, 2009. Springer.&nbsp;<a href="http://doi.org/10.1007/978-3-642-10871-6_11">doi:10.1007/978-3-642-10871-6_11</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Troncy, Hardman - 2009 - LODE Linking Open Descriptions of Events.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -384,7 +384,7 @@
     International Society for Knowledge Organization.&nbsp;<a href="{% static "pubs/Buckland, Shaw - 2008 - 4W Vocabulary Mapping Across Diverse Reference Genres.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -394,7 +394,7 @@
       to Cultural Heritage (IACH 2008)</em>, Aarhus, 2008.&nbsp;<a href="{% static "pubs/Gey et al. - 2008 - Marking Up Cultural Materials for Time and Geography.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -404,7 +404,7 @@
       and Technology</em>, volume&nbsp;45, page 1&ndash;3, 2008.&nbsp;<a href="http://doi.org/10.1002/meet.2008.14504503146">doi:10.1002/meet.2008.14504503146</a>
   </p>
   
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -415,7 +415,7 @@
     New York, New York, USA, 2008. ACM Press.&nbsp;<a href="http://doi.org/10.1145/1463434.1463535">doi:10.1145/1463434.1463535</a>&nbsp;|&nbsp;<a href="{% static "pubs/Gey et al. - 2008 - Biography as events in time and space.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -426,7 +426,7 @@
     Press.&nbsp;<a href="http://doi.org/10.1145/1458550.1458567">doi:10.1145/1458550.1458567</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2008 - Event gazetteers for navigating humanities resources.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -436,7 +436,7 @@
       Core and Metadata Applications</em>, Berlin, 2008.&nbsp;<a href="http://dcpapers.dublincore.org/pubs/article/view/942">http://dcpapers.dublincore.org/pubs/article/view/942</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -449,7 +449,7 @@
     Berlin Heidelberg.&nbsp;<a href="http://doi.org/10.1007/978-3-540-87599-4_50">doi:10.1007/978-3-540-87599-4_50</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Larson - 2008 - Event Representation in Temporal and Geographic Context.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -459,7 +459,7 @@
     In <em>International Conference on Digital Libraries</em>, 2008.&nbsp;<a href="http://doi.org/10.1145/1378889.1378981">doi:10.1145/1378889.1378981</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Larson - 2008 - Bringing lives to light lives and event representation in temporal and geographic context.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -470,7 +470,7 @@
     Press.&nbsp;<a href="http://doi.org/10.1145/1254960.1255012">doi:10.1145/1254960.1255012</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shamma, Shaw - 2007 - Supporting creative acts beyond dissemination.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -481,7 +481,7 @@
     USA, 2007. ACM Press.&nbsp;<a href="http://doi.org/10.1145/1290082.1290120">doi:10.1145/1290082.1290120</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shamma et al. - 2007 - Watch what I watch using community activity to understand content.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="no" 
      data-type="other"
      >
@@ -491,7 +491,7 @@
     <em>Business History</em>, 49(5):758&ndash;759, 2007.&nbsp;<a href="http://doi.org/10.1080/00076790701428778">doi:10.1080/00076790701428778</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2007 - Review of From Counterculture to Cyberculture Stewart Brand, the Whole Earth Network, and the Rise of Digital Utopianism.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="no" 
      data-type="other"
      >
@@ -500,7 +500,7 @@
     U.S. patent application 11/687,940, filed March 19, 2007.&nbsp;<a href="http://www.google.com/patents/US20080235589">http://www.google.com/patents/US20080235589</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="no" 
      data-type="other"
      >
@@ -509,7 +509,7 @@
     U.S. patent application 11/763,383, filed June 14, 2007.&nbsp;<a href="http://www.google.com/patents/US20080313227">http://www.google.com/patents/US20080313227</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="no" 
      data-type="other"
      >
@@ -518,7 +518,7 @@
     U.S. patent application 11/763,388, filed June 14, 2007.&nbsp;<a href="http://www.google.com/patents/US20080313541">http://www.google.com/patents/US20080313541</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="no" 
      data-type="other"
      >
@@ -527,7 +527,7 @@
     Technical report, School of Information, UC Berkeley, 2007.&nbsp;<a href="http://escholarship.org/uc/item/42q341g6">http://escholarship.org/uc/item/42q341g6</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Wilde - 2007 - Web-Style Multimedia Annotations.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -539,7 +539,7 @@
     Press.&nbsp;<a href="http://doi.org/10.1145/1180639.1180814">doi:10.1145/1180639.1180814</a>&nbsp;|&nbsp;<a href="{% static "pubs/Schmitz et al. - 2006 - International Remix Video Editing for the Web.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -549,7 +549,7 @@
       Century</em>, Berkeley, 2006.&nbsp;<a href="http://www.law.berkeley.edu/files/bclt_unblinking_shaw.pdf">http://www.law.berkeley.edu/files/bclt_unblinking_shaw.pdf</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw - 2006 - Recognition Markets and Visual Privacy.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -560,7 +560,7 @@
     ACM Press.&nbsp;<a href="http://doi.org/10.1145/1178745.1178761">doi:10.1145/1178745.1178761</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Schmitz - 2006 - Community annotation and remix a research platform and pilot deployment.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -571,7 +571,7 @@
     Press.&nbsp;<a href="http://doi.org/10.1145/1101149.1101286">doi:10.1145/1101149.1101286</a>&nbsp;|&nbsp;<a href="{% static "pubs/Niemeyer et al. - 2005 - Organum individual presence through collaborative play.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -581,7 +581,7 @@
       for Community Appropriation</em>, Portland, Oregon, 2005.&nbsp;<a href="{% static "pubs/Shaw - 2005 - Designing for Community Appropriation of Media.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="conference-paper"
      >
@@ -591,7 +591,7 @@
       on Multimedia</em>, 2005.&nbsp;<a href="http://doi.org/10.1145/1101149.1101244">doi:10.1145/1101149.1101244</a>&nbsp;|&nbsp;<a href="{% static "pubs/Shaw, Davis - 2005 - Toward emergent representations for video.pdf" %}">pdf</a>
   </p>
 
-  <p class="bibitem"
+  <p class="item"
      data-peer-reviewed="yes" 
      data-type="workshop-paper"
      >
@@ -604,6 +604,6 @@
   </p>
   </div>
 </article>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="{% static "facets.js" %}"></script>
 {% endblock %}

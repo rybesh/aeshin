@@ -1,5 +1,5 @@
 <!doctype html>
-{% load staticfiles %}
+{% load static %}
 <head>
   <meta charset="utf-8"/>
   <title>{% block title %}{% endblock %}</title>
@@ -17,6 +17,7 @@
         <li><h1>{% navlink request "/" "Ryan Shaw" %}</h1></li>
         <li>{% navlink request "/teaching/" "teaching" %}</li>
         <li>{% navlink request "/writing/" "writing" %}</li>
+        <li>{% navlink request "/advising/" "advising" %}</li>
         <li>{% navlink request "/static/Ryan-Shaw-CV.pdf" "cv" %}
       </ul>
     </nav>

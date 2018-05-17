@@ -1,26 +1,35 @@
-from django.conf.urls import patterns, include, url
-import views
+from django.urls import include, re_path
+from . import views
 
-course_patterns = patterns('',
-    url(r'^$',
+course_patterns = [
+    re_path(
+        r'^$',
         views.info, name='course_info_view'),
-    url(r'^schedule/$',
+    re_path(
+        r'^schedule/$',
         views.schedule, name='course_schedule_view'),
-    url(r'^guidelines/$',
+    re_path(
+        r'^guidelines/$',
         views.guidelines, name='course_guidelines_view'),
-    url(r'^thanks/$',
+    re_path(
+        r'^thanks/$',
         views.thanks, name='course_thanks_view'),
-    url(r'^assignments/$',
+    re_path(
+        r'^assignments/$',
         views.assignments, name='course_assignments_view'),
-    url(r'^grades/$',
+    re_path(
+        r'^grades/$',
         views.grades, name='course_grades_view'),
-)
-urlpatterns = patterns('',
-    url(r'^$',
-        views.index, name='courses_index_view'),
-    (r'^(?P<slug>[a-z]+(?:-\d+)+)/(?P<year>\d{4})/(?P<semester>sp|su|fa)/',
-        include(course_patterns)),
-    url(r'^assignment/(?P<assignment_id>\d+)/submit/$',
-        views.submit_assignment, name='course_submit_assignment_view'),
-)
+]
 
+urlpatterns = [
+    re_path(
+        r'^$',
+        views.index, name='courses_index_view'),
+    re_path(
+        r'^(?P<slug>[a-z]+(?:-\d+)+)/(?P<year>\d{4})/(?P<semester>sp|su|fa)/',
+        include(course_patterns)),
+    re_path(
+        r'^assignment/(?P<assignment_id>\d+)/submit/$',
+        views.submit_assignment, name='course_submit_assignment_view'),
+]

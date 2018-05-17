@@ -3,16 +3,17 @@ from django.core.management.base import CommandError
 from django.db import transaction
 from django.db.utils import IntegrityError
 from django.utils.crypto import get_random_string
-from courses.models import Course
 from utils import MyBaseCommand
 from HTMLParser import HTMLParser
 import csv
+
 
 def parse_csv(filename):
     for row in csv.DictReader(open(filename, 'rb')):
         last_name, first_name = row['Name'].split(',')
         email = row['Email']
-        yield (lastname, first_name, email)
+        yield (last_name, first_name, email)
+
 
 class TableReader(HTMLParser):
     def read(self, f):
@@ -24,12 +25,14 @@ class TableReader(HTMLParser):
         for line in f:
             self.feed(line.decode('utf8').strip())
         return self.rows
+
     def handle_starttag(self, tag, attrs):
         self.tag = tag
         if tag == 'tr':
             if len(self.keys) > 0:
                 self.rows.append({})
                 self.keyindex = 0
+
     def handle_endtag(self, tag):
         if self.tag == 'th':
             self.keys.append(self.data)
@@ -39,17 +42,20 @@ class TableReader(HTMLParser):
             self.keyindex += 1
         self.tag = None
         self.data = ''
+
     def handle_data(self, data):
         self.data += data
+
 
 class Command(MyBaseCommand):
     args = '<student_info_file> <emails_file>'
     help = 'Creates student accounts and adds them to a course.'
+
     @transaction.atomic
     def handle(self, *args, **options):
         if not len(args) == 2:
             raise CommandError(
-                'You must provide the names of files with student info and emails.')
+                'You must provide the names of files with student info and emails.') # noqa
         if args[0].endswith('.csv'):
             reader = csv.DictReader
         elif args[0].endswith('.xls'):
@@ -65,23 +71,23 @@ class Command(MyBaseCommand):
         new_count = existing_count = 0
         for i, row in enumerate(reader(open(args[0], 'rb'))):
             try:
-                last_name, first_name = [ 
-                    x.strip() for x in row['Name'].split(',') ]
+                last_name, first_name = [
+                    x.strip() for x in row['Name'].split(',')]
                 email = emails[i]
                 username = email.split('@')[0]
                 try:
                     student, created = User.objects.get_or_create(
                         first_name=first_name, last_name=last_name,
-                        defaults={ 'username': username })
+                        defaults={'username': username})
                     if created:
                         self.stdout.write(
-                            'New student: %s %s (%s)\n' 
+                            'New student: %s %s (%s)\n'
                             % (first_name, last_name, email))
                         student.set_password(get_random_string())
                         new_count += 1
                     else:
                         self.stdout.write(
-                            'Old student: %s %s (%s)\n' 
+                            'Old student: %s %s (%s)\n'
                             % (first_name, last_name, email))
                         existing_count += 1
                     student.email = email
@@ -95,13 +101,17 @@ class Command(MyBaseCommand):
         if not len(students) == len(emails):
             raise CommandError(
                 'Number of emails does not match number of students.')
-        self.stdout.write('%s new students and %s existing students.\n' % (new_count, existing_count))
+        self.stdout.write(
+            '%s new students and %s existing students.\n'
+            % (new_count, existing_count))
         self.stdout.write('To which course will these students be added?\n')
         course = self.input_course()
         added_count = existing_count = 0
         for student in course.students.all():
-            if not student in students:
-                self.stdout.write('%s appears to have dropped the course.\n' % student.email)
+            if student not in students:
+                self.stdout.write(
+                    '%s appears to have dropped the course.\n'
+                    % student.email)
         for student in students:
             if course.has_student(student):
                 existing_count += 1
@@ -109,13 +119,6 @@ class Command(MyBaseCommand):
                 course.students.add(student)
                 self.stdout.write('%s\n' % student.email)
                 added_count += 1
-        self.stdout.write('%s students added (%s already in that course).\n' % (added_count, existing_count))
-        
-        
-            
-            
-            
-            
-            
-        
-        
+        self.stdout.write(
+            '%s students added (%s already in that course).\n'
+            % (added_count, existing_count))

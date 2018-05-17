@@ -1,6 +1,6 @@
 import os
 
-from secrets import * # noqa
+from .secrets import * # noqa
 
 WWW_ROOT = '/var/www/aeshin'
 
@@ -15,12 +15,26 @@ DATABASES = {
 
 # debugging -------------------------------------------------------------------
 
-DEBUG = False
-TEMPLATE_DEBUG = False
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 # logging ---------------------------------------------------------------------
 
-LOGGING_CONFIG = None
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
 
 # email -----------------------------------------------------------------------
 
@@ -51,16 +65,14 @@ USE_TZ = True
 
 # http ------------------------------------------------------------------------
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'aeshin.middleware.XUACompatibleMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-)
+]
 
 WSGI_APPLICATION = 'aeshin.wsgi.application'
 
@@ -74,7 +86,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django.contrib.flatpages',
+    'aeshin',
     'shared',
     'courses',
     'files',
@@ -85,23 +97,29 @@ INSTALLED_APPS = (
 ALLOWED_HOSTS = [
     '.aeshin.org',
     '.aeshin.org.',
+    '127.0.0.1',
 ]
 
 # templates -------------------------------------------------------------------
 
-TEMPLATE_DIRS = (
-    os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates')),
-)
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.request',
-)
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [
+        os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates')),
+    ],
+    'APP_DIRS': True,
+    'OPTIONS': {
+        'context_processors': [
+            'django.contrib.auth.context_processors.auth',
+            'django.template.context_processors.debug',
+            'django.template.context_processors.media',
+            'django.template.context_processors.static',
+            'django.template.context_processors.tz',
+            'django.contrib.messages.context_processors.messages',
+            'django.template.context_processors.request',
+        ]
+    }
+}]
 
 # urls ------------------------------------------------------------------------
 
@@ -128,3 +146,7 @@ STATICFILES_DIRS = (
 # shared ----------------------------------------------------------------------
 
 ZOTERO_GROUP_ID = '51755'
+
+# tests -----------------------------------------------------------------------
+
+TEST_RUNNER = None

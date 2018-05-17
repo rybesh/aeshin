@@ -1,0 +1,94 @@
+{% extends "boilerplate.html" %}
+
+{% block title %}Ryan Shaw's doctoral advisees{% endblock %}
+
+{% block description %}SILS PhDs on whose committees Ryan Shaw served.{% endblock %}
+
+{% load static %}
+{% load typogrify %}
+
+{% block style %}
+<style>
+  .item { text-indent: 0; margin-top: 0.2em; }
+  .item { text-decoration: none }
+  .doctor { font-weight: bold }
+  .doctor a { text-decoration: none }
+  h2 { color: #073642 }
+  p + h2 { margin-top: 1em }
+  .note { border-top: 1px solid #eee8d5; padding-top: .5em; margin-top: 2em}
+</style>
+{% endblock %}
+
+{% block main %}
+<article id="main">
+  <header>
+    <h1>PhDs advised</h1>
+  </header>
+  <form id="facets">
+    <dl>
+      <dt> Chaired dissertation committee? </dt>
+      <dd id="chaired">
+        <label> <input type="checkbox" checked
+                       name="yes"> yes </label>
+        <label> <input type="checkbox" checked
+                       name="no"> no </label>
+      </dd>
+    </dl>
+  </form>
+  <div id="items">
+    <h2>2018</h2>
+    <p class="item"
+       data-chaired="yes"
+       >
+      <span class="doctor">Dr. Samantha Kaplan.</span>
+      <span class="title">
+        The everyday life and information practices of a natural immunity advocate.
+      </span>
+    </p>
+    <h2>2016</h2>
+    <p class="item"
+       data-chaired="no"
+       >
+      <span class="doctor">
+        <a href="https://makatib.org">
+          Dr. Sumayya Ahmed.
+        </a>
+      </span>
+      <span class="title">
+        “We call on citizens to be aware of the value of what is in their homes:” A case study of the Hassan II Prize for manuscripts and archival documents.
+      </span>
+      <a href="https://cdr.lib.unc.edu/record/uuid:efb3ef25-48ac-4338-950f-75ba40331248">pdf</a>
+    </p>
+    <p class="item"
+       data-chaired="no"
+       >
+      <span class="doctor">
+        <a href="https://softarchitectures.wordpress.com">
+          Dr. Alex Chassanoff.
+        </a>
+      </span>
+      <span class="title">
+        Historians' experiences using digitized archival photographs as evidence.
+      </span>
+      <a href="https://cdr.lib.unc.edu/record/uuid:4d4442f7-be6b-404b-a1b0-1e4b97255437">pdf</a>
+    </p>
+    <h2>2015</h2>
+    <p class="item"
+       data-chaired="no"
+       >
+      <span class="doctor">
+        <a href="https://alexhpoole.wordpress.com">
+          Dr. Alex Poole.
+        </a>
+      </span>
+      <span class="title">
+        Forging our cultural commonwealth: The importance of digital curation in the digital humanities.
+      </span>
+      <a href="https://cdr.lib.unc.edu/record/uuid:229fc048-68ea-41ad-b281-ab8f67cecdca">pdf</a>
+    </p>
+  </div>
+  <p class="note">For a full list of Master's papers and honors theses advised, see my <a href="{% static "Ryan-Shaw-CV.pdf" %}">CV</a>.
+</article>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="{% static "facets.js" %}"></script>
+{% endblock %}

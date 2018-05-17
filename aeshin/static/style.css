@@ -1,6 +1,6 @@
 /* reset */
 
-html, body, div, span, h1, h2, h3, p, blockquote, 
+html, body, div, span, h1, h2, h3, p, blockquote,
 cite, em, img, q, strong, dl, dt, dd, ol, ul, li, time, mark,
 article, footer, header, hgroup, menu, nav, section {
     margin: 0;
@@ -17,15 +17,15 @@ article, dl, footer, header, hgroup, menu, nav, section {
 
 blockquote, q { quotes: none; }
 blockquote:before, blockquote:after,
-q:before, q:after { 
-    content: ''; 
-    content: none; 
+q:before, q:after {
+    content: '';
+    content: none;
 }
 
-body { 
-    font: 13px/1.231 sans-serif; 
-    *font-size:small; 
-} 
+body {
+    font: 13px/1.231 sans-serif;
+    *font-size:small;
+}
 
 /* base */
 
@@ -35,21 +35,21 @@ a:hover, a:active, a.active { outline: none; }
 
 ol { list-style-type: decimal; }
 
-nav ul, nav li { 
-    margin: 0; 
-    list-style:none; 
-    list-style-image: none; 
+nav ul, nav li {
+    margin: 0;
+    list-style:none;
+    list-style-image: none;
 }
 
-::-moz-selection { 
+::-moz-selection {
     background: #EF0081;
-    color: #fff; 
-    text-shadow: none; 
+    color: #fff;
+    text-shadow: none;
 }
-::selection { 
+::selection {
     background: #EF0081;
-    color: #fff; 
-    text-shadow: none; 
+    color: #fff;
+    text-shadow: none;
 }
 a:link { -webkit-tap-highlight-color: #EF0081; }
 
@@ -69,11 +69,11 @@ body {
 
 body > header {
     background-color: #93A1A1;
-    position: absolute; 
+    position: absolute;
     width: 100%;
 }
 
-nav li, nav h1 { 
+nav li, nav h1 {
     display: inline;
 }
 
@@ -84,9 +84,9 @@ nav a {
     padding: 4px 0px 4px 20px;
 }
 
-nav a:hover, nav a.active { 
+nav a:hover, nav a.active {
     color: #fdf6e3 !important;
-    background: transparent; 
+    background: transparent;
 }
 
 nav h1 a {
@@ -112,7 +112,7 @@ nav h1 a:hover, nav h1 a.active {
     max-width: 780px;
 }
 
-h1, h2 { 
+h1, h2 {
     color: #d33682;
 }
 
@@ -152,9 +152,9 @@ dl {
     max-width: 160px;
 }
 
-dd { 
+dd {
     line-height: 1.6;
-    padding-bottom: 10px; 
+    padding-bottom: 10px;
 }
 
 img.representative {
@@ -322,7 +322,7 @@ nav {
     font-family: MuseoSans500, Arial, Helvetica, sans-serif;
 }
 
-nav h1 { 
+nav h1 {
     font-size: 100%;
 }
 
@@ -330,10 +330,10 @@ h1 { font-size: 26px; }
 
 li h2 { font-size: 18px; }
 
-article h2, #notes h1, h3 { 
+article h2, #notes h1, h3 {
     font-family: MuseoSans500, Arial, Helvetica, sans-serif;
-    font-size: 14px; 
-    text-transform: uppercase; 
+    font-size: 14px;
+    text-transform: uppercase;
     letter-spacing: 0.1em;
 }
 
@@ -350,16 +350,16 @@ dt { font-weight: bold; }
 
 a.button {
     background-color: #d33682;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
-	border: 1px solid #d6d2d6;
-	display: inline-block;
-	color: #ffffff;
-	font-family: MuseoSans500, Arial, Helvetica, sans-serif;
-	font-size: 15px;
-	padding: 4px 14px;
-	text-decoration: none;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    border: 1px solid #d6d2d6;
+    display: inline-block;
+    color: #ffffff;
+    font-family: MuseoSans500, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 4px 14px;
+    text-decoration: none;
 }
 
 a.button:hover {
@@ -367,8 +367,8 @@ a.button:hover {
 }
 
 a.button:active {
-	position: relative;
-	top: 1px;
+    position: relative;
+    top: 1px;
 }
 
 #tweets {
@@ -379,7 +379,7 @@ a.button:active {
     padding-bottom: 40px;
     font-family: CharisSILRegular, 'Palatino Linotype', Palatino, 'URW Palladio L', serif !important;
     font-size: 16px !important;
-    line-height: 1.5;    
+    line-height: 1.5;
 }
 
 #twtr-widget-1 .twtr-user {
@@ -434,28 +434,28 @@ a.button:active {
 /* print */
 
 @media print {
-  * { 
-      background: transparent !important; 
-      color: black !important; 
-      text-shadow: none !important; 
+  * {
+      background: transparent !important;
+      color: black !important;
+      text-shadow: none !important;
       filter:none !important;
-      -ms-filter: none !important; 
+      -ms-filter: none !important;
   }
-  a, a:visited { 
-      color: #444 !important; 
-      text-decoration: underline; 
+  a, a:visited {
+      color: #444 !important;
+      text-decoration: underline;
   }
   a[href]:after { content: ' (' attr(href) ')'; }
   a[href^='javascript:']:after, a[href^='#']:after { content: ''; }
-  blockquote { 
-      border: 1px solid #999; 
-      page-break-inside: avoid; 
+  blockquote {
+      border: 1px solid #999;
+      page-break-inside: avoid;
   }
   img { page-break-inside: avoid; }
   @page { margin: 0.5cm; }
-  p, h2 { 
-      orphans: 3; 
-      widows: 3; 
+  p, h2 {
+      orphans: 3;
+      widows: 3;
   }
   h2 { page-break-after: avoid; }
 }

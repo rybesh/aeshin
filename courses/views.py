@@ -1,13 +1,12 @@
-from models import Course, Assignment, ReadingAssignment, Submission, User
+from .models import Course, Assignment, ReadingAssignment, Submission, User
 from django import forms
 from django.http import HttpResponse, HttpResponseForbidden, Http404
-from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import SimpleUploadedFile
 from zipfile import ZipFile, BadZipfile
-from StringIO import StringIO
+from io import StringIO
 import datetime
 import csv
 import magic
@@ -16,16 +15,14 @@ import magic
 def index(request):
     o = {}
     o['courses'] = Course.objects.order_by('title', '-year', 'semester')
-    return render_to_response('courses.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'courses.html', context=o)
 
 
 def info(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
-    return render_to_response('info.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'info.html', context=o)
 
 
 def schedule(request, slug, year, semester):
@@ -53,32 +50,28 @@ def schedule(request, slug, year, semester):
         if item.date >= today:
             item.next = True
     o['user_is_authorized'] = o['course'].is_authorized(request.user)
-    return render_to_response('schedule.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'schedule.html', context=o)
 
 
 def guidelines(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
-    return render_to_response('guidelines.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'guidelines.html', context=o)
 
 
 def thanks(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
-    return render_to_response('thanks.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'thanks.html', context=o)
 
 
 def assignments(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
-    return render_to_response('assignments.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'assignments.html', context=o)
 
 
 class SubmissionForm(forms.Form):
@@ -165,8 +158,7 @@ def submit_assignment(request, assignment_id):
             pass
 
     o['form'] = form
-    return render_to_response('submit_assignment.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'submit_assignment.html', context=o)
 
 
 def get_current_course(slug):
@@ -257,5 +249,4 @@ def grades(request, slug, year, semester):
             data['median'] = '%s / %s' % (
                 median(grades.values()), assignment.points)
         o['assignments'].append(data)
-    return render_to_response('grades.html', o,
-                              context_instance=RequestContext(request))
+    return render(request, 'grades.html', context=o)

@@ -9,11 +9,13 @@ from django.core.management.base import CommandError
 from courses.management.commands.utils import MyBaseCommand
 from courses.models import Submission
 
+
 def row_to_data(header, row):
-    email = row[header.index('Your email address')].lower()    
-    return { 'username': email.split('@')[0],
-             'grade': row[header.index('grade')],
-             'comments': row[header.index('comments')] }
+    email = row[header.index('Your email address')].lower()
+    return {'username': email.split('@')[0],
+            'grade': row[header.index('grade')],
+            'comments': row[header.index('comments')]}
+
 
 def create_submission(assignment, data):
     try:
@@ -24,26 +26,29 @@ def create_submission(assignment, data):
             grade=data['grade'],
             comments=data['comments'])
         submission.save()
-    except User.DoesNotExist: # pylint: disable=E1101
+    except User.DoesNotExist:  # pylint: disable=E1101
         raise CommandError('Cannot find user: %s ' % data['username'])
+
 
 def sheets_connect():
     client = gdata.spreadsheet.service.SpreadsheetsService()
-    client.email = raw_input('Email: ')
+    client.email = input('Email: ')
     client.password = getpass.getpass('Password: ')
     client.source = 'org.aeshin.uploadgrades.py'
     client.ProgrammaticLogin()
     return client
-    
+
+
 def get_sheet_rows(client, sheet):
     ss_key = sheet.id.text.split('/')[-1]
     ws_feed = client.GetWorksheetsFeed(ss_key)
     ws_key = ws_feed.entry[0].id.text.split('/')[-1]
     cells_feed = client.GetCellsFeed(ss_key, ws_key)
-    rows = [ [ c.content.text for c in cells ] for _, cells
-             in itertools.groupby(cells_feed.entry, lambda e: e.cell.row) ]
+    rows = [[c.content.text for c in cells] for _, cells
+            in itertools.groupby(cells_feed.entry, lambda e: e.cell.row)]
     return rows
-    
+
+
 class Command(MyBaseCommand):
     help = 'Uploads grades from a Google spreadsheet.'
 
@@ -52,7 +57,7 @@ class Command(MyBaseCommand):
         client = sheets_connect()
         ss_feed = client.GetSpreadsheetsFeed()
         sheets = [e for e in ss_feed.entry if e.title.text.startswith("Probe")]
-        sheet_names = [ s.title.text for s in sheets ]
+        sheet_names = [s.title.text for s in sheets]
         sheet = sheets[self.input_choices_index(sheet_names)]
         rows = get_sheet_rows(client, sheet)
         course = self.input_course()
