@@ -51,11 +51,11 @@ class CourseAdmin(admin.ModelAdmin):
         return (user.get_full_name() or user.username)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.rel.to == User:
+        if db_field.remote_field.model == User:
             kwargs['queryset'] = User.objects.order_by('last_name', 'username')
         field = super(CourseAdmin, self)\
             .formfield_for_manytomany(db_field, request, **kwargs)
-        if db_field.rel.to == User:
+        if db_field.remote_field.model == User:
             field.label_from_instance = self.get_user_label
         return field
 
