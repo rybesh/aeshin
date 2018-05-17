@@ -12,7 +12,7 @@ class Department(models.Model):
     name = models.CharField(max_length=80)
     url = models.URLField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -20,7 +20,7 @@ class Instructor(models.Model):
     name = models.CharField(max_length=36)
     url = models.URLField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -108,7 +108,7 @@ class Course(models.Model):
                 'semester': self.semester,
                 'year': self.year})
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s: %s, %s %s' % (
             self.number, self.title,
             self.get_semester_display(), self.get_year_display())
@@ -149,7 +149,7 @@ class Meeting(models.Model):
     def reading_list(self):
         return self.readings.all().order_by('readingassignment__order')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s: %s' % (self.date.strftime('%m-%d'), self.title)
 
     class Meta:
@@ -165,7 +165,7 @@ class Holiday(models.Model):
     def is_holiday(self):
         return True  # For mixing holidays and meetings in schedule lists
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s: %s' % (self.date.strftime('%m-%d'), self.name)
 
     class Meta:
@@ -195,7 +195,7 @@ class Assignment(models.Model):
         return (reverse('course_submit_assignment_view', kwargs={
                     'assignment_id': self.id}))
 
-    def __unicode__(self):
+    def __str__(self):
         if self.due_date:
             return u'%s %s: %s' % (
                 self.course.number, self.due_date.strftime('%m-%d'), self.title
@@ -235,7 +235,7 @@ class Submission(models.Model):
             self.time_submitted = datetime.datetime.now()
         super(Submission, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s: %s' % (self.assignment, self.submitter)
 
 
@@ -307,7 +307,7 @@ class Reading(models.Model):
             self.get_url(), self.access_via_proxy, self.ignore_citation_url)
         return linky.linkify(self.citation_html)
 
-    def __unicode__(self):
+    def __str__(self):
         return truncate(self.citation_text)
 
     class Meta:

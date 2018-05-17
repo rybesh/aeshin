@@ -35,7 +35,7 @@ class ReadingAssignmentInline(admin.StackedInline):
 
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'is_current')
+    list_display = ('__str__', 'is_current')
     inlines = (HolidayInline,)
     prepopulated_fields = {'slug': ('number',)}
     filter_horizontal = ('students',)
@@ -61,7 +61,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 class MeetingAdmin(admin.ModelAdmin):
-    list_display = ('course', '__unicode__', 'is_tentative')
+    list_display = ('course', '__str__', 'is_tentative')
     inlines = (ReadingAssignmentInline,)
     save_as = True
     actions = ['make_tentative', 'finalize']
