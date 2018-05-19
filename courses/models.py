@@ -101,12 +101,11 @@ class Course(models.Model):
         return (datetime.date(self.year, start_month, start_day),
                 datetime.date(self.year, end_month, end_day))
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('course_info_view', (), {
-                'slug': self.slug,
-                'semester': self.semester,
-                'year': self.year})
+        return reverse('course_info_view', kwargs={
+            'slug': self.slug,
+            'semester': self.semester,
+            'year': self.year})
 
     def __str__(self):
         return u'%s: %s, %s %s' % (
@@ -327,10 +326,9 @@ class ReadingAssignment(models.Model):
     def discussion_questions_posted(self):
         return len(self.discussion_questions.strip()) > 0
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('course_discussion_view', (), {
-                'discussion_id': self.id})
+        return reverse('course_discussion_view', kwargs={
+            'discussion_id': self.id})
 
     class Meta:
         ordering = ('order',)
