@@ -4,6 +4,6 @@
 *.key
 .DS_Store
 secrets.py
-static/
-media/
-venv/
+/static/
+/media/
+/venv/
