@@ -35,12 +35,6 @@ a:hover, a:active, a.active { outline: none; }
 
 ol { list-style-type: decimal; }
 
-nav ul, nav li {
-    margin: 0;
-    list-style:none;
-    list-style-image: none;
-}
-
 ::-moz-selection {
     background: #EF0081;
     color: #fff;
@@ -73,8 +67,29 @@ body > header {
     width: 100%;
 }
 
-nav li, nav h1 {
-    display: inline;
+nav {
+    box-sizing: border-box;
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: .5em 0;
+    white-space: nowrap;
+    width: 100%;
+}
+
+nav ul, nav li {
+    display: inline-block;
+    list-style-image: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    white-space: nowrap;
+}
+
+nav li {
+    vertical-align: middle;
+    height: 100%;
 }
 
 nav a {
@@ -87,6 +102,10 @@ nav a {
 nav a:hover, nav a.active {
     color: #fdf6e3 !important;
     background: transparent;
+}
+
+nav h1 {
+    display: inline;
 }
 
 nav h1 a {
@@ -132,7 +151,7 @@ h3 a:hover { color: #d33682; }
 
 #main {
     background: #fdf6e3;
-    padding: 32px 50px 40px;
+    padding: 50px;
 }
 
 #main > header {
