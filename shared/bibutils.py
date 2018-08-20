@@ -10,8 +10,10 @@ import json
 def format_zotero_as_html(zotero_item_id):
     return mark_safe(urlopen(
             'https://api.zotero.org/groups/%s/items/%s?format=bib'
-            % (settings.ZOTERO_GROUP_ID, zotero_item_id)).read().replace(
-            '<?xml version="1.0"?>', ''))
+            % (settings.ZOTERO_GROUP_ID, zotero_item_id))
+                     .read()
+                     .decode('utf-8')
+                     .replace('<?xml version="1.0"?>', ''))
 
 
 def zotero_item_to_text(item):
