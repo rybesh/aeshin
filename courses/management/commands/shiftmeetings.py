@@ -1,12 +1,12 @@
 from django.core.management.base import CommandError
 from django.db import transaction
-from utils import MyBaseCommand
+from courses.management.commands.utils import MyBaseCommand
 
 
 class Command(MyBaseCommand):
     help = 'Shifts the dates of course meetings.'
 
-    @transaction.commit_on_success
+    @transaction.atomic
     def handle(self, *args, **options):
         course = self.input_course()
         for m in course.meetings.all():

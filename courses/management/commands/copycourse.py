@@ -2,7 +2,7 @@ from datetime import timedelta
 from django.core.management.base import CommandError
 from django.db import transaction
 from courses.models import Meeting, ReadingAssignment
-from utils import MyBaseCommand
+from courses.management.commands.utils import MyBaseCommand
 
 
 def push_from_weekend(date, days):
@@ -18,7 +18,7 @@ def push_from_weekend(date, days):
 class Command(MyBaseCommand):
     help = 'Copies all meetings from an old course to a new course.'
 
-    @transaction.commit_on_success
+    @transaction.atomic
     def handle(self, *args, **options):
         self.stdout.write('Choose the old course:\n')
         old_course = self.input_course(include_archived=True)

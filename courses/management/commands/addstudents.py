@@ -3,7 +3,7 @@ from django.core.management.base import CommandError
 from django.db import transaction
 from django.db.utils import IntegrityError
 from django.utils.crypto import get_random_string
-from utils import MyBaseCommand
+from courses.management.commands.utils import MyBaseCommand
 from HTMLParser import HTMLParser
 import csv
 
