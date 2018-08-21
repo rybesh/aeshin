@@ -48,28 +48,31 @@ class TableReader(HTMLParser):
 
 
 class Command(MyBaseCommand):
-    args = '<student_info_file> <emails_file>'
+    args = '<student_roster_file> <emails_file>'
     help = 'Creates student accounts and adds them to a course.'
+
+    def add_arguments(self, parser):
+        parser.add_argument('roster')
+        parser.add_argument('emails')
 
     @transaction.atomic
     def handle(self, *args, **options):
-        if not len(args) == 2:
-            raise CommandError(
-                'You must provide the names of files with student info and emails.') # noqa
-        if args[0].endswith('.csv'):
+        roster = options['roster']
+        emails = options['emails']
+        if roster.endswith('.csv'):
             reader = csv.DictReader
-        elif args[0].endswith('.xls'):
+        elif roster.endswith('.xls'):
             reader = TableReader().read
         else:
             raise CommandError(
-                'Student info must be in CSV or XLS (really HTML).')
+                'Student roster must be in CSV or XLS (really HTML).')
         emails = []
-        with open(args[1]) as f:
+        with open(emails) as f:
             for line in f:
                 emails.append(line.strip())
         students = []
         new_count = existing_count = 0
-        for i, row in enumerate(reader(open(args[0], 'rb'))):
+        for i, row in enumerate(reader(open(roster, 'rb'))):
             try:
                 last_name, first_name = [
                     x.strip() for x in row['Name'].split(',')]
@@ -97,7 +100,7 @@ class Command(MyBaseCommand):
                 except IntegrityError as e:
                     raise CommandError('Username collision: %s' % username)
             except KeyError as e:
-                raise CommandError('%s is missing a %s value.' % (args[0], e))
+                raise CommandError('%s is missing a %s value.' % (roster, e))
         if not len(students) == len(emails):
             raise CommandError(
                 'Number of emails does not match number of students.')
