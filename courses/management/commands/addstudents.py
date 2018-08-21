@@ -51,8 +51,8 @@ class Command(MyBaseCommand):
     help = 'Creates student accounts and adds them to a course.'
 
     def add_arguments(self, parser):
-        parser.add_argument('roster', required=True)
-        parser.add_argument('emails', required=True)
+        parser.add_argument('roster')
+        parser.add_argument('emails')
 
     @transaction.atomic
     def handle(self, *args, **options):
