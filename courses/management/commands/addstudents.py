@@ -48,12 +48,11 @@ class TableReader(HTMLParser):
 
 
 class Command(MyBaseCommand):
-    args = '<student_roster_file> <emails_file>'
     help = 'Creates student accounts and adds them to a course.'
 
     def add_arguments(self, parser):
-        parser.add_argument('roster')
-        parser.add_argument('emails')
+        parser.add_argument('roster', required=True)
+        parser.add_argument('emails', required=True)
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -66,17 +65,17 @@ class Command(MyBaseCommand):
         else:
             raise CommandError(
                 'Student roster must be in CSV or XLS (really HTML).')
-        emails = []
+        email_list = []
         with open(emails) as f:
             for line in f:
-                emails.append(line.strip())
+                email_list.append(line.strip())
         students = []
         new_count = existing_count = 0
         for i, row in enumerate(reader(open(roster, 'rb'))):
             try:
                 last_name, first_name = [
                     x.strip() for x in row['Name'].split(',')]
-                email = emails[i]
+                email = email_list[i]
                 username = email.split('@')[0]
                 try:
                     student, created = User.objects.get_or_create(
@@ -101,7 +100,7 @@ class Command(MyBaseCommand):
                     raise CommandError('Username collision: %s' % username)
             except KeyError as e:
                 raise CommandError('%s is missing a %s value.' % (roster, e))
-        if not len(students) == len(emails):
+        if not len(students) == len(email_list):
             raise CommandError(
                 'Number of emails does not match number of students.')
         self.stdout.write(
