@@ -2,7 +2,7 @@ from django import http
 from django.urls import include, path, re_path
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.template import RequestContext, loader
+from django.template import loader
 from django.views.generic.base import TemplateView, RedirectView
 from django.contrib import admin
 from django.conf import settings
@@ -22,7 +22,7 @@ def loggedin(request):
 
 def server_error(request, template_name='500.html'):
     t = loader.get_template(template_name)
-    return http.HttpResponseServerError(t.render(RequestContext(request, {})))
+    return http.HttpResponseServerError(t.render(request=request))
 
 
 handler500 = server_error
