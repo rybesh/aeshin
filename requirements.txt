@@ -3,6 +3,6 @@ gdata==2.0.18
 isodate==0.6.0
 markdown2==2.3.6
 pip-tools==3.0.0
-pytz==2018.5
+pytz==2018.6
 smartypants==2.0.1
 python-magic==0.4.15
