@@ -1,7 +1,7 @@
 Django==2.1.2
 gdata==2.0.18
 isodate==0.6.0
-markdown2==2.3.6
+markdown2==2.3.7
 pip-tools==3.0.0
 pytz==2018.5
 smartypants==2.0.1
