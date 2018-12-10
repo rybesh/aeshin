@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import SimpleUploadedFile
 from zipfile import ZipFile, BadZipfile
-from io import StringIO
+from io import StringIO, BytesIO
 import datetime
 import csv
 import magic
@@ -99,7 +99,7 @@ def handleZipUpload(request, assignment, zipfile):
 
 
 def handlePDFUpload(request, assignment, pdf):
-    buffer = StringIO()
+    buffer = BytesIO()
     with ZipFile(buffer, mode='w') as zip:
         zip.writestr(pdf.name, pdf.read())
     buffer.seek(0)
