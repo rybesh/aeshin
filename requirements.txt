@@ -1,4 +1,4 @@
-Django==2.1.2
+Django==2.1.5
 gdata==2.0.18
 isodate==0.6.0
 markdown2==2.3.6
