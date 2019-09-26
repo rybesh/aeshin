@@ -240,7 +240,7 @@ def download_reviewed_submission(request, review_id):
 
     return FileResponse(
         review.submission.zipfile,
-        filename='under-review-%s' % review_id,
+        filename='under-review-%s.zip' % review_id,
         as_attachment=True)
 
 
