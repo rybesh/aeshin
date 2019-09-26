@@ -261,6 +261,7 @@ class PeerReviewSession(models.Model):
     assignment = models.OneToOneField(
         'Assignment', related_name='peer_review_session',
         on_delete=models.PROTECT)
+    form_url = models.URLField()
     active = models.BooleanField(default=False)
 
     @transaction.atomic

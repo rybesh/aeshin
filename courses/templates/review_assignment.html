@@ -16,7 +16,7 @@
 <p>First, <a href="{{ review.get_download_url }}">download</a>
 the assignment you'll be reviewing.</p>
 <p>Then, use this
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSd55D3DjSt0bmdeaR6mkLxGY9MWg8A7mxqxVN-2FVC1tBybMA/viewform?usp=pp_url&entry.284655416={{ review.id }}">
+<a href="{{ review.session.form_url }}{{ review.id }}">
 form</a> to complete your review. Don't forget to submit the form!</p>
 <p>Finally, click the button below to mark your review as complete.</p>
 <form method="post" action="{{ review.get_submit_url }}">
