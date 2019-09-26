@@ -32,4 +32,15 @@ urlpatterns = [
     re_path(
         r'^assignment/(?P<assignment_id>\d+)/submit/$',
         views.submit_assignment, name='course_submit_assignment_view'),
+    re_path(
+        r'^assignment/(?P<assignment_id>\d+)/review/$',
+        views.review_assignment, name='course_review_assignment_view'),
+    re_path(
+        r'^review/(?P<review_id>\d+)/download/$',
+        views.download_reviewed_submission,
+        name='course_download_reviewed_submission_view'),
+    re_path(
+        r'^review/(?P<review_id>\d+)/submit/$',
+        views.submit_review,
+        name='course_submit_review_view'),
 ]

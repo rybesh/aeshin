@@ -1,15 +1,19 @@
 from .models import Course, Assignment, ReadingAssignment, Submission, User
+from .models import PeerReview, PeerReviewSession
 from django import forms
-from django.http import HttpResponse, HttpResponseForbidden, Http404
+from django.http import HttpResponse, HttpResponseForbidden, FileResponse
+from django.http import HttpResponseRedirect, HttpResponseServerError, Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db.models import Count
 from zipfile import ZipFile, BadZipfile
 from io import StringIO, BytesIO
 import datetime
 import csv
 import magic
+import random
 
 
 def index(request):
@@ -154,11 +158,102 @@ def submit_assignment(request, assignment_id):
             o['files'] = [f for f in ZipFile(submission.zipfile).namelist()
                           if not f.startswith('__MACOSX/')]
             o['zipfile_url'] = submission.zipfile.url
-        except:
+        except:  # noqa: E722
             pass
 
     o['form'] = form
     return render(request, 'submit_assignment.html', context=o)
+
+
+@login_required
+def review_assignment(request, assignment_id):
+
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    if not (assignment.is_handed_out and
+            assignment.is_submitted_online):
+        raise Http404
+
+    if not assignment.course.is_authorized(request.user):
+        return HttpResponseForbidden(
+            'You are not a student in this class.')
+
+    if not assignment.was_submitted_by(request.user):
+        return HttpResponseForbidden(
+            'You have not submitted this assignment yet.')
+
+    review = None
+
+    try:
+        session = assignment.peer_review_session
+        review = session.reviews.get(reviewer=request.user, in_progress=True)
+
+    except PeerReviewSession.DoesNotExist:
+        raise Http404
+    except PeerReview.MultipleObjectsReturned:
+        # ruh roh
+        return HttpResponseServerError()
+    except PeerReview.DoesNotExist:
+        pass
+
+    if review is None:
+        submissions = (assignment
+                       .submissions
+                       .exclude(submitter=request.user)
+                       .exclude(under_review=True)
+                       .annotate(review_count=Count('reviews')))
+
+        unreviewed = list(submissions.filter(review_count=0))
+        reviewed = list(submissions.filter(review_count__gt=0))
+
+        submission = random.choice(unreviewed) if len(unreviewed) > 0 else None
+        if submission is None:
+            submission = random.choice(reviewed) if len(reviewed) > 0 else None
+
+        if submission is not None:
+            review = session.new_review_or_none(submission, request.user)
+
+    return render(request, 'review_assignment.html', context={
+        'submitted': 'submitted' in request.GET,
+        'course': assignment.course,
+        'assignment': assignment,
+        'review': review,
+    })
+
+
+@login_required
+def download_reviewed_submission(request, review_id):
+    review = get_object_or_404(PeerReview, id=review_id)
+
+    if not review.reviewer == request.user:
+        return HttpResponseForbidden(
+            'You are not authorized to review this submission.')
+    if not review.in_progress:
+        return HttpResponseForbidden(
+            'This review has already been submitted.')
+
+    return FileResponse(
+        review.submission.zipfile,
+        filename='under-review-%s' % review_id,
+        as_attachment=True)
+
+
+@login_required
+def submit_review(request, review_id):
+    if not request.method == 'POST':
+        raise Http404
+
+    review = get_object_or_404(PeerReview, id=review_id)
+
+    if not review.reviewer == request.user:
+        return HttpResponseForbidden(
+            'You are not authorized to submit this review.')
+    if not review.in_progress:
+        return HttpResponseForbidden(
+            'This review has already been submitted.')
+
+    review.submit()
+
+    return HttpResponseRedirect('%s?submitted' % review.session.get_url())
 
 
 def get_current_course(slug):

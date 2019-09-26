@@ -19,6 +19,9 @@
   {% if assignment.is_submitted_online %}
   <p id="submit-{{ assignment.slug }}"><a href="{{ assignment.get_submit_url }}">Submit this assignment.</a></p>
   {% endif %}
+  {% if assignment.is_peer_reviewed %}
+  <p id="review-{{ assignment.slug }}"><a href="{{ assignment.get_review_url }}">Peer review this assignment.</a></p>
+  {% endif %}
 {% else %}
 <p>To be handed out.</p>
 {% endif %}

@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
@@ -192,7 +192,25 @@ class Assignment(models.Model):
 
     def get_submit_url(self):
         return (reverse('course_submit_assignment_view', kwargs={
-                    'assignment_id': self.id}))
+            'assignment_id': self.id}))
+
+    def get_review_url(self):
+        return (reverse('course_review_assignment_view', kwargs={
+            'assignment_id': self.id}))
+
+    def is_peer_reviewed(self):
+        try:
+            session = self.peer_review_session
+            return (session is not None)
+        except PeerReviewSession.DoesNotExist:
+            return False
+
+    def was_submitted_by(self, user):
+        try:
+            self.submissions.get(submitter=user)
+            return True
+        except Submission.DoesNotExist:
+            return False
 
     def __str__(self):
         if self.due_date:
@@ -225,6 +243,7 @@ class Submission(models.Model):
     grade = models.FloatField(default=0.0)
     letter_grade = models.CharField(blank=True, max_length=2)
     comments = models.TextField(blank=True)
+    under_review = models.BooleanField(default=False)
 
     def get_grade(self):
         return self.letter_grade or self.grade
@@ -236,6 +255,67 @@ class Submission(models.Model):
 
     def __str__(self):
         return u'%s: %s' % (self.assignment, self.submitter)
+
+
+class PeerReviewSession(models.Model):
+    assignment = models.OneToOneField(
+        'Assignment', related_name='peer_review_session',
+        on_delete=models.PROTECT)
+    active = models.BooleanField(default=False)
+
+    @transaction.atomic
+    def new_review_or_none(self, submission, reviewer):
+        # check if this person has already reviewed this submission
+        # and if so return None
+        try:
+            review, new = self.reviews.get_or_create(
+                submission=submission, reviewer=reviewer)
+            if new:
+                submission.under_review = True
+                submission.save()
+                return review
+            else:
+                return None
+        except PeerReview.MultipleObjectsReturned:
+            return None
+
+    def get_url(self):
+        return (reverse(
+            'course_review_assignment_view',
+            kwargs={'assignment_id': self.assignment.id}))
+
+    def __str__(self):
+        return u'Peer review of %s' % self.assignment
+
+
+class PeerReview(models.Model):
+    session = models.ForeignKey(
+        'PeerReviewSession', related_name='reviews', on_delete=models.PROTECT)
+    submission = models.ForeignKey(
+        'Submission', related_name='reviews', on_delete=models.PROTECT)
+    reviewer = models.ForeignKey(
+        User, related_name='reviews', on_delete=models.PROTECT)
+    in_progress = models.BooleanField(default=True)
+
+    def get_download_url(self):
+        return (reverse(
+            'course_download_reviewed_submission_view',
+            kwargs={'review_id': self.id}))
+
+    def get_submit_url(self):
+        return (reverse(
+            'course_submit_review_view',
+            kwargs={'review_id': self.id}))
+
+    @transaction.atomic
+    def submit(self):
+        self.in_progress = False
+        self.save()
+        self.submission.under_review = False
+        self.submission.save()
+
+    def __str__(self):
+        return "%s's review of %s" % (self.reviewer, self.submission)
 
 
 PROXY = 'http://libproxy.lib.unc.edu/login?url='

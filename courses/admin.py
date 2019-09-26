@@ -8,6 +8,8 @@ from .models import (
     ReadingAssignment,
     Submission,
     User,
+    PeerReviewSession,
+    PeerReview,
 )
 from django.contrib import admin
 from django.forms import ModelForm, ChoiceField
@@ -115,9 +117,15 @@ class SubmissionAdmin(admin.ModelAdmin):
             .filter(assignment__course__is_archived=False)
 
 
+class PeerReviewAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'in_progress')
+
+
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(Reading, ReadingAdmin)
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Submission, SubmissionAdmin)
 admin.site.register(Instructor)
+admin.site.register(PeerReviewSession)
+admin.site.register(PeerReview, PeerReviewAdmin)
