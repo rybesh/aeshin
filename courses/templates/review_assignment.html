@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}: Review Assignment{% endblock %}
+
+{% block content %}
+<h3><span class="title">Reviewing {{ assignment.title }}</span></h3>
+
+{% if submitted %}
+<p><b>Your review was submitted. Thanks!</b></p>
+{% if review %}
+<p>To submit another review:</p>
+{% endif %}
+{% endif %}
+
+{% if review %}
+<p>First, <a href="{{ review.get_download_url }}">download</a>
+the assignment you'll be reviewing.</p>
+<p>Then, use this
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSd55D3DjSt0bmdeaR6mkLxGY9MWg8A7mxqxVN-2FVC1tBybMA/viewform?usp=pp_url&entry.284655416={{ review.id }}">
+form</a> to complete your review. Don't forget to submit the form!</p>
+<p>Finally, click the button below to mark your review as complete.</p>
+<form method="post" action="{{ review.get_submit_url }}">
+{% csrf_token %}
+<button type="submit">Submit review</button>
+</form>
+{% else %}
+<p>No more submissions are currently available for review.</p>
+<p>Please wait a bit, then reload the page.</p>
+{% endif %}
+
+{% endblock %}
