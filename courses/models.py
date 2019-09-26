@@ -198,10 +198,10 @@ class Assignment(models.Model):
         return (reverse('course_review_assignment_view', kwargs={
             'assignment_id': self.id}))
 
-    def is_peer_reviewed(self):
+    def is_being_peer_reviewed(self):
         try:
             session = self.peer_review_session
-            return (session is not None)
+            return (session is not None and session.active)
         except PeerReviewSession.DoesNotExist:
             return False
 

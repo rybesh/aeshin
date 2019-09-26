@@ -185,6 +185,10 @@ def review_assignment(request, assignment_id):
 
     try:
         session = assignment.peer_review_session
+
+        if not session.active:
+            return HttpResponseForbidden('This peer review session has ended.')
+
         review = session.reviews.get(reviewer=request.user, in_progress=True)
 
     except PeerReviewSession.DoesNotExist:
@@ -230,6 +234,9 @@ def download_reviewed_submission(request, review_id):
     if not review.in_progress:
         return HttpResponseForbidden(
             'This review has already been submitted.')
+    if not review.session.active:
+        return HttpResponseForbidden(
+            'This peer review session has ended.')
 
     return FileResponse(
         review.submission.zipfile,
@@ -250,6 +257,9 @@ def submit_review(request, review_id):
     if not review.in_progress:
         return HttpResponseForbidden(
             'This review has already been submitted.')
+    if not review.session.active:
+        return HttpResponseForbidden(
+            'This peer review session has ended.')
 
     review.submit()
 
