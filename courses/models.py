@@ -290,13 +290,22 @@ class PeerReviewSession(models.Model):
 
 
 class PeerReview(models.Model):
+    NEW = 0
+    IN_PROGRESS = 1
+    COMPLETE = 2
+    STATE_CHOICES = [
+        (NEW, 'New'),
+        (IN_PROGRESS, 'In progress'),
+        (COMPLETE, 'Complete'),
+    ]
     session = models.ForeignKey(
         'PeerReviewSession', related_name='reviews', on_delete=models.PROTECT)
     submission = models.ForeignKey(
         'Submission', related_name='reviews', on_delete=models.PROTECT)
     reviewer = models.ForeignKey(
         User, related_name='reviews', on_delete=models.PROTECT)
-    in_progress = models.BooleanField(default=True)
+    state = models.PositiveSmallIntegerField(
+        choices=STATE_CHOICES, default=NEW)
 
     def get_download_url(self):
         return (reverse(
@@ -310,10 +319,11 @@ class PeerReview(models.Model):
 
     @transaction.atomic
     def submit(self):
-        self.in_progress = False
-        self.save()
-        self.submission.under_review = False
-        self.submission.save()
+        if self.state == self.IN_PROGRESS:
+            self.state = self.COMPLETE
+            self.save()
+            self.submission.under_review = False
+            self.submission.save()
 
     def __str__(self):
         return "%s's review of %s" % (self.reviewer, self.submission)

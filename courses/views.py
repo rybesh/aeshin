@@ -189,7 +189,8 @@ def review_assignment(request, assignment_id):
         if not session.active:
             return HttpResponseForbidden('This peer review session has ended.')
 
-        review = session.reviews.get(reviewer=request.user, in_progress=True)
+        review = session.reviews.get(
+            reviewer=request.user, state=PeerReview.IN_PROGRESS)
 
     except PeerReviewSession.DoesNotExist:
         raise Http404
@@ -198,6 +199,17 @@ def review_assignment(request, assignment_id):
         return HttpResponseServerError()
     except PeerReview.DoesNotExist:
         pass
+
+    if review is None:
+        # check for pre-created reviews (e.g. for late submissions)
+        new_reviews = list(
+            session.reviews.filter(reviewer=request.user, state=PeerReview.NEW)
+        )
+        review = random.choice(new_reviews) if len(new_reviews) > 0 else None
+
+        if review is not None:
+            review.state = PeerReview.IN_PROGRESS
+            review.save()
 
     if review is None:
         submissions = (assignment
@@ -224,24 +236,36 @@ def review_assignment(request, assignment_id):
     })
 
 
+def validate_review(review, user):
+    if not review.reviewer == user:
+        return (False,
+                'You are not authorized to access this submission.')
+    if review.state == PeerReview.NEW:
+        return (False,
+                'This review has not yet begun.')
+    if review.state == PeerReview.COMPLETE:
+        return (False,
+                'This review has already been submitted.')
+    if not review.session.active:
+        return (False,
+                'This peer review session has ended.')
+    return (True, '')
+
+
 @login_required
 def download_reviewed_submission(request, review_id):
     review = get_object_or_404(PeerReview, id=review_id)
 
-    if not review.reviewer == request.user:
-        return HttpResponseForbidden(
-            'You are not authorized to review this submission.')
-    if not review.in_progress:
-        return HttpResponseForbidden(
-            'This review has already been submitted.')
-    if not review.session.active:
-        return HttpResponseForbidden(
-            'This peer review session has ended.')
+    is_valid, msg = validate_review(review, request.user)
 
-    return FileResponse(
-        review.submission.zipfile,
-        filename='under-review-%s.zip' % review_id,
-        as_attachment=True)
+    if is_valid:
+        return FileResponse(
+            review.submission.zipfile,
+            filename='under-review-%s.zip' % review_id,
+            as_attachment=True)
+
+    else:
+        return HttpResponseForbidden(msg)
 
 
 @login_required
@@ -251,19 +275,13 @@ def submit_review(request, review_id):
 
     review = get_object_or_404(PeerReview, id=review_id)
 
-    if not review.reviewer == request.user:
-        return HttpResponseForbidden(
-            'You are not authorized to submit this review.')
-    if not review.in_progress:
-        return HttpResponseForbidden(
-            'This review has already been submitted.')
-    if not review.session.active:
-        return HttpResponseForbidden(
-            'This peer review session has ended.')
+    is_valid, msg = validate_review(review, request.user)
 
-    review.submit()
-
-    return HttpResponseRedirect('%s?submitted' % review.session.get_url())
+    if is_valid:
+        review.submit()
+        return HttpResponseRedirect('%s?submitted' % review.session.get_url())
+    else:
+        return HttpResponseForbidden(msg)
 
 
 def get_current_course(slug):

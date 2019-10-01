@@ -118,7 +118,7 @@ class SubmissionAdmin(admin.ModelAdmin):
 
 
 class PeerReviewAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'in_progress')
+    list_display = ('__str__', 'state')
 
 
 admin.site.register(Course, CourseAdmin)
