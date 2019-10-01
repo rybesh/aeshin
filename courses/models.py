@@ -272,6 +272,8 @@ class PeerReviewSession(models.Model):
             review, new = self.reviews.get_or_create(
                 submission=submission, reviewer=reviewer)
             if new:
+                review.state = PeerReview.IN_PROGRESS
+                review.save()
                 submission.under_review = True
                 submission.save()
                 return review
