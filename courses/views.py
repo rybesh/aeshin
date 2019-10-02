@@ -130,9 +130,8 @@ def submit_assignment(request, assignment_id):
         form = SubmissionForm(request.POST, request.FILES)
         if form.is_valid():
             upload = request.FILES['upload']
-            mimetype = magic.from_buffer(upload.read(1024), mime=True)
-            print(mimetype)
-            upload.seek(0)  # since we read 1K
+            mimetype = magic.from_buffer(upload.read(2048), mime=True)
+            upload.seek(0)  # since we read 2K
             if mimetype == 'application/zip':
                 submission = handleZipUpload(request, o['assignment'], upload)
             elif mimetype == 'application/pdf':
