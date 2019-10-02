@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from shared import bibutils
 from shared.utils import truncate
+from django.utils import timezone
 import datetime
 import re
 
@@ -248,9 +249,8 @@ class Submission(models.Model):
     def get_grade(self):
         return self.letter_grade or self.grade
 
-    def save(self, *args, **kwargs):  # pylint: disable=E1002
-        if not kwargs.pop('skip_timestamp', False):
-            self.time_submitted = datetime.datetime.now()
+    def save(self, *args, **kwargs):
+        self.time_submitted = timezone.now()
         super(Submission, self).save(*args, **kwargs)
 
     def __str__(self):
