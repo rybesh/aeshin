@@ -103,12 +103,12 @@ def handleZipUpload(request, assignment, zipfile):
 
 
 def handlePDFUpload(request, assignment, pdf):
-    buffer = BytesIO()
-    with ZipFile(buffer, mode='w') as zip:
-        zip.writestr(pdf.name, pdf.read())
-    buffer.seek(0)
-    return handleZipUpload(request, assignment, SimpleUploadedFile(
-        pdf.name, buffer.read(), content_type='application/zip'))
+    with BytesIO() as buffer:
+        with ZipFile(buffer, mode='w') as zip:
+            zip.writestr(pdf.name, pdf.read())
+        buffer.seek(0)
+        return handleZipUpload(request, assignment, SimpleUploadedFile(
+            pdf.name, buffer.read(), content_type='application/zip'))
 
 
 @login_required
