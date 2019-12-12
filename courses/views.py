@@ -308,7 +308,10 @@ def grades_csv(course):
         row = [s.get_full_name()]
         for a in assignments:
             try:
-                row.append(a.submissions.get(submitter=s).grade)
+                submission = a.submissions.get(submitter=s)
+                grade = (submission.letter_grade if a.is_letter_graded
+                         else submission.grade)
+                row.append(grade)
             except Submission.DoesNotExist:
                 row.append('')
         table.append(row)
