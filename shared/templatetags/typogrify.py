@@ -2,7 +2,7 @@ import re
 from django.conf import settings
 from django import template
 from django.utils.safestring import mark_safe
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 register = template.Library()
 
@@ -33,7 +33,7 @@ def amp(text):
     >>> amp('<link href="xyz.html" title="One & Two">xyz</link>')
     u'<link href="xyz.html" title="One & Two">xyz</link>'
     """
-    text = force_text(text)
+    text = force_str(text)
     # it kinda sucks but it fixes the standalone amps in attributes bug
     tag_pattern = r'</?\w+((\s+\w+(\s*=\s*(?:".*?"|\'.*?\'|[^\'">\s]+))?)+\s*|\s*)/?>'  # noqa: E501
     amp_finder = re.compile(r"(\s|&nbsp;)(&|&amp;|&\#38;)(\s|&nbsp;)")
@@ -83,7 +83,7 @@ def caps(text):
     >>> caps("'I.W.W.' 'IWW'")
     u'\\'<span class="caps">I.W.W.</span>\\' \\'<span class="caps">IWW</span>\\''
     """
-    text = force_text(text)
+    text = force_str(text)
     try:
         import smartypants
     except ImportError:
@@ -164,7 +164,7 @@ def initial_quotes(text):
     >>> initial_quotes('&#8220;With smartypanted quotes&#8221;')
     u'<span class="dquo">&#8220;</span>With smartypanted quotes&#8221;'
     """
-    text = force_text(text)
+    text = force_str(text)
     # start with an opening p, h1-6, li, dd, dt or the start of the string
     quote_finder = re.compile(
         r"""((<(p|h[1-6]|li|dt|dd)[^>]*>|^)          # start with an opening p, h1-6, li, dd, dt or the start of the string  # noqa: E501
@@ -196,7 +196,7 @@ def smartypants(text):
     >>> smartypants('The "Green" man')
     u'The &#8220;Green&#8221; man'
     """
-    text = force_text(text)
+    text = force_str(text)
     try:
         import smartypants
     except ImportError:
@@ -229,7 +229,7 @@ def typogrify(text):
     >>> typogrify('"I.W.W."')
     u'<span class="dquo">&#8220;</span><span class="caps">I.W.W.</span>&#8221;'
     """
-    text = force_text(text)
+    text = force_str(text)
     text = amp(text)
     text = widont(text)
     text = caps(text)
@@ -278,7 +278,7 @@ def widont(text):
     >>> widont('<div><p>But divs with paragraphs do!</p></div>')
     u'<div><p>But divs with paragraphs&nbsp;do!</p></div>'
     """
-    text = force_text(text)
+    text = force_str(text)
     widont_finder = re.compile(
         r"""((?:</?(?:a|em|span|strong|i|b)[^>]*>)|[^<>\s]) # must be proceeded by an approved inline opening or closing tag or a nontag/nonspace  # noqa: E501
         \s+                                             # the space to replace
