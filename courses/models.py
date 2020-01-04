@@ -48,11 +48,8 @@ class Course(models.Model):
     )
     department = models.ForeignKey(
         'Department', related_name='courses', on_delete=models.PROTECT)
-    instructor = models.ForeignKey(
-        'Instructor', related_name='courses', on_delete=models.PROTECT)
-    assistant = models.ForeignKey(
-        'Instructor', related_name='courses_assisting',
-        on_delete=models.PROTECT, blank=True, null=True)
+    instructors = models.ManyToManyField(
+        'Instructor', related_name='courses_teaching')
     students = models.ManyToManyField(User, related_name='courses')
     number = models.CharField(max_length=20)
     slug = models.CharField(max_length=20)

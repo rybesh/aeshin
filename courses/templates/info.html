@@ -9,10 +9,9 @@
 {% filter typogrify %}
 <section id="instructor-info">
 <h3><span class="title">Who's Teaching It</span></h3>
-<p><a target="_blank" href="{{ course.instructor.url }}">{{ course.instructor.name }}</a></p>
-{% if course.assistant %}
-<p><a target="_blank" href="{{ course.assistant.url }}">{{ course.assistant.name }}</a></p>
-{% endif %}
+{% for instructor in course.instructors.all %}
+<p><a target="_blank" href="{{ instructor.url }}">{{ instructor.name }}</a></p>
+{% endfor %}
 </section>
 <section id="course-info">
 <h3><span class="title">When &amp; Where It Is</span></h3>
