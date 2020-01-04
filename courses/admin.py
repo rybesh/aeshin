@@ -4,6 +4,7 @@ from .models import (
     Holiday,
     Instructor,
     Meeting,
+    Unit,
     Reading,
     ReadingAssignment,
     Submission,
@@ -96,6 +97,10 @@ class MeetingAdmin(admin.ModelAdmin):
     finalize.short_description = 'Mark selected meetings as finalized'
 
 
+class UnitAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'course')
+
+
 class AssignmentAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     save_as = True
@@ -123,6 +128,7 @@ class PeerReviewAdmin(admin.ModelAdmin):
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Meeting, MeetingAdmin)
+admin.site.register(Unit, UnitAdmin)
 admin.site.register(Reading, ReadingAdmin)
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Submission, SubmissionAdmin)
