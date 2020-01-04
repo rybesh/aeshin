@@ -3,7 +3,7 @@
 {% block title %}: Submit Assignment{% endblock %}
 
 {% block content %}
-<h3><span class="title">Submit Assignment: {{ assignment.title }}</span></h3>
+<h4><span class="title">Submit Assignment: {{ assignment.title }}</span></h4>
 <form enctype="multipart/form-data" method="post" action="">
 {% csrf_token %}
 {% if files %}

@@ -153,6 +153,17 @@ class Meeting(models.Model):
         ordering = ('course', 'date')
 
 
+class Unit(models.Model):
+    course = models.ForeignKey(
+        'Course', related_name='units', on_delete=models.PROTECT)
+    starts_with = models.OneToOneField(
+        'Meeting', related_name='starts_unit', on_delete=models.PROTECT)
+    title = models.CharField(max_length=80)
+
+    def __str__(self):
+        return self.title
+
+
 class Holiday(models.Model):
     course = models.ForeignKey(
         'Course', related_name='holidays', on_delete=models.CASCADE)

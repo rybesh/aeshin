@@ -8,25 +8,25 @@
 {% block content %}
 {% filter typogrify %}
 <section id="instructor-info">
-<h3><span class="title">Who's Teaching It</span></h3>
+<h4><span class="title">Who's Teaching It</span></h4>
 {% for instructor in course.instructors.all %}
 <p><a target="_blank" href="{{ instructor.url }}">{{ instructor.name }}</a></p>
 {% endfor %}
 </section>
 <section id="course-info">
-<h3><span class="title">When &amp; Where It Is</span></h3>
+<h4><span class="title">When &amp; Where It Is</span></h4>
 <p>
 {{ course.times }}<br/>
 {{ course.location }}
 </p>
 </section>
 <section id="course-desc">
-<h3><span class="title">What It Is</span></h3>
+<h4><span class="title">What It Is</span></h4>
 {{ course.description|markdown }}
 </section>
 <section>
-<h3><span class="title">Is That All?</span></h3>
-<p>Nope! You should probably check out the 
+<h4><span class="title">Is That All?</span></h4>
+<p>Nope! You should probably check out the
 <a href="{{ course.get_absolute_url }}guidelines/">guidelines</a>.</p>
 </section>
 {% endfilter %}

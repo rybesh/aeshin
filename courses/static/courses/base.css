@@ -31,7 +31,6 @@ caption { background: transparent; }
 
 h1 {
     background: transparent;
-    border: 0;
     font-size: 24px;
     font-weight: normal;
     line-height: 26px;
@@ -41,7 +40,6 @@ h1 {
 }
 h2 {
     background: transparent;
-    border: 0;
     font-size: 100%;
     font-weight: normal;
     margin: 0;
@@ -50,25 +48,31 @@ h2 {
 }
 h3 {
     background: transparent;
-    border: 0;
+    color: #007c8d;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 18px 0 0 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+/* csslint ignore:start */
+div + h3 {
+    border-top: 1px dashed gray;
+    padding-top: 18px;
+}
+/* csslint ignore:end */
+h4 {
+    background: transparent;
     font-size: 100%;
     font-weight: normal;
     margin: 18px 0 0 0;
     padding: 0;
     vertical-align: baseline;
 }
-h4 {
-    background: transparent;
-    border: 0;
-    font-size: 100%;
-    font-weight: bold;
-    margin: 18px 0 0 0;
-    padding: 0;
-    vertical-align: baseline;
-}
+h4 .date { color: #666; }
+h4 .title { font-size: 14px; font-weight: bold; }
 h5 {
     background: transparent;
-    border: 0;
     font-size: 100%;
     font-style: italic;
     font-weight: normal;
@@ -78,7 +82,6 @@ h5 {
 }
 h6 {
     background: transparent;
-    border: 0;
     font-size: 100%;
     font-style: italic;
     font-weight: normal;
@@ -125,7 +128,7 @@ a:hover {
 .assignment {
     border-color: gray;
     border-style: dashed;
-    border-top: 1px;
+    border-width: 1px 0 0 0;
     padding-top: 9px;
 }
 .assignment-due { color: #408000; font-weight: bold; }
@@ -149,7 +152,12 @@ body {
     padding: 10px;
 }
 ul.nav { margin: 0; padding: 4px 0; }
-ul.nav li { display: inline; padding: 0 3% 0 0; }
+ul.nav li {
+    display: inline;
+/* csslint ignore:start */
+    margin: 0 3% 0 0;
+/* csslint ignore:end */
+}
 p { margin-top: 8px; }
 table p { margin: 0; }
 table p+p { margin-top: 4px; }
