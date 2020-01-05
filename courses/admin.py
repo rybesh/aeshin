@@ -22,7 +22,7 @@ class ReadingForm(ModelForm):
 
     class Meta:
         model = Reading
-        fields = ['zotero_id', 'description', 'file', 'url',
+        fields = ['zotero_id', 'description', 'file', 'url', 'centiwords',
                   'access_via_proxy', 'access_via_ereserves',
                   'ignore_citation_url']
 

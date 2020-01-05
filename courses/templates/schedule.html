@@ -47,6 +47,11 @@
 <div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">
   {% filter typogrify %}
   {% include "assignments_due.include" with assignments_due=meeting.assignments_due %}
+  {% if meeting.word_count %}
+  <p class="word-count">
+  Total amount of reading for this week: {{ meeting.word_count }} words
+  </p>
+  {% endif %}
   <div class="description">{{ meeting.description|markdown }}</div>
   {% if user_is_authorized %}
   {% if meeting.slides %}
@@ -56,12 +61,22 @@
   {% if meeting.has_readings %}
   <p>To read <strong>before</strong> this class:</p>
   <ol class="readings">
-    {% for assigned in meeting.reading_assignments.all %}
+    {% for reading in meeting.reading_list %}
     <li class="reading">
-      <p>
-        {{ assigned.reading.as_html }}
-      </p>
-      <div class="description">{{ assigned.reading.description|markdown }}</div>
+      <div>
+        {{ reading.as_html }}
+        {% if reading.word_count %}
+        <span class="word-count">{{ reading.word_count }} words</span>
+        {% endif %}
+      </div>
+      {% if reading.description %}
+      <details>
+        <summary>Reading tips</summary>
+        <div class="description">
+        {{ reading.description|markdown }}
+        </div>
+      </details>
+      {% endif %}
     </li>
     {% endfor %}
   </ol>

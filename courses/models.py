@@ -147,6 +147,14 @@ class Meeting(models.Model):
     def reading_list(self):
         return self.readings.all().order_by('readingassignment__order')
 
+    def word_count(self):
+        centiwords = 0
+        for reading in self.readings.all():
+            if not reading.centiwords:
+                return None
+            centiwords += reading.centiwords
+        return '{:,}'.format(centiwords * 100)
+
     def __str__(self):
         return u'%s: %s' % (self.date.strftime('%m-%d'), self.title)
 
@@ -387,6 +395,7 @@ class Reading(models.Model):
     access_via_proxy = models.BooleanField(default=False)
     access_via_ereserves = models.BooleanField(default=False)
     ignore_citation_url = models.BooleanField(default=False)
+    centiwords = models.PositiveSmallIntegerField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if self.zotero_id:
@@ -407,7 +416,13 @@ class Reading(models.Model):
     def as_html(self):
         linky = Linky(
             self.get_url(), self.access_via_proxy, self.ignore_citation_url)
-        return linky.linkify(self.citation_html)
+        unstyled_html = re.sub(r'style="[^"]+"', '', self.citation_html)
+        return linky.linkify(unstyled_html)
+
+    def word_count(self):
+        if not self.centiwords:
+            return None
+        return '{:,}'.format(self.centiwords * 100)
 
     def __str__(self):
         return truncate(self.citation_text)
