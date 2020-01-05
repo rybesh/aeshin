@@ -58,6 +58,7 @@ class Course(models.Model):
     year = models.IntegerField(choices=YEAR_CHOICES)
     times = models.CharField(max_length=64)
     location = models.CharField(max_length=32)
+    recitations = models.TextField(blank=True)
     ereserves_id = models.CharField(max_length=8, blank=True)
     description = models.TextField()
     blurb = models.TextField(blank=True)

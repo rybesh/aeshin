@@ -19,6 +19,12 @@
 {{ course.times }}<br/>
 {{ course.location }}
 </p>
+{% if course.recitations %}
+<h5>Recitations</h5>
+<p>
+{{ course.recitations|markdown:"unsafe" }}
+</p>
+{% endif %}
 </section>
 <section id="course-desc">
 <h4><span class="title">What It Is</span></h4>
