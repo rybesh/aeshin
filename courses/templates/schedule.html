@@ -17,7 +17,7 @@
 {% endif %}
 <div id="accordion">
 {% for entry in schedule %}
-{% if entry.next %}<span id="next"></span>{% endif %}
+{% if entry.next %}<span id="next" class="next"></span>{% endif %}
 {% if entry.starts_unit %}
 <h3>{{ entry.starts_unit|typogrify }}</h3>
 {% if entry.starts_unit.description %}

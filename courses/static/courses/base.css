@@ -56,8 +56,9 @@ h3 {
     vertical-align: baseline;
 }
 /* csslint ignore:start */
-div + h3, span + h3 {
+div + h3, .next + h3 {
     border-top: 1px dashed gray;
+    margin-top: 54px;
     padding-top: 18px;
 }
 /* csslint ignore:end */
