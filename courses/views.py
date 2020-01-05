@@ -47,12 +47,14 @@ def schedule(request, slug, year, semester):
     o['schedule'] = o['meetings'] + o['holidays']
     o['schedule'].sort(key=lambda x: x.date)
     today = datetime.date.today()
+    need_next = True
     for item in o['schedule']:
         item.assignments_due = assignments.get(item.date, [])
         if hasattr(item, 'is_tentative') and item.is_tentative:
             o['in_flux'] = True
-        if item.date >= today:
+        if need_next and item.date >= today:
             item.next = True
+            need_next = False
     o['user_is_authorized'] = o['course'].is_authorized(request.user)
     return render(request, 'schedule.html', context=o)
 
