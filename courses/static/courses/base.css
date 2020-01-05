@@ -246,6 +246,9 @@ summary {
   margin: 0.25em 0 0.5em 0;
   padding: 0.25em 0;
 }
+.tips:hover {
+  border-bottom: 1px solid #ef4300;
+}
 
 @media print {
   nav { display: none; }
