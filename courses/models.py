@@ -148,6 +148,8 @@ class Meeting(models.Model):
         return self.readings.all().order_by('readingassignment__order')
 
     def word_count(self):
+        if not self.has_readings():
+            return None
         centiwords = 0
         for reading in self.readings.all():
             if not reading.centiwords:
