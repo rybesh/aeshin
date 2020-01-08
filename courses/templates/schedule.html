@@ -54,7 +54,7 @@
   Total amount of reading for this week: {{ meeting.word_count }} words
   </p>
   {% endif %}
-  <div class="description">{{ meeting.description|markdown }}</div>
+  <div class="description">{{ meeting.description|markdown:"unsafe" }}</div>
   {% if user_is_authorized %}
   {% if meeting.slides %}
   <p>Download <a href="{{ meeting.slides.url }}">slides</a> for this class.</p>

@@ -143,6 +143,11 @@ a:hover {
     font-size: 16px;
     font-weight: bold;
 }
+.warning {
+    color: #b1ad00;
+    font-size: 14px;
+    font-weight: bold;
+}
 .posted-by { color: #666; }
 img { display: block; margin: auto; }
 .word-count {
