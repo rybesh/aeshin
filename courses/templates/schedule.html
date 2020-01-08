@@ -21,7 +21,9 @@
 {% if entry.starts_unit %}
 <h3>{{ entry.starts_unit|typogrify }}</h3>
 {% if entry.starts_unit.description %}
-<div class="description">{{ entry.starts_unit.description|markdown }}</div>
+<div class="description">
+{{ entry.starts_unit.description|markdown:"unsafe" }}
+</div>
 {% endif %}
 {% endif %}
 <h4 id="on-{{ entry.date|date:"m-d" }}">
