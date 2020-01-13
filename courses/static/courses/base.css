@@ -132,7 +132,11 @@ a:hover {
     border-width: 1px 0 0 0;
     padding-top: 9px;
 }
-.assignment-due { color: #408000; font-weight: bold; }
+.assignment-due {
+    color: #408000;
+    font-size: 14px;
+    font-weight: bold;
+}
 .error {
     color: #ef4300;
     font-size: 16px;
