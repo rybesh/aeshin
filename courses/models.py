@@ -64,6 +64,7 @@ class Course(models.Model):
     blurb = models.TextField(blank=True)
     evaluation = models.TextField(blank=True)
     participation = models.TextField(blank=True)
+    how_to_succeed = models.TextField(blank=True)
     thanks = models.TextField(blank=True)
     is_archived = models.BooleanField(default=False)
     blog_slug = models.CharField(max_length=20, blank=True)

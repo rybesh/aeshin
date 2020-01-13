@@ -6,14 +6,24 @@
 
 {% block content %}
 {% filter typogrify %}
+{% if course.how_to_succeed %}
+<section id="how-to-succeed">
+<h4><span class="title">How to Succeed in This Course</span></h4>
+{{ course.how_to_succeed|markdown }}
+</section>
+{% endif %}
+{% if course.evaluation %}
 <section id="evaluation">
 <h4><span class="title">Evaluation &amp; Grading</span></h4>
 {{ course.evaluation|markdown }}
 </section>
+{% endif %}
+{% if course.participation %}
 <section id="participation">
 <h4><span class="title">Participation</span></h4>
 {{ course.participation|markdown }}
 </section>
+{% endif %}
 <section id="communicating">
 <h4><span class="title">Communicating with me</span></h4>
 <p><a href="mailto:ryanshaw@unc.edu">Email</a> is the best way to communicate with me outside of class. It is particularly well-suited for short-answer and clarification questions.</p>
