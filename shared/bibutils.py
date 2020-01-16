@@ -5,6 +5,10 @@ from .utils import truncate
 from xml.etree.ElementTree import ElementTree
 from xml.parsers.expat import ExpatError
 import json
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def format_zotero_as_html(zotero_item_id):
@@ -56,14 +60,16 @@ def load_zotero_atom(uri):
             try:
                 library.append(
                     (key, truncate(zotero_item_to_text(json.loads(content)))))
-            except KeyError as e:
+            except KeyError:
                 continue
         for link in tree.findall('{http://www.w3.org/2005/Atom}link'):
             if link.attrib.get('rel', None) == 'next':
                 library.extend(load_zotero_atom(link.attrib['href']))
                 break
-    except ExpatError as e:
+    except ExpatError:
         pass
+    except ConnectionError:
+        logger.warning('failed to connect to Zotero API')
     return library
 
 

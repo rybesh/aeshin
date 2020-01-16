@@ -18,7 +18,7 @@ from shared import bibutils
 
 
 class ReadingForm(ModelForm):
-    # zotero_id = ChoiceField(choices=bibutils.load_zotero_library())
+    zotero_id = ChoiceField(choices=bibutils.load_zotero_library())
 
     class Meta:
         model = Reading
