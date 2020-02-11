@@ -313,13 +313,49 @@ class PeerReviewSession(models.Model):
 
 
 class PeerReview(models.Model):
+    # states
     NEW = 0
     IN_PROGRESS = 1
     COMPLETE = 2
+    # grades
+    NONE = -1
+    HIGH_PASS = 0
+    PASS = 1
+    LOW_PASS = 2
+    A_PLUS = 3
+    A = 4
+    A_MINUS = 5
+    B_PLUS = 6
+    B = 7
+    B_MINUS = 8
+    C_PLUS = 9
+    C = 10
+    C_MINUS = 11
+    D_PLUS = 12
+    D = 13
+    F = 14
     STATE_CHOICES = [
         (NEW, 'New'),
         (IN_PROGRESS, 'In progress'),
         (COMPLETE, 'Complete'),
+    ]
+    GRADE_CHOICES = [
+        (NONE, 'None'),
+        (HIGH_PASS, 'H'),
+        (PASS, 'P'),
+        (LOW_PASS, 'L'),
+        (A_PLUS, 'A+'),
+        (A, 'A'),
+        (A_MINUS, 'A-'),
+        (B_PLUS, 'B+'),
+        (B, 'B'),
+        (B_MINUS, 'B-'),
+        (C_PLUS, 'C+'),
+        (C, 'C'),
+        (C_MINUS, 'C-'),
+        (D_PLUS, 'D+'),
+        (D, 'D'),
+        (F, 'F'),
     ]
     session = models.ForeignKey(
         'PeerReviewSession', related_name='reviews', on_delete=models.PROTECT)
@@ -329,6 +365,8 @@ class PeerReview(models.Model):
         User, related_name='reviews', on_delete=models.PROTECT)
     state = models.PositiveSmallIntegerField(
         choices=STATE_CHOICES, default=NEW)
+    suggested_grade = models.SmallIntegerField(
+        choices=GRADE_CHOICES, default=NONE)
 
     def get_download_url(self):
         return (reverse(

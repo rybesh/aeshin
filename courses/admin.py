@@ -102,6 +102,7 @@ class UnitAdmin(admin.ModelAdmin):
 
 
 class AssignmentAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'get_review_url')
     prepopulated_fields = {'slug': ('title',)}
     save_as = True
     ordering = ('-due_date',)

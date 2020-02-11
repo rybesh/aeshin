@@ -179,7 +179,8 @@ def review_assignment(request, assignment_id):
         return HttpResponseForbidden(
             'You are not a student in this class.')
 
-    if not assignment.was_submitted_by(request.user):
+    if not (request.user.is_staff
+            or assignment.was_submitted_by(request.user)):
         return HttpResponseForbidden(
             'You have not submitted this assignment yet.')
 
@@ -188,7 +189,7 @@ def review_assignment(request, assignment_id):
     try:
         session = assignment.peer_review_session
 
-        if not session.active:
+        if not (session.active or request.user.is_staff):
             return HttpResponseForbidden('This peer review session has ended.')
 
         review = session.reviews.get(
@@ -235,6 +236,8 @@ def review_assignment(request, assignment_id):
         'course': assignment.course,
         'assignment': assignment,
         'review': review,
+        'grader': request.user.is_staff,
+        'GRADE_CHOICES': PeerReview.GRADE_CHOICES,
     })
 
 
@@ -248,7 +251,7 @@ def validate_review(review, user):
     if review.state == PeerReview.COMPLETE:
         return (False,
                 'This review has already been submitted.')
-    if not review.session.active:
+    if not (review.session.active or user.is_staff):
         return (False,
                 'This peer review session has ended.')
     return (True, '')
@@ -280,6 +283,8 @@ def submit_review(request, review_id):
     is_valid, msg = validate_review(review, request.user)
 
     if is_valid:
+        review.suggested_grade = request.POST.get(
+            'suggested-grade', PeerReview.NONE)
         review.submit()
         return HttpResponseRedirect('%s?submitted' % review.session.get_url())
     else:
