@@ -263,7 +263,7 @@ class Submission(models.Model):
     time_submitted = models.DateTimeField()
     zipfile = models.FileField(upload_to=submission_upload_to, blank=True)
     grade = models.FloatField(default=0.0)
-    letter_grade = models.CharField(blank=True, max_length=2)
+    letter_grade = models.CharField(blank=True, max_length=16)
     comments = models.TextField(blank=True)
     under_review = models.BooleanField(default=False)
 
