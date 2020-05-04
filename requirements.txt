@@ -2,7 +2,7 @@ Django==3.0.5
 gdata==2.0.18
 isodate==0.6.0
 markdown2==2.3.8
-pip-tools==4.5.1
+pip-tools==5.1.1
 pytz==2019.3
 smartypants==2.0.1
 python-magic==0.4.15
