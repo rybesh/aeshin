@@ -22,7 +22,7 @@
 {% if course.recitations %}
 <h5>Recitations</h5>
 <p>
-{{ course.recitations|markdown:"unsafe" }}
+{{ course.recitations|markdown:"unsanitized" }}
 </p>
 {% endif %}
 </section>

@@ -22,7 +22,7 @@
 <h3>{{ entry.starts_unit|typogrify }}</h3>
 {% if entry.starts_unit.description %}
 <div class="description">
-{{ entry.starts_unit.description|markdown:"unsafe" }}
+{{ entry.starts_unit.description|markdown:"unsanitized" }}
 </div>
 {% endif %}
 {% endif %}
@@ -54,7 +54,7 @@
   Total amount of reading for this week: {{ meeting.word_count }} words
   </p>
   {% endif %}
-  <div class="description">{{ meeting.description|markdown:"unsafe" }}</div>
+  <div class="description">{{ meeting.description|markdown:"unsanitized" }}</div>
   {% if user_is_authorized %}
   {% if meeting.slides %}
   <p>Download <a href="{{ meeting.slides.url }}">slides</a> for this class.</p>
