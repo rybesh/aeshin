@@ -7,4 +7,4 @@ pip-tools==5.1.2
 Markdown==3.2.1
 pytz==2020.1
 smartypants==2.0.1
-python-magic==0.4.15
+python-magic==0.4.18
