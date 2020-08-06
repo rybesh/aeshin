@@ -1,6 +1,6 @@
-Django==3.0.7
+Django==3.1
 bleach==3.1.5
-bleach-whitelist==0.0.11
+bleach-allowlist==1.0.2
 gdata==2.0.18
 isodate==0.6.0
 pip-tools==5.3.1

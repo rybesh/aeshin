@@ -8,7 +8,7 @@ from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 
 import bleach
-from bleach_whitelist import markdown_tags, markdown_attrs
+from bleach_allowlist import markdown_tags, markdown_attrs
 
 
 register = template.Library()
