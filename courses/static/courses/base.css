@@ -152,6 +152,10 @@ a:hover {
     font-size: 14px;
     font-weight: bold;
 }
+.optional {
+    color: #408000;
+    font-weight: bold;
+}
 .posted-by { color: #666; }
 img { display: block; margin: auto; }
 .word-count {

@@ -51,7 +51,7 @@
   {% include "assignments_due.include" with assignments_due=meeting.assignments_due %}
   {% if meeting.word_count %}
   <p class="word-count">
-  Total amount of reading for this week: {{ meeting.word_count }} words
+  Total amount of required reading for this week: {{ meeting.word_count }} words
   </p>
   {% endif %}
   <div class="description">{{ meeting.description|markdown:"unsanitized" }}</div>
@@ -63,23 +63,11 @@
   {% if meeting.has_readings %}
   <p>To read <strong>before</strong> this class:</p>
   <ol class="readings">
-    {% for reading in meeting.reading_list %}
-    <li class="reading">
-      <div>
-        {{ reading.as_html }}
-        {% if reading.word_count %}
-        <span class="word-count">{{ reading.word_count }} words</span>
-        {% endif %}
-      </div>
-      {% if reading.description %}
-      <details>
-        <summary><span class="tips">Reading tips</span></summary>
-        <div class="description">
-        {{ reading.description|markdown }}
-        </div>
-      </details>
-      {% endif %}
-    </li>
+    {% for reading in meeting.required_reading_list %}
+    {% include "reading_assignment.include" %}
+    {% endfor %}
+    {% for reading in meeting.optional_reading_list %}
+    {% include "reading_assignment.include" with optional=True %}
     {% endfor %}
   </ol>
   {% if meeting.has_ereserves %}

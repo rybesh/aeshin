@@ -1,0 +1,21 @@
+{% load markdown  %}
+
+    <li class="reading">
+      <div>
+        {% if optional %}
+        <span class="optional">Optional</span>
+        {% endif %}
+        {{ reading.as_html }}
+        {% if reading.word_count %}
+        <span class="word-count">{{ reading.word_count }} words</span>
+        {% endif %}
+      </div>
+      {% if reading.description %}
+      <details>
+        <summary><span class="tips">Reading tips</span></summary>
+        <div class="description">
+        {{ reading.description|markdown }}
+        </div>
+      </details>
+      {% endif %}
+    </li>

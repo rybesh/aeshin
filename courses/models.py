@@ -148,11 +148,21 @@ class Meeting(models.Model):
     def reading_list(self):
         return self.readings.all().order_by('readingassignment__order')
 
+    def required_reading_list(self):
+        return self.readings.\
+            filter(readingassignment__is_optional=False).\
+            order_by('readingassignment__order')
+
+    def optional_reading_list(self):
+        return self.readings.\
+            filter(readingassignment__is_optional=True).\
+            order_by('readingassignment__order')
+
     def word_count(self):
         if not self.has_readings():
             return None
         centiwords = 0
-        for reading in self.readings.all():
+        for reading in self.required_reading_list():
             if not reading.centiwords:
                 return None
             centiwords += reading.centiwords
@@ -481,6 +491,7 @@ class ReadingAssignment(models.Model):
     discussion_leader = models.ForeignKey(
         User, on_delete=models.SET_NULL, blank=True, null=True)
     discussion_questions = models.TextField(blank=True)
+    is_optional = models.BooleanField(default=False)
 
     def discussion_questions_posted(self):
         return len(self.discussion_questions.strip()) > 0
