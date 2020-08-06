@@ -14,6 +14,8 @@ import datetime
 import csv
 import magic
 import random
+import itertools
+import functools
 
 
 def index(request):
@@ -57,6 +59,7 @@ def schedule(request, slug, year, semester):
                 item.next = True
             need_next = False
     o['user_is_authorized'] = o['course'].is_authorized(request.user)
+    o['unit_counter'] = functools.partial(next, itertools.count(start=1))
     return render(request, 'schedule.html', context=o)
 
 
