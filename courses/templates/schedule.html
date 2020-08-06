@@ -57,11 +57,11 @@
   <div class="description">{{ meeting.description|markdown:"unsanitized" }}</div>
   {% if user_is_authorized %}
   {% if meeting.slides %}
-  <p>Download <a href="{{ meeting.slides.url }}">slides</a> for this class.</p>
+  <p>Download <a href="{{ meeting.slides.url }}">slides</a> for this meeting.</p>
   {% endif %}
   {% endif %}
   {% if meeting.has_readings %}
-  <p>To read <strong>before</strong> this class:</p>
+  <p>To read <strong>before</strong> this meeting:</p>
   <ol class="readings">
     {% for reading in meeting.required_reading_list %}
     {% include "reading_assignment.include" %}
