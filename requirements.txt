@@ -3,7 +3,7 @@ bleach==3.1.5
 bleach-whitelist==0.0.10
 gdata==2.0.18
 isodate==0.6.0
-pip-tools==5.1.2
+pip-tools==5.3.1
 Markdown==3.2.2
 pytz==2020.1
 smartypants==2.0.1
