@@ -8,8 +8,23 @@ from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 
 import bleach
-from bleach_allowlist import markdown_tags, markdown_attrs
 
+markdown_tags = [
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "b", "i", "strong", "em", "tt",
+    "p", "br",
+    "span", "div", "blockquote", "code", "pre", "hr",
+    "ul", "ol", "li", "dd", "dt",
+    "img",
+    "a",
+    "sub", "sup",
+]
+
+markdown_attrs = {
+    "*": ["id"],
+    "img": ["src", "alt", "title"],
+    "a": ["href", "alt", "title"],
+}
 
 register = template.Library()
 
