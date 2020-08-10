@@ -18,6 +18,9 @@ course_patterns = [
         r'^assignments/$',
         views.assignments, name='course_assignments_view'),
     re_path(
+        r'^milestones/$',
+        views.milestones, name='course_milestones_view'),
+    re_path(
         r'^grades/$',
         views.grades, name='course_grades_view'),
 ]

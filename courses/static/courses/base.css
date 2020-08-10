@@ -162,6 +162,10 @@ img { display: block; margin: auto; }
     color: #666;
     font-style: italic;
 }
+.passed {
+    color: #757575;
+    text-decoration: line-through;
+}
 
 /* Layout */
 

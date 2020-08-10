@@ -10,6 +10,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db.models import Count
 from zipfile import ZipFile, BadZipfile
 from io import StringIO, BytesIO
+from collections import namedtuple
 import datetime
 import csv
 import magic
@@ -36,7 +37,7 @@ def schedule(request, slug, year, semester):
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
     o['meetings'] = list(o['course'].meetings.all())
-    o['holidays'] = list(o['course'].holidays.all())
+    o['milestones'] = list(o['course'].milestones.all())
     assignments = {}
     for i, assignment in enumerate(
             o['course'].assignments.filter(due_date__isnull=False)
@@ -46,7 +47,7 @@ def schedule(request, slug, year, semester):
         assignments_due.append(assignment)
         assignments[assignment.due_date] = assignments_due
     o['in_flux'] = False
-    o['schedule'] = o['meetings'] + o['holidays']
+    o['schedule'] = o['meetings'] + o['milestones']
     o['schedule'].sort(key=lambda x: x.date)
     today = datetime.date.today()
     need_next = True
@@ -61,6 +62,36 @@ def schedule(request, slug, year, semester):
     o['user_is_authorized'] = o['course'].is_authorized(request.user)
     o['unit_counter'] = functools.partial(next, itertools.count(start=1))
     return render(request, 'schedule.html', context=o)
+
+
+milestone = namedtuple('milestone', ['date', 'name', 'url', 'passed'])
+
+
+def milestones(request, slug, year, semester):
+    o = {}
+    o['course'] = get_object_or_404(
+        Course, slug=slug, year=year, semester=semester)
+
+    milestones = []
+
+    today = datetime.date.today()
+
+    for m in o['course'].milestones.all():
+        milestones.append(milestone(m.date, m.name, None, today > m.date))
+
+    for a in o['course'].assignments.filter(due_date__isnull=False):
+        milestones.append(milestone(
+            a.due_date,
+            f"{a.title} due",
+            a.get_absolute_url() if a.is_handed_out else None,
+            today > a.due_date
+        ))
+
+    milestones.sort(key=lambda x: x.date)
+
+    o['milestones'] = milestones
+
+    return render(request, 'milestones.html', context=o)
 
 
 def guidelines(request, slug, year, semester):

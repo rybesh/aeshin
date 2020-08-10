@@ -187,14 +187,14 @@ class Unit(models.Model):
         return self.title
 
 
-class Holiday(models.Model):
+class Milestone(models.Model):
     course = models.ForeignKey(
-        'Course', related_name='holidays', on_delete=models.CASCADE)
+        'Course', related_name='milestones', on_delete=models.CASCADE)
     date = models.DateField()
     name = models.CharField(max_length=80)
 
-    def is_holiday(self):
-        return True  # For mixing holidays and meetings in schedule lists
+    def is_milestone(self):
+        return True  # For mixing milestones and meetings in schedule lists
 
     def __str__(self):
         return u'%s: %s' % (self.date.strftime('%m-%d'), self.name)

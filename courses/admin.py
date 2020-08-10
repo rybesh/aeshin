@@ -1,7 +1,7 @@
 from .models import (
     Assignment,
     Course,
-    Holiday,
+    Milestone,
     Instructor,
     Meeting,
     Unit,
@@ -27,8 +27,8 @@ class ReadingForm(ModelForm):
                   'ignore_citation_url']
 
 
-class HolidayInline(admin.StackedInline):
-    model = Holiday
+class MilestoneInline(admin.StackedInline):
+    model = Milestone
     extra = 0
 
 
@@ -39,7 +39,7 @@ class ReadingAssignmentInline(admin.StackedInline):
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'is_current')
-    inlines = (HolidayInline,)
+    inlines = (MilestoneInline,)
     prepopulated_fields = {'slug': ('number',)}
     filter_horizontal = ('students',)
     ordering = ('is_archived',)

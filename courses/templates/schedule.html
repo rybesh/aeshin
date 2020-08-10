@@ -27,17 +27,13 @@
 {% endif %}
 {% endif %}
 <h4 id="on-{{ entry.date|date:"m-d" }}">
-{% if entry.is_holiday %}
-{% with entry as holiday %}
+{% if entry.is_milestone %}
+{% with entry as milestone %}
   <!--<a href="#">-->
-    <span class="date">{{ holiday.date|date:"F j" }}</span><br/>
-    <span class="title">{{ holiday.name }}</span>
+    <span class="date">{{ milestone.date|date:"F j" }}</span><br/>
+    <span class="title">{{ milestone.name }}</span>
   <!--</a>-->
 </h4>
-<div>
-  <p>No class.</p>
-  {% include "assignments_due.include" with assignments_due=holiday.assignments_due %}
-</div>
 {% endwith %}
 {% else %}
 {% with entry as meeting %}
