@@ -35,11 +35,11 @@
           {% endif %}
           {% endwith %}
         </ul>
-      </nav>    
+      </nav>
       <header>
         <h1>{{ course.title }}</h1>
         <h2>
-          {{ course.department }}, {{ course.number }}, 
+          {{ course.department }}, {{ course.number }},
           {{ course.get_semester_display }} {{ course.get_year_display }}
         </h2>
       </header>
@@ -52,5 +52,5 @@
       {% endif %}
       {% block content %}{% endblock %}
     </div>
-  </body>   
+  </body>
 </html>
