@@ -5,18 +5,7 @@
 {% block content %}
 <div id="accordion">
 {% for milestone in milestones %}
-<h4 id="on-{{ entry.date|date:"m-d" }}">
-<span class="date">{{ milestone.date|date:"F j" }}</span><br/>
-{% if milestone.url and not milestone.passed %}
-<a href="{{ milestone.url }}">
-  <span class="title">{{ milestone.name }}</span>
-</a>
-{% else %}
-<span
-  class="title{% if milestone.passed %} passed{% endif %}">
-{{ milestone.name }}
-</span>
-{% endif %}
+{% include "milestone.include" %}
 {% endfor %}
 </div>
 {% endblock %}

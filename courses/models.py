@@ -5,8 +5,19 @@ from django.utils.safestring import mark_safe
 from shared import bibutils
 from shared.utils import truncate
 from django.utils import timezone
+from types import SimpleNamespace
 import datetime
 import re
+
+
+def milestone(date, name, url, passed, is_milestone=True):
+    m = SimpleNamespace()
+    m.date = date
+    m.name = name
+    m.url = url
+    m.passed = passed
+    m.is_milestone = is_milestone
+    return m
 
 
 class Department(models.Model):
@@ -100,6 +111,27 @@ class Course(models.Model):
             end_month = 7
         return (datetime.date(self.year, start_month, start_day),
                 datetime.date(self.year, end_month, end_day))
+
+    def get_milestones(self):
+        milestones = []
+        today = datetime.date.today()
+
+        for m in self.milestones.all():
+            milestones.append(milestone(
+                m.date, m.name, None, today > m.date, True
+            ))
+
+        for a in self.assignments.filter(due_date__isnull=False):
+            milestones.append(milestone(
+                a.due_date,
+                f"{a.title} due",
+                a.get_absolute_url() if a.is_handed_out else None,
+                today > a.due_date
+            ))
+
+        milestones.sort(key=lambda x: x.date)
+
+        return milestones
 
     def get_absolute_url(self):
         return reverse('course_info_view', kwargs={

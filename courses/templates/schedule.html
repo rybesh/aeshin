@@ -26,21 +26,15 @@
 </div>
 {% endif %}
 {% endif %}
-<h4 id="on-{{ entry.date|date:"m-d" }}">
 {% if entry.is_milestone %}
 {% with entry as milestone %}
-  <!--<a href="#">-->
-    <span class="date">{{ milestone.date|date:"F j" }}</span><br/>
-    <span class="title">{{ milestone.name }}</span>
-  <!--</a>-->
-</h4>
+{% include "milestone.include" %}
 {% endwith %}
 {% else %}
 {% with entry as meeting %}
-  <!--<a href="#">-->
-    <span class="date">{{ meeting.date|date:"F j" }}</span><br/>
-    <span class="title">{{ meeting.title|typogrify }}</span>
-  <!--</a>-->
+<h4 id="on-{{ meeting.date|date:"m-d" }}">
+  <span class="date">{{ meeting.date|date:"F j" }}</span><br/>
+  <span class="title">{{ meeting.title|typogrify }}</span>
 </h4>
 <div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">
   {% filter typogrify %}

@@ -10,7 +10,6 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db.models import Count
 from zipfile import ZipFile, BadZipfile
 from io import StringIO, BytesIO
-from collections import namedtuple
 import datetime
 import csv
 import magic
@@ -37,8 +36,8 @@ def schedule(request, slug, year, semester):
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
     o['meetings'] = list(o['course'].meetings.all())
-    o['milestones'] = list(o['course'].milestones.all())
     assignments = {}
+    o['milestones'] = o['course'].get_milestones()
     for i, assignment in enumerate(
             o['course'].assignments.filter(due_date__isnull=False)
     ):
@@ -47,8 +46,13 @@ def schedule(request, slug, year, semester):
         assignments_due.append(assignment)
         assignments[assignment.due_date] = assignments_due
     o['in_flux'] = False
-    o['schedule'] = o['meetings'] + o['milestones']
-    o['schedule'].sort(key=lambda x: x.date)
+
+    schedule = {}
+    # don't show milestones that coincide with meetings
+    for x in (o['milestones'] + o['meetings']):
+        schedule[x.date] = x
+    o['schedule'] = sorted(schedule.values(), key=lambda x: x.date)
+
     today = datetime.date.today()
     need_next = True
     for i, item in enumerate(o['schedule']):
@@ -64,32 +68,11 @@ def schedule(request, slug, year, semester):
     return render(request, 'schedule.html', context=o)
 
 
-milestone = namedtuple('milestone', ['date', 'name', 'url', 'passed'])
-
-
 def milestones(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
-
-    milestones = []
-
-    today = datetime.date.today()
-
-    for m in o['course'].milestones.all():
-        milestones.append(milestone(m.date, m.name, None, today > m.date))
-
-    for a in o['course'].assignments.filter(due_date__isnull=False):
-        milestones.append(milestone(
-            a.due_date,
-            f"{a.title} due",
-            a.get_absolute_url() if a.is_handed_out else None,
-            today > a.due_date
-        ))
-
-    milestones.sort(key=lambda x: x.date)
-
-    o['milestones'] = milestones
+    o['milestones'] = o['course'].get_milestones()
 
     return render(request, 'milestones.html', context=o)
 
