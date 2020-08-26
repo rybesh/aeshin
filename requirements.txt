@@ -1,6 +1,6 @@
 Django==3.1
 bleach==3.1.5
-bleach-allowlist==1.0.2
+bleach-allowlist==1.0.3
 gdata==2.0.18
 isodate==0.6.0
 pip-tools==5.3.1
