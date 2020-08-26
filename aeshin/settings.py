@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'shared',
     'courses',
     'files',
+    'shuffle',
 )
 
 # security --------------------------------------------------------------------
