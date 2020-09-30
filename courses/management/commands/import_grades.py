@@ -23,17 +23,18 @@ class Command(MyBaseCommand):
 
         with open(options['grades'], newline='') as csvfile:
             for row in csv.reader(csvfile):
-                username, grade, comments = row
+                username, grade, comments = row[:3]
                 try:
                     submitter = User.objects.get(username=username)
-                    submission = Submission(
+                    submission = Submission.objects.get_or_create(
                         assignment=assignment,
                         submitter=submitter,
-                        comments=comments)
+                    )
                     if str.isnumeric(grade):
                         submission.grade = float(grade)
                     else:
                         submission.letter_grade = grade
+                    submission.comments = comments
                     submission.save()
                 except User.DoesNotExist:  # pylint: disable=E1101
                     raise CommandError('Cannot find user: %s ' % username)
