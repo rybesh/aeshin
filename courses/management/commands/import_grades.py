@@ -22,6 +22,8 @@ class Command(MyBaseCommand):
         assignment = self.input_assignment(course)
 
         with open(options['grades'], newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            next(reader)  # skip header
             for row in csv.reader(csvfile):
                 username, grade, comments = row[:3]
                 try:
