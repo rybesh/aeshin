@@ -28,7 +28,7 @@ class Command(MyBaseCommand):
                 username, grade, comments = row[:3]
                 try:
                     submitter = User.objects.get(username=username)
-                    submission = Submission.objects.get_or_create(
+                    submission, created = Submission.objects.get_or_create(
                         assignment=assignment,
                         submitter=submitter,
                     )
