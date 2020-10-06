@@ -32,7 +32,7 @@ class Command(MyBaseCommand):
                         assignment=assignment,
                         submitter=submitter,
                     )
-                    if str.isnumeric(grade):
+                    if str.isdigit(grade.replace('.', '')):
                         submission.grade = float(grade)
                     else:
                         submission.letter_grade = grade
