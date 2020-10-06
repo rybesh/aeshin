@@ -522,7 +522,10 @@ class ReadingSummary(models.Model):
         'Reading',
         related_name='summaries',
         on_delete=models.PROTECT)
-    summarizer = models.ForeignKey(User, on_delete=models.PROTECT)
+    summarizer = models.ForeignKey(
+        User,
+        related_name='summaries',
+        on_delete=models.PROTECT)
     file = models.FileField(upload_to='courses/readings')
 
     def __str__(self):

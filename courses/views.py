@@ -399,4 +399,8 @@ def grades(request, slug, year, semester):
             data['median'] = '%s / %s' % (
                 median(grades.values()), assignment.points)
         o['assignments'].append(data)
+
+    summaries = o['student'].summaries.all()
+    o['summaries'] = summaries if len(summaries) > 0 else None
+
     return render(request, 'grades.html', context=o)
