@@ -34,9 +34,9 @@ class Command(MyBaseCommand):
                     )
                     if str.isdigit(grade.replace('.', '')):
                         submission.grade = float(grade)
-                        submission.letter_grade = None
+                        submission.letter_grade = ''
                     else:
-                        submission.grade = None
+                        submission.grade = 0.0
                         submission.letter_grade = grade
                     submission.comments = comments
                     submission.save()
