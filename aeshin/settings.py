@@ -42,10 +42,10 @@ ADMINS = (
     ('Ryan Shaw', 'ryanshaw@unc.edu'),
 )
 MANAGERS = ADMINS
-DEFAULT_FROM_EMAIL = 'Ryan Shaw <ryanshaw@unc.edu>'
+DEFAULT_FROM_EMAIL = 'aeshin.org <no-reply@aeshin.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-EMAIL_HOST = 'smtp.office365.com'
-EMAIL_HOST_USER = 'ryanshaw@ad.unc.edu'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST_USER = 'postmaster@kimyuenikk.aeshin.org'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
