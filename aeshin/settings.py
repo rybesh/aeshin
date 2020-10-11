@@ -25,7 +25,13 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': False,
         },
     },
     'loggers': {
@@ -33,13 +39,17 @@ LOGGING = {
             'handlers': ['console'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+        },
     },
 }
 
 # email -----------------------------------------------------------------------
 
 ADMINS = (
-    ('Ryan Shaw', 'ryanshaw@unc.edu'),
+    ('Ryan Shaw', 'rieyin@icloud.com'),
 )
 MANAGERS = ADMINS
 DEFAULT_FROM_EMAIL = 'aeshin.org <no-reply@aeshin.org>'
