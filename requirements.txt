@@ -4,7 +4,7 @@ bleach-allowlist==1.0.3
 gdata==2.0.18
 isodate==0.6.0
 pip-tools==5.3.1
-Markdown==3.2.2
+Markdown==3.3.1
 pytz==2020.1
 smartypants==2.0.1
 python-magic==0.4.18
