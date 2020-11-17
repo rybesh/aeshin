@@ -100,8 +100,11 @@ def assignments(request, slug, year, semester):
 
 class SubmissionForm(forms.Form):
     upload = forms.FileField(
-        help_text='Please upload a either a PDF, or a single zip archive'
-        + ' containing all the required files for this assignment.')
+        help_text='''
+        Please upload a either a PDF, or a single zip archive
+        containing all the required files for this assignment.
+        '''
+    )
 
 
 def handleZipUpload(request, assignment, zipfile):
@@ -136,8 +139,8 @@ def submit_assignment(request, assignment_id):
     o = {}
 
     o['assignment'] = get_object_or_404(Assignment, id=assignment_id)
-    if not (o['assignment'].is_handed_out and
-            o['assignment'].is_submitted_online):
+    if not (o['assignment'].is_handed_out
+            and o['assignment'].is_submitted_online):
         raise Http404
 
     o['course'] = o['assignment'].course
@@ -188,8 +191,8 @@ def submit_assignment(request, assignment_id):
 def review_assignment(request, assignment_id):
 
     assignment = get_object_or_404(Assignment, id=assignment_id)
-    if not (assignment.is_handed_out and
-            assignment.is_submitted_online):
+    if not (assignment.is_handed_out
+            and assignment.is_submitted_online):
         raise Http404
 
     if not assignment.course.is_authorized(request.user):
@@ -323,7 +326,7 @@ def median(pool):
     if size % 2 == 1:
         return copy[int((size - 1) / 2)]
     else:
-        return (copy[int(size/2 - 1)] + copy[int(size/2)]) / 2
+        return (copy[int(size / 2 - 1)] + copy[int(size / 2)]) / 2
 
 
 def grades_csv(course):
@@ -374,7 +377,7 @@ def grades(request, slug, year, semester):
 
     def setdefault(username):
         return counts.setdefault(username, {
-                'discussion_count': 0, 'post_count': 0, 'comment_count': 0})
+            'discussion_count': 0, 'post_count': 0, 'comment_count': 0})
     for leader in ReadingAssignment.objects\
             .filter(meeting__course=o['course'])\
             .values_list('discussion_leader__username', flat=True):

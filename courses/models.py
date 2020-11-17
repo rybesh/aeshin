@@ -250,9 +250,9 @@ class Assignment(models.Model):
 
     def get_absolute_url(self):
         return (reverse('course_assignments_view', kwargs={
-                    'slug': self.course.slug,
-                    'semester': self.course.semester,
-                    'year': self.course.year}) + '#' + self.slug)
+            'slug': self.course.slug,
+            'semester': self.course.semester,
+            'year': self.course.year}) + '#' + self.slug)
 
     def get_submit_url(self):
         return (reverse('course_submit_assignment_view', kwargs={
