@@ -531,6 +531,9 @@ class ReadingSummary(models.Model):
     def __str__(self):
         return u'Summary of %s by %s' % (self.reading, self.summarizer)
 
+    class Meta:
+        verbose_name_plural = "reading summaries"
+
 
 class ReadingAssignment(models.Model):
     meeting = models.ForeignKey(
