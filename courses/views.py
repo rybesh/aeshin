@@ -328,8 +328,8 @@ def median(pool):
 
 def grades_csv(course):
     assignments = course.assignments.filter(is_graded=True)
-    table = [['Name'] + [a.title for a in assignments]]
-    for s in course.students.filter(is_active=True):
+    table = [['Name'] + [a.title for a in assignments] + ['Extra credit']]
+    for s in course.students.filter(is_active=True).order_by('last_name'):
         row = [s.get_full_name()]
         for a in assignments:
             try:
@@ -339,10 +339,13 @@ def grades_csv(course):
                 row.append(grade)
             except Submission.DoesNotExist:
                 row.append('')
+        row.append(s.summaries.count())
         table.append(row)
     buf = StringIO()
     csv.writer(buf).writerows(table)
-    return HttpResponse(buf.getvalue(), 'text/csv')
+    response = HttpResponse(buf.getvalue(), content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="grades.csv"'
+    return response
 
 
 @login_required
@@ -350,12 +353,16 @@ def grades(request, slug, year, semester):
     o = {}
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
-    if request.user.is_superuser:
+    if request.user.is_staff:
         if 'username' in request.GET:
             o['student'] = get_object_or_404(
                 User, username=request.GET['username'])
-        else:
+        elif 'csv' in request.GET:
             return grades_csv(o['course'])
+        else:
+            o['students'] = (o['course'].students
+                             .filter(is_active=True).order_by('last_name'))
+            return render(request, 'all-grades.html', context=o)
     elif o['course'].has_student(request.user):
         o['student'] = request.user
     else:

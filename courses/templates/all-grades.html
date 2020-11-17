@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load markdown typogrify %}
+
+{% block title %}: Grades{% endblock %}
+
+{% block content %}
+<p>
+<a href="?csv">
+Download all grades as CSV.
+</a>
+</p>
+<ol>
+{% for student in students %}
+<li>
+<a href="?username={{ student.username }}">
+{{ student.get_full_name }}
+</a>
+</li>
+{% endfor %}
+<ol>
+{% endblock %}
