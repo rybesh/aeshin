@@ -331,9 +331,11 @@ def median(pool):
 
 def grades_csv(course):
     assignments = course.assignments.filter(is_graded=True)
-    table = [['Name'] + [a.title for a in assignments] + ['Extra credit']]
+    table = [['Name', 'Username']
+             + [a.title for a in assignments]
+             + ['Extra credit']]
     for s in course.students.filter(is_active=True).order_by('last_name'):
-        row = [s.get_full_name()]
+        row = [s.get_full_name(), s.username]
         for a in assignments:
             try:
                 submission = a.submissions.get(submitter=s)
