@@ -1,3 +1,5 @@
+{% load markdown  %}
+
 <h4 id="on-{{ milestone.date|date:"m-d" }}">
 <span class="date">{{ milestone.date|date:"F j" }}</span><br/>
 {% if milestone.url and not milestone.passed %}
@@ -9,4 +11,9 @@
   class="title{% if milestone.passed %} passed{% endif %}">
 {{ milestone.name }}
 </span>
+{% endif %}
+{% if show_description %}
+<div>
+{{ milestone.description|markdown:"unsanitized" }}
+</div>
 {% endif %}

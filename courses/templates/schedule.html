@@ -22,12 +22,17 @@
 {% endif %}
 {% if entry.is_milestone %}
 {% with entry as milestone %}
-{% include "milestone.include" %}
+<div class="highlight">
+{% include "milestone.include" with show_description=True %}
 {% endwith %}
+</div>
 {% else %}
 {% with entry as meeting %}
 <h4 id="on-{{ meeting.date|date:"m-d" }}">
-  <span class="date">{{ meeting.date|date:"F j" }}</span><br/>
+  <span class="date">
+    {% if course.is_weekly %}Week starting{% endif %}
+    {{ meeting.date|date:"F j" }}
+  </span><br/>
   <span class="title">{{ meeting.title|typogrify }}</span>
 </h4>
 <div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">

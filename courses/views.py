@@ -47,11 +47,8 @@ def schedule(request, slug, year, semester):
         assignments[assignment.due_date] = assignments_due
     o['in_flux'] = False
 
-    schedule = {}
-    # don't show milestones that coincide with meetings
-    for x in (o['milestones'] + o['meetings']):
-        schedule[x.date] = x
-    o['schedule'] = sorted(schedule.values(), key=lambda x: x.date)
+    schedule = o['milestones'] + o['meetings']
+    o['schedule'] = sorted(schedule, key=lambda x: x.date)
 
     today = datetime.date.today()
     need_next = True

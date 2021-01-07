@@ -10,13 +10,14 @@ import datetime
 import re
 
 
-def milestone(date, name, url, passed, is_milestone=True):
+def milestone(date, name, url, passed, description=''):
     m = SimpleNamespace()
     m.date = date
     m.name = name
     m.url = url
     m.passed = passed
-    m.is_milestone = is_milestone
+    m.description = description
+    m.is_milestone = True
     return m
 
 
@@ -78,6 +79,7 @@ class Course(models.Model):
     how_to_succeed = models.TextField(blank=True)
     thanks = models.TextField(blank=True)
     is_archived = models.BooleanField(default=False)
+    is_weekly = models.BooleanField(default=False)
     blog_slug = models.CharField(max_length=20, blank=True)
     forum = models.URLField(blank=True)
 
@@ -118,7 +120,11 @@ class Course(models.Model):
 
         for m in self.milestones.all():
             milestones.append(milestone(
-                m.date, m.name, None, today > m.date, True
+                m.date,
+                m.name,
+                None,
+                today > m.date,
+                m.description,
             ))
 
         for a in self.assignments.filter(due_date__isnull=False):
@@ -128,6 +134,11 @@ class Course(models.Model):
                 a.get_absolute_url() if a.is_handed_out else None,
                 today > a.due_date
             ))
+            if a.available_date is not None:
+                a.available_date,
+                f"{a.title} handed out",
+                a.get_absolute_url() if a.is_handed_out else None,
+                today > a.available_date
 
         milestones.sort(key=lambda x: x.date)
 
@@ -224,9 +235,7 @@ class Milestone(models.Model):
         'Course', related_name='milestones', on_delete=models.CASCADE)
     date = models.DateField()
     name = models.CharField(max_length=80)
-
-    def is_milestone(self):
-        return True  # For mixing milestones and meetings in schedule lists
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return u'%s: %s' % (self.date.strftime('%m-%d'), self.name)
@@ -239,7 +248,8 @@ class Assignment(models.Model):
     course = models.ForeignKey(
         'Course', related_name='assignments', on_delete=models.CASCADE)
     slug = models.SlugField()
-    due_date = models.DateField(blank=True)
+    due_date = models.DateField(null=True, blank=True)
+    available_date = models.DateField(null=True, blank=True)
     title = models.CharField(max_length=80)
     description = models.TextField()
     points = models.IntegerField(default=0)
