@@ -37,7 +37,6 @@
 </h4>
 <div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">
   {% filter typogrify %}
-  {% include "assignments_due.include" with assignments_due=meeting.assignments_due %}
   {% if meeting.word_count %}
   <p class="word-count">
   Total amount of required reading for this week: {{ meeting.word_count }} words

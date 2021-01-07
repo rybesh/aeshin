@@ -36,15 +36,8 @@ def schedule(request, slug, year, semester):
     o['course'] = get_object_or_404(
         Course, slug=slug, year=year, semester=semester)
     o['meetings'] = list(o['course'].meetings.all())
-    assignments = {}
+
     o['milestones'] = o['course'].get_milestones()
-    for i, assignment in enumerate(
-            o['course'].assignments.filter(due_date__isnull=False)
-    ):
-        assignment.number = (i + 1)
-        assignments_due = assignments.get(assignment.due_date, [])
-        assignments_due.append(assignment)
-        assignments[assignment.due_date] = assignments_due
     o['in_flux'] = False
 
     schedule = o['milestones'] + o['meetings']
@@ -53,7 +46,6 @@ def schedule(request, slug, year, semester):
     today = datetime.date.today()
     need_next = True
     for i, item in enumerate(o['schedule']):
-        item.assignments_due = assignments.get(item.date, [])
         if hasattr(item, 'is_tentative') and item.is_tentative:
             o['in_flux'] = True
         if need_next and item.date >= today:

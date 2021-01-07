@@ -1,9 +1,0 @@
-  {% for assignment in assignments_due %}
-  <p class="assignment-due">
-    {% if assignment.is_handed_out %}
-    <a href="{{ assignment.get_absolute_url }}">{{ assignment.title }} due</a>
-    {% else %}
-    {{ assignment.title }} due
-    {% endif %}
-  </p>
-  {% endfor %}

@@ -135,10 +135,12 @@ class Course(models.Model):
                 today > a.due_date
             ))
             if a.available_date is not None:
-                a.available_date,
-                f"{a.title} handed out",
-                a.get_absolute_url() if a.is_handed_out else None,
-                today > a.available_date
+                milestones.append(milestone(
+                    a.available_date,
+                    f"{a.title} handed out",
+                    a.get_absolute_url() if a.is_handed_out else None,
+                    today > a.available_date
+                ))
 
         milestones.sort(key=lambda x: x.date)
 
