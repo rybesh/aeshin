@@ -341,7 +341,6 @@ def grades_csv(course):
                 row.append(grade)
             except Submission.DoesNotExist:
                 row.append('')
-        row.append(s.summaries.count())
         table.append(row)
     buf = StringIO()
     csv.writer(buf).writerows(table)
@@ -408,8 +407,5 @@ def grades(request, slug, year, semester):
             data['median'] = '%s / %s' % (
                 median(grades.values()), assignment.points)
         o['assignments'].append(data)
-
-    summaries = o['student'].summaries.all()
-    o['summaries'] = summaries if len(summaries) > 0 else None
 
     return render(request, 'grades.html', context=o)
