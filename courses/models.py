@@ -179,6 +179,8 @@ class Meeting(models.Model):
     is_tentative = models.BooleanField(default=True)
     slides = models.FileField(upload_to=upload_to, blank=True, null=True)
 
+    is_milestone = False  # for sorting with milestones
+
     def has_readings(self):
         return len(self.readings.all()) > 0
 

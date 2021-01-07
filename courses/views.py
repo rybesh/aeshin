@@ -48,7 +48,7 @@ def schedule(request, slug, year, semester):
     o['in_flux'] = False
 
     schedule = o['milestones'] + o['meetings']
-    o['schedule'] = sorted(schedule, key=lambda x: x.date)
+    o['schedule'] = sorted(schedule, key=lambda x: (x.date, x.is_milestone))
 
     today = datetime.date.today()
     need_next = True
