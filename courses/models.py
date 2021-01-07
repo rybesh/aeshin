@@ -507,32 +507,11 @@ class Reading(models.Model):
             return None
         return '{:,}'.format(self.centiwords * 100)
 
-    def has_summaries(self):
-        return len(self.summaries.all()) > 0
-
     def __str__(self):
         return truncate(self.citation_text)
 
     class Meta:
         ordering = ('citation_text',)
-
-
-class ReadingSummary(models.Model):
-    reading = models.ForeignKey(
-        'Reading',
-        related_name='summaries',
-        on_delete=models.PROTECT)
-    summarizer = models.ForeignKey(
-        User,
-        related_name='summaries',
-        on_delete=models.PROTECT)
-    file = models.FileField(upload_to='courses/readings')
-
-    def __str__(self):
-        return u'Summary of %s by %s' % (self.reading, self.summarizer)
-
-    class Meta:
-        verbose_name_plural = "reading summaries"
 
 
 class ReadingAssignment(models.Model):

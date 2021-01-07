@@ -7,7 +7,6 @@ from .models import (
     Unit,
     Reading,
     ReadingAssignment,
-    ReadingSummary,
     Submission,
     User,
     PeerReviewSession,
@@ -132,7 +131,6 @@ admin.site.register(Course, CourseAdmin)
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(Unit, UnitAdmin)
 admin.site.register(Reading, ReadingAdmin)
-admin.site.register(ReadingSummary)
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Submission, SubmissionAdmin)
 admin.site.register(Instructor)

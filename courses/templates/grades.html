@@ -35,12 +35,4 @@
 {% else %}
 <p>Nothing to see here yet.</p>
 {% endif %}
-{% if summaries %}
-<h3>Extra credit reading summaries</h3>
-<ol>
-{% for summary in summaries %}
-  <li>{{ summary.reading }}</li>
-{% endfor %}
-<ol>
-{% endif %}
 {% endblock %}

@@ -18,15 +18,4 @@
         </div>
       </details>
       {% endif %}
-      {% if reading.has_summaries %}
-      <details>
-        <summary><span class="tips">Student-authored summaries</span></summary>
-        <ol class="readings">
-        {% for summary in reading.summaries.all %}
-           <li><a href="{{ summary.file.url }}">
-           Summary #{{ forloop.counter }}</a></li>
-        {% endfor %}
-        </ol>
-      </details>
-      {% endif %}
     </li>
