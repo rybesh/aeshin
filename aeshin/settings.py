@@ -115,9 +115,6 @@ ALLOWED_HOSTS = [
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [
-        os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates')),
-    ],
     'APP_DIRS': True,
     'OPTIONS': {
         'context_processors': [
@@ -150,9 +147,6 @@ SITE_ID = 1
 
 STATIC_ROOT = os.path.join(WWW_ROOT, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.abspath(os.path.join(os.path.dirname(__file__), 'static')),
-)
 
 # shared ----------------------------------------------------------------------
 
