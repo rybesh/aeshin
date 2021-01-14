@@ -39,7 +39,9 @@
   {% filter typogrify %}
   {% if meeting.word_count %}
   <p class="word-count">
-  Total amount of required reading for this week: {{ meeting.word_count }} words
+  Total amount of required reading for this
+  {% if course.is_weekly %}week{% else %}meeting{% endif %}:
+  {{ meeting.word_count }} words
   </p>
   {% endif %}
   <div class="description">{{ meeting.description|markdown:"unsanitized" }}</div>
