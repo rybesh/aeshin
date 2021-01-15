@@ -210,10 +210,12 @@ class Meeting(models.Model):
             return None
         centiwords = 0
         for reading in self.required_reading_list():
-            if not reading.centiwords:
-                return None
-            centiwords += reading.centiwords
-        return '{:,}'.format(centiwords * 100)
+            if reading.centiwords:
+                centiwords += reading.centiwords
+        if centiwords > 0:
+            return '{:,}'.format(centiwords * 100)
+        else:
+            return None
 
     def __str__(self):
         return u'%s: %s' % (self.date.strftime('%m-%d'), self.title)
