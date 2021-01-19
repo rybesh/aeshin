@@ -30,6 +30,7 @@
           <li><a href="{{ course_url }}thanks/">Thanks.</a></li>
           {% if user.is_authenticated %}
           <li><a href="{{ course_url }}grades/">Grades.</a></li>
+          <li><a href="{% url 'logout' %}">Log out.</a></li>
           {% else %}
           <li><a href="{% url 'login' %}?next={{ request.path }}">Log in.</a></li>
           {% endif %}

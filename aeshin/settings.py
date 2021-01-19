@@ -89,6 +89,11 @@ WSGI_APPLICATION = 'aeshin.wsgi.application'
 # models ----------------------------------------------------------------------
 
 INSTALLED_APPS = (
+    'aeshin',
+    'shared',
+    'courses',
+    'files',
+    'shuffle',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -96,11 +101,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'aeshin',
-    'shared',
-    'courses',
-    'files',
-    'shuffle',
 )
 
 # security --------------------------------------------------------------------
