@@ -20,14 +20,7 @@
           <li><a href="{{ course_url }}schedule/{% if not course.is_archived %}#next{% endif %}">Schedule.</a></li>
           <li><a href="{{ course_url }}assignments/">Assignments.</a></li>
           <li><a href="{{ course_url }}milestones/">Milestones.</a></li>
-          {% if course.has_forum %}
-          <li><a target="_blank" href="{{ course.forum }}">Wikis.</a></li>
-          {% endif %}
-          {% if course.has_blog %}
-          <li><a href="/courses/{{ course.blog_slug }}/blog/">Blog.</a></li>
-          {% endif %}
           <li><a href="{{ course_url }}guidelines/">Guidelines.</a></li>
-          <li><a href="{{ course_url }}thanks/">Thanks.</a></li>
           {% if user.is_authenticated %}
           <li><a href="{{ course_url }}grades/">Grades.</a></li>
           <li><a href="{% url 'logout' %}">Log out.</a></li>
