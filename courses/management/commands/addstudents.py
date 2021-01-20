@@ -8,13 +8,6 @@ from html.parser import HTMLParser
 import csv
 
 
-def parse_csv(filename):
-    for row in csv.DictReader(open(filename, 'rb')):
-        last_name, first_name = row['Name'].split(',')
-        email = row['Email']
-        yield (last_name, first_name, email)
-
-
 class TableReader(HTMLParser):
     def read(self, f):
         self.tag = None
@@ -23,7 +16,7 @@ class TableReader(HTMLParser):
         self.rows = []
         self.keyindex = 0
         for line in f:
-            self.feed(line.decode('utf8').strip())
+            self.feed(line.strip())
         return self.rows
 
     def handle_starttag(self, tag, attrs):
@@ -71,7 +64,7 @@ class Command(MyBaseCommand):
                 email_list.append(line.strip())
         students = []
         new_count = existing_count = 0
-        for i, row in enumerate(reader(open(roster, 'rb'))):
+        for i, row in enumerate(reader(open(roster, 'rt', encoding='utf8'))):
             try:
                 last_name, first_name = [
                     x.strip() for x in row['Name'].split(',')]
@@ -96,7 +89,7 @@ class Command(MyBaseCommand):
                     student.is_active = True
                     student.save()
                     students.append(student)
-                except IntegrityError as e:
+                except IntegrityError:
                     raise CommandError('Username collision: %s' % username)
             except KeyError as e:
                 raise CommandError('%s is missing a %s value.' % (roster, e))
