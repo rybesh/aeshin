@@ -90,7 +90,7 @@ def assignments(request, slug, year, semester):
 class SubmissionForm(forms.Form):
     upload = forms.FileField(
         help_text='''
-        Please upload a either a PDF, or a single zip archive
+        Please upload either a PDF, or a single zip archive
         containing all the required files for this assignment.
         '''
     )
