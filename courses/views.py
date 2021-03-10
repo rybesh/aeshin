@@ -378,9 +378,12 @@ def grades(request, slug, year, semester):
     o['discussion_median'] = median(
         [v['discussion_count'] for v in counts.values()])
     o['assignments'] = []
-    for assignment in o['course'].assignments.filter(
-            is_handed_out=True, is_graded=True
-    ):
+
+    for assignment in o['course'].assignments.filter(is_handed_out=True):
+
+        if not (assignment.is_graded or request.user.is_staff):
+            continue
+
         grades = {}
         data = {'title': assignment.title}
         for submission in assignment.submissions.all():

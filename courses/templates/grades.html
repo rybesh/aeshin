@@ -17,7 +17,12 @@
     </tr>
 {% for assignment in assignments %}
     <tr>
-      <td><em>{{ assignment.title }}</em></td>
+      <td>
+        <em>{{ assignment.title }}</em>
+        {% if not assignment.is_graded %}
+        <br><strong>Not yet released to student</strong>
+        {% endif %}
+      </td>
       <td>{{ assignment.grade }}</td>
       <td>{{ assignment.median }}</td>
     </tr>
