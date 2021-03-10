@@ -385,7 +385,10 @@ def grades(request, slug, year, semester):
             continue
 
         grades = {}
-        data = {'title': assignment.title}
+        data = {
+            'title': assignment.title,
+            'is_graded': assignment.is_graded
+        }
         for submission in assignment.submissions.all():
             if submission.submitter.username in students:
                 grades[submission.submitter.username] = submission.get_grade()
