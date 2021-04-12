@@ -13,6 +13,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # debugging -------------------------------------------------------------------
 
 DEBUG = False
