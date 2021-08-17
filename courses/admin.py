@@ -100,6 +100,7 @@ class MeetingAdmin(admin.ModelAdmin):
 
 class UnitAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'course')
+    save_as = True
 
 
 class AssignmentAdmin(admin.ModelAdmin):
