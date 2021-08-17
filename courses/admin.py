@@ -65,6 +65,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 class MeetingAdmin(admin.ModelAdmin):
     list_display = ('course', '__str__', 'is_tentative')
+    list_filter = ('course',)
     inlines = (ReadingAssignmentInline,)
     save_as = True
     actions = ['make_tentative', 'finalize']
