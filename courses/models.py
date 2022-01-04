@@ -69,7 +69,7 @@ class Course(models.Model):
     semester = models.CharField(max_length=2, choices=SEMESTER_CHOICES)
     year = models.IntegerField(choices=YEAR_CHOICES)
     times = models.CharField(max_length=64)
-    location = models.CharField(max_length=128)
+    location = models.CharField(max_length=256)
     recitations = models.TextField(blank=True)
     ereserves_id = models.CharField(max_length=8, blank=True)
     description = models.TextField()
