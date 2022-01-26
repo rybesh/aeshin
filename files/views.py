@@ -18,6 +18,8 @@ def sendfile(request, path):
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')  # noqa
     elif path.endswith('.epub'):
         response = HttpResponse(content_type='application/epub+zip')
+    elif path.endswith('.csv'):
+        response = HttpResponse(content_type='text/csv')
     else:
         raise Http404
     Download.objects.create(downloader=request.user, path=path)
