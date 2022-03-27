@@ -44,7 +44,8 @@ table p {
       <td colspan="3">
         {{ assignment.comments|markdown:"unsanitized"|typogrify }}
         {% if assignment.zipfile_url %}
-        <a href="{{ assignment.zipfile_url }}">Download files.</a>
+        <a style="margin-top: 2em"
+           href="{{ assignment.zipfile_url }}">Download files.</a>
         {% endif %}
       </td>
     </tr>
