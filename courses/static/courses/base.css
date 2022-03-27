@@ -339,6 +339,9 @@ summary {
 .tips:hover {
     border-bottom: 1px solid #ef4300;
 }
+pre {
+    margin: 1em;
+}
 
 @media print {
     nav { display: none; }

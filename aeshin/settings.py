@@ -2,7 +2,7 @@ import os
 
 from .secrets import * # noqa
 
-WWW_ROOT = '/var/www/aeshin.org'
+WWW_ROOT = '.'
 
 # database --------------------------------------------------------------------
 
