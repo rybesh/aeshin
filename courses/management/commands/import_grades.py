@@ -37,12 +37,13 @@ class Command(MyBaseCommand):
                         assignment=assignment,
                         submitter=submitter,
                     )
-                    if str.isdigit(row['grade'].replace('.', '')):
-                        submission.grade = float(get(row, 'grade'))
+                    grade = get(row, 'grade')
+                    if str.isdigit(grade.replace('.', '')):
+                        submission.grade = float(grade)
                         submission.letter_grade = ''
                     else:
                         submission.grade = 0.0
-                        submission.letter_grade = get(row, 'grade')
+                        submission.letter_grade = grade
                     try:
                         submission.comments = get(row, 'comment')
                     except:
