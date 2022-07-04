@@ -1,5 +1,5 @@
 Django==4.0.5
-bleach==5.0.0
+bleach==5.0.1
 bleach-allowlist==1.0.3
 gdata==2.0.18
 isodate==0.6.1
