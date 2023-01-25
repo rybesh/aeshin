@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 
 import bleach
 
-markdown_tags = [
+markdown_tags = {
     "h1", "h2", "h3", "h4", "h5", "h6",
     "b", "i", "strong", "em", "tt",
     "p", "br",
@@ -18,7 +18,7 @@ markdown_tags = [
     "img",
     "a",
     "sub", "sup",
-]
+}
 
 markdown_attrs = {
     "*": ["id"],
