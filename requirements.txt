@@ -1,4 +1,4 @@
-Django==4.1.5
+Django==4.1.6
 bleach==6.0.0
 bleach-allowlist==1.0.3
 gdata==2.0.18
