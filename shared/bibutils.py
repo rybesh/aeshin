@@ -12,26 +12,30 @@ logger = logging.getLogger(__name__)
 
 
 def format_zotero_as_html(zotero_item_id):
-    return mark_safe(urlopen(
-            'https://api.zotero.org/groups/%s/items/%s?format=bib'
-            % (settings.ZOTERO_GROUP_ID, zotero_item_id))
-                     .read()
-                     .decode('utf-8')
-                     .replace('<?xml version="1.0"?>', ''))
+    return mark_safe(
+        urlopen(
+            "https://api.zotero.org/groups/%s/items/%s?format=bib"
+            % (settings.ZOTERO_GROUP_ID, zotero_item_id)
+        )
+        .read()
+        .decode("utf-8")
+        .replace('<?xml version="1.0"?>', "")
+    )
 
 
 def zotero_item_to_text(item):
-    if 'title' not in item:
-        raise KeyError('Zotero item missing title')
+    if "title" not in item:
+        raise KeyError("Zotero item missing title")
 
     def name(creator):
-        if 'name' in creator:
-            return creator['name']
-        return '%s %s' % (creator.get('firstName', ''),
-                          creator.get('lastName', ''))
-    return '%s (%s)' % (item['title'],
-                        ', '.join([name(c)
-                                   for c in item.get('creators', [])]))
+        if "name" in creator:
+            return creator["name"]
+        return "%s %s" % (creator.get("firstName", ""), creator.get("lastName", ""))
+
+    return "%s (%s)" % (
+        item["title"],
+        ", ".join([name(c) for c in item.get("creators", [])]),
+    )
 
 
 def format_zotero_as_text(zotero_item_id):
@@ -40,10 +44,13 @@ def format_zotero_as_text(zotero_item_id):
 
 def load_zotero_item(zotero_item_id):
     tree = ElementTree()
-    tree.parse(urlopen(
-            'https://api.zotero.org/groups/%s/items/%s?content=json'
-            % (settings.ZOTERO_GROUP_ID, zotero_item_id)))
-    return json.loads(tree.find('{http://www.w3.org/2005/Atom}content').text)
+    tree.parse(
+        urlopen(
+            "https://api.zotero.org/groups/%s/items/%s?content=json"
+            % (settings.ZOTERO_GROUP_ID, zotero_item_id)
+        )
+    )
+    return json.loads(tree.find("{http://www.w3.org/2005/Atom}content").text)
 
 
 def load_zotero_atom(uri):
@@ -51,29 +58,31 @@ def load_zotero_atom(uri):
     library = []
     try:
         tree.parse(urlopen(uri))
-        for entry in tree.findall('{http://www.w3.org/2005/Atom}entry'):
-            item_type = entry.find('{http://zotero.org/ns/api}itemType').text
-            if item_type == 'attachment':
+        for entry in tree.findall("{http://www.w3.org/2005/Atom}entry"):
+            item_type = entry.find("{http://zotero.org/ns/api}itemType").text
+            if item_type == "attachment":
                 continue
-            key = entry.find('{http://zotero.org/ns/api}key').text
-            content = entry.find('{http://www.w3.org/2005/Atom}content').text
+            key = entry.find("{http://zotero.org/ns/api}key").text
+            content = entry.find("{http://www.w3.org/2005/Atom}content").text
             try:
                 library.append(
-                    (key, truncate(zotero_item_to_text(json.loads(content)))))
+                    (key, truncate(zotero_item_to_text(json.loads(content))))
+                )
             except KeyError:
                 continue
-        for link in tree.findall('{http://www.w3.org/2005/Atom}link'):
-            if link.attrib.get('rel', None) == 'next':
-                library.extend(load_zotero_atom(link.attrib['href']))
+        for link in tree.findall("{http://www.w3.org/2005/Atom}link"):
+            if link.attrib.get("rel", None) == "next":
+                library.extend(load_zotero_atom(link.attrib["href"]))
                 break
     except ExpatError:
         pass
     except ConnectionError:
-        logger.warning('failed to connect to Zotero API')
+        logger.warning("failed to connect to Zotero API")
     return library
 
 
 def load_zotero_library():
     return load_zotero_atom(
-        'https://api.zotero.org/groups/%s/items' % settings.ZOTERO_GROUP_ID
-        + '?content=json&order=title&limit=99')
+        "https://api.zotero.org/groups/%s/items" % settings.ZOTERO_GROUP_ID
+        + "?content=json&order=title&limit=99"
+    )
