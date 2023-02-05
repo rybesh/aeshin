@@ -60,9 +60,6 @@
     {% include "reading_assignment.include" with optional=True %}
     {% endfor %}
   </ol>
-  {% if meeting.has_ereserves %}
-  <p>Readings not linked above are available through <a href="http://eres.lib.unc.edu.libproxy.lib.unc.edu/eres/coursepage.aspx?cid={{ course.ereserves_id }}">ereserves</a>.</p>
-  {% endif %}
   {% endif %}
   {% endfilter %}
 </div>

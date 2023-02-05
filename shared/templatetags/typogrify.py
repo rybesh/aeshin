@@ -8,7 +8,7 @@ register = template.Library()
 
 
 def amp(text):
-    """Wraps apersands in HTML with ``<span class="amp">`` so they can be   # noqa: E501
+    """Wraps apersands in HTML with ``<span class="amp">`` so they can be
     styled with CSS. Apersands are also normalized to ``&amp;``. Requires
     ampersands to have whitespace or an ``&nbsp;`` on both sides.
 
@@ -35,16 +35,21 @@ def amp(text):
     """
     text = force_str(text)
     # it kinda sucks but it fixes the standalone amps in attributes bug
-    tag_pattern = r'</?\w+((\s+\w+(\s*=\s*(?:".*?"|\'.*?\'|[^\'">\s]+))?)+\s*|\s*)/?>'  # noqa: E501
+    tag_pattern = r'</?\w+((\s+\w+(\s*=\s*(?:".*?"|\'.*?\'|[^\'">\s]+))?)+\s*|\s*)/?>'
     amp_finder = re.compile(r"(\s|&nbsp;)(&|&amp;|&\#38;)(\s|&nbsp;)")
-    intra_tag_finder = re.compile(r'(?P<prefix>(%s)?)(?P<text>([^<]*))(?P<suffix>(%s)?)' % (tag_pattern, tag_pattern))  # noqa: E501
+    intra_tag_finder = re.compile(
+        r"(?P<prefix>(%s)?)(?P<text>([^<]*))(?P<suffix>(%s)?)"
+        % (tag_pattern, tag_pattern)
+    )
 
     def _amp_process(groups):
-        prefix = groups.group('prefix') or ''
+        prefix = groups.group("prefix") or ""
         text = amp_finder.sub(
-            r"""\1<span class="amp">&amp;</span>\3""", groups.group('text'))
-        suffix = groups.group('suffix') or ''
+            r"""\1<span class="amp">&amp;</span>\3""", groups.group("text")
+        )
+        suffix = groups.group("suffix") or ""
         return prefix + text + suffix
+
     output = intra_tag_finder.sub(_amp_process, text)
     return mark_safe(output)
 
@@ -53,7 +58,7 @@ amp.is_safe = True
 
 
 def caps(text):
-    """Wraps multiple capital letters in ``<span class="caps">``  # noqa: E501
+    """Wraps multiple capital letters in ``<span class="caps">``
     so they can be styled with CSS.
 
     >>> caps("A message from KU")
@@ -67,8 +72,8 @@ def caps(text):
     >>> caps("A message from 2KU2 with digits")
     u'A message from <span class="caps">2KU2</span> with digits'
 
-    >>> caps("Dotted caps followed by spaces should never include them in the wrap D.O.T.   like so.")
-    u'Dotted caps followed by spaces should never include them in the wrap <span class="caps">D.O.T.</span>  like so.'
+    >>> caps("Spaces following dotted caps should not be included in the wrap D.O.T.   like so.")
+    u'Spaces following dotted caps should not be included in the wrap <span class="caps">D.O.T.</span>  like so.'
 
     All caps with with apostrophes in them shouldn't break. Only handles dump apostrophes though.
     >>> caps("JIMMY'S")
@@ -86,12 +91,12 @@ def caps(text):
     text = force_str(text)
     try:
         import smartypants
-    except ImportError:
+    except ImportError as e:
         if settings.DEBUG:
             raise template.TemplateSyntaxError(
                 "Error in {% caps %} filter:"
                 + " The Python SmartyPants library isn't installed."
-            )
+            ) from e
         return text
 
     tokens = smartypants._tokenize(text)
@@ -99,33 +104,36 @@ def caps(text):
     in_skipped_tag = False
 
     cap_finder = re.compile(
-        r"""(  # noqa: E501
+        r"""(
         (\b[A-Z\d]*        # Group 2: Any amount of caps and digits
         [A-Z]\d*[A-Z]      # A cap string much at least include two caps (but they can have digits between them)
         [A-Z\d']*\b)       # Any amount of caps and digits or dumb apostsrophes
         | (\b[A-Z]+\.\s?   # OR: Group 3: Some caps, followed by a '.' and an optional space
         (?:[A-Z]+\.\s?)+)  # Followed by the same thing at least once more
         (?:'|"|\s|\b|$))
-        """, re.VERBOSE)
+        """,
+        re.VERBOSE,
+    )
 
     def _cap_wrapper(matchobj):
-        """This is necessary to keep dotted cap strings to pick up extra spaces"""  # noqa: E501
+        """This is necessary to keep dotted cap strings to pick up extra spaces"""
         if matchobj.group(2):
             return """<span class="caps">%s</span>""" % matchobj.group(2)
         else:
             if matchobj.group(3)[-1] == " ":
                 caps = matchobj.group(3)[:-1]
-                tail = ' '
+                tail = " "
             elif matchobj.group(1)[-1] in ("'", '"'):
                 caps = matchobj.group(3)
                 tail = matchobj.group(1)[-1]
             else:
                 caps = matchobj.group(3)
-                tail = ''
+                tail = ""
             return """<span class="caps">%s</span>%s""" % (caps, tail)
 
     tags_to_skip_regex = re.compile(
-        "<(/)?(?:pre|code|kbd|script|math)[^>]*>", re.IGNORECASE)
+        "<(/)?(?:pre|code|kbd|script|math)[^>]*>", re.IGNORECASE
+    )
 
     for token in tokens:
         if token[0] == "tag":
@@ -149,7 +157,7 @@ caps.is_safe = True
 
 
 def initial_quotes(text):
-    """Wraps initial quotes in ``class="dquo"`` for double quotes or  # noqa: E501
+    """Wraps initial quotes in ``class="dquo"`` for double quotes or
     ``class="quo"`` for single quotes. Works in these block tags ``(h1-h6, p, li, dt, dd)``
     and also accounts for potential opening inline elements ``a, em, strong, span, b, i``
 
@@ -167,12 +175,14 @@ def initial_quotes(text):
     text = force_str(text)
     # start with an opening p, h1-6, li, dd, dt or the start of the string
     quote_finder = re.compile(
-        r"""((<(p|h[1-6]|li|dt|dd)[^>]*>|^)          # start with an opening p, h1-6, li, dd, dt or the start of the string  # noqa: E501
+        r"""((<(p|h[1-6]|li|dt|dd)[^>]*>|^)          # start with an opening p, h1-6, li, dd, dt or the start of the string
         \s*                                          # optional white space!
         (<(a|em|span|strong|i|b)[^>]*>\s*)*)         # optional opening inline tags, with more optional white space for each.
         (("|&ldquo;|&\#8220;)|('|&lsquo;|&\#8216;))  # Find me a quote! (only need to find the left quotes and the primes)
                                                      # double quotes are in group 7, singles in group 8
-        """, re.VERBOSE)
+        """,
+        re.VERBOSE,
+    )
 
     def _quote_wrapper(matchobj):
         if matchobj.group(7):
@@ -181,8 +191,12 @@ def initial_quotes(text):
         else:
             classname = "quo"
             quote = matchobj.group(8)
-        return ("""%s<span class="%s">%s</span>"""
-                % (matchobj.group(1), classname, quote))
+        return """%s<span class="%s">%s</span>""" % (
+            matchobj.group(1),
+            classname,
+            quote,
+        )
+
     output = quote_finder.sub(_quote_wrapper, text)
     return mark_safe(output)
 
@@ -199,12 +213,12 @@ def smartypants(text):
     text = force_str(text)
     try:
         import smartypants
-    except ImportError:
+    except ImportError as e:
         if settings.DEBUG:
             raise template.TemplateSyntaxError(
                 "Error in {% smartypants %} filter:"
                 + " The Python smartypants library isn't installed."
-            )
+            ) from e
         return text
     else:
         output = smartypants.smartypants(text)
@@ -215,7 +229,7 @@ smartypants.is_safe = True
 
 
 def typogrify(text):
-    """The super typography filter    # noqa: E501
+    """The super typography filter
 
     Applies the following filters: widont, smartypants, caps, amp, initial_quotes
 
@@ -280,29 +294,32 @@ def widont(text):
     """
     text = force_str(text)
     widont_finder = re.compile(
-        r"""((?:</?(?:a|em|span|strong|i|b)[^>]*>)|[^<>\s]) # must be proceeded by an approved inline opening or closing tag or a nontag/nonspace  # noqa: E501
+        r"""((?:</?(?:a|em|span|strong|i|b)[^>]*>)|[^<>\s]) # must be proceeded by an approved inline opening or closing tag or a nontag/nonspace
         \s+                                             # the space to replace
         ([^<>\s]+                                       # must be flollowed by non-tag non-space characters
         \s*                                             # optional white space!
         (</(a|em|span|strong|i|b)>\s*)*                 # optional closing inline tags with optional white space after each
         ((</(p|h[1-6]|li|dt|dd)>)|$))                   # end with a closing p, h1-6, li or the end of the string
-        """, re.VERBOSE)
-    output = widont_finder.sub(r'\1&nbsp;\2', text)
+        """,
+        re.VERBOSE,
+    )
+    output = widont_finder.sub(r"\1&nbsp;\2", text)
     return mark_safe(output)
 
 
 widont.is_safe = True
 
-register.filter('amp', amp)
-register.filter('caps', caps)
-register.filter('initial_quotes', initial_quotes)
-register.filter('smartypants', smartypants)
-register.filter('typogrify', typogrify)
-register.filter('widont', widont)
+register.filter("amp", amp)
+register.filter("caps", caps)
+register.filter("initial_quotes", initial_quotes)
+register.filter("smartypants", smartypants)
+register.filter("typogrify", typogrify)
+register.filter("widont", widont)
 
 
 def _test():
     import doctest
+
     doctest.testmod()
 
 
