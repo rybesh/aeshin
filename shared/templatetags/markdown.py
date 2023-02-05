@@ -10,14 +10,34 @@ from django.utils.safestring import mark_safe
 import bleach
 
 markdown_tags = {
-    "h1", "h2", "h3", "h4", "h5", "h6",
-    "b", "i", "strong", "em", "tt",
-    "p", "br",
-    "span", "div", "blockquote", "code", "pre", "hr",
-    "ul", "ol", "li", "dd", "dt",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "b",
+    "i",
+    "strong",
+    "em",
+    "tt",
+    "p",
+    "br",
+    "span",
+    "div",
+    "blockquote",
+    "code",
+    "pre",
+    "hr",
+    "ul",
+    "ol",
+    "li",
+    "dd",
+    "dt",
     "img",
     "a",
-    "sub", "sup",
+    "sub",
+    "sup",
 }
 
 markdown_attrs = {
@@ -29,7 +49,7 @@ markdown_attrs = {
 register = template.Library()
 
 
-def markdown(value, arg=''):
+def markdown(value, arg=""):
     """
     Runs Markdown over a given value.
 
@@ -42,16 +62,17 @@ def markdown(value, arg=''):
     """
     try:
         import markdown
-    except ImportError:
+    except ImportError as e:
         if settings.DEBUG:
             raise template.TemplateSyntaxError(
                 "Error in {% markdown %} filter:"
-                + " The python-markdown library isn't installed.")
+                + " The python-markdown library isn't installed."
+            ) from e
         return force_str(value)
     else:
         unsanitized_html = markdown.markdown(force_str(value))
 
-        if arg == 'unsanitized':
+        if arg == "unsanitized":
             return mark_safe(unsanitized_html)
         else:
             sanitized_html = bleach.clean(

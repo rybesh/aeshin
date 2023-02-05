@@ -7,7 +7,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,168 +15,352 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Assignment',
+            name="Assignment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.SlugField()),
-                ('due_date', models.DateField(blank=True)),
-                ('title', models.CharField(max_length=80)),
-                ('description', models.TextField()),
-                ('points', models.IntegerField(default=0)),
-                ('is_handed_out', models.BooleanField(default=False)),
-                ('is_submitted_online', models.BooleanField(default=False)),
-                ('is_letter_graded', models.BooleanField(default=False)),
-                ('is_graded', models.BooleanField(default=False, verbose_name='has been graded')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("slug", models.SlugField()),
+                ("due_date", models.DateField(blank=True)),
+                ("title", models.CharField(max_length=80)),
+                ("description", models.TextField()),
+                ("points", models.IntegerField(default=0)),
+                ("is_handed_out", models.BooleanField(default=False)),
+                ("is_submitted_online", models.BooleanField(default=False)),
+                ("is_letter_graded", models.BooleanField(default=False)),
+                (
+                    "is_graded",
+                    models.BooleanField(default=False, verbose_name="has been graded"),
+                ),
             ],
             options={
-                'ordering': ('due_date', 'slug'),
+                "ordering": ("due_date", "slug"),
             },
         ),
         migrations.CreateModel(
-            name='Course',
+            name="Course",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('number', models.CharField(max_length=20)),
-                ('slug', models.CharField(max_length=20)),
-                ('title', models.CharField(max_length=80)),
-                ('semester', models.CharField(choices=[('sp', 'Spring'), ('fa', 'Fall')], max_length=2)),
-                ('year', models.IntegerField(choices=[(2011, '2011'), (2012, '2012'), (2013, '2013'), (2014, '2014'), (2015, '2015'), (2016, '2016'), (2017, '2017'), (2018, '2018'), (2019, '2019'), (2020, '2020'), (2021, '2021'), (2022, '2022'), (2023, '2023'), (2024, '2024')])),
-                ('times', models.CharField(max_length=64)),
-                ('location', models.CharField(max_length=32)),
-                ('ereserves_id', models.CharField(blank=True, max_length=8)),
-                ('description', models.TextField()),
-                ('blurb', models.TextField(blank=True)),
-                ('evaluation', models.TextField(blank=True)),
-                ('participation', models.TextField(blank=True)),
-                ('thanks', models.TextField(blank=True)),
-                ('is_archived', models.BooleanField(default=False)),
-                ('blog_slug', models.CharField(blank=True, max_length=20)),
-                ('forum', models.URLField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("number", models.CharField(max_length=20)),
+                ("slug", models.CharField(max_length=20)),
+                ("title", models.CharField(max_length=80)),
+                (
+                    "semester",
+                    models.CharField(
+                        choices=[("sp", "Spring"), ("fa", "Fall")], max_length=2
+                    ),
+                ),
+                (
+                    "year",
+                    models.IntegerField(
+                        choices=[
+                            (2011, "2011"),
+                            (2012, "2012"),
+                            (2013, "2013"),
+                            (2014, "2014"),
+                            (2015, "2015"),
+                            (2016, "2016"),
+                            (2017, "2017"),
+                            (2018, "2018"),
+                            (2019, "2019"),
+                            (2020, "2020"),
+                            (2021, "2021"),
+                            (2022, "2022"),
+                            (2023, "2023"),
+                            (2024, "2024"),
+                        ]
+                    ),
+                ),
+                ("times", models.CharField(max_length=64)),
+                ("location", models.CharField(max_length=32)),
+                ("ereserves_id", models.CharField(blank=True, max_length=8)),
+                ("description", models.TextField()),
+                ("blurb", models.TextField(blank=True)),
+                ("evaluation", models.TextField(blank=True)),
+                ("participation", models.TextField(blank=True)),
+                ("thanks", models.TextField(blank=True)),
+                ("is_archived", models.BooleanField(default=False)),
+                ("blog_slug", models.CharField(blank=True, max_length=20)),
+                ("forum", models.URLField(blank=True)),
             ],
             options={
-                'ordering': ('-year', 'semester'),
+                "ordering": ("-year", "semester"),
             },
         ),
         migrations.CreateModel(
-            name='Department',
+            name="Department",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=80)),
-                ('url', models.URLField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=80)),
+                ("url", models.URLField()),
             ],
         ),
         migrations.CreateModel(
-            name='Holiday',
+            name="Holiday",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('name', models.CharField(max_length=80)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='holidays', to='courses.Course')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("name", models.CharField(max_length=80)),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="holidays",
+                        to="courses.Course",
+                    ),
+                ),
             ],
             options={
-                'ordering': ('date',),
+                "ordering": ("date",),
             },
         ),
         migrations.CreateModel(
-            name='Instructor',
+            name="Instructor",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=36)),
-                ('url', models.URLField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=36)),
+                ("url", models.URLField()),
             ],
         ),
         migrations.CreateModel(
-            name='Meeting',
+            name="Meeting",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('title', models.CharField(max_length=80)),
-                ('description', models.TextField(blank=True)),
-                ('is_tentative', models.BooleanField(default=True)),
-                ('slides', models.FileField(blank=True, null=True, upload_to=courses.models.upload_to)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='meetings', to='courses.Course')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("title", models.CharField(max_length=80)),
+                ("description", models.TextField(blank=True)),
+                ("is_tentative", models.BooleanField(default=True)),
+                (
+                    "slides",
+                    models.FileField(
+                        blank=True, null=True, upload_to=courses.models.upload_slides_to
+                    ),
+                ),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="meetings",
+                        to="courses.Course",
+                    ),
+                ),
             ],
             options={
-                'ordering': ('course', 'date'),
+                "ordering": ("course", "date"),
             },
         ),
         migrations.CreateModel(
-            name='Reading',
+            name="Reading",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('zotero_id', models.CharField(max_length=16)),
-                ('citation_text', models.CharField(blank=True, editable=False, max_length=128)),
-                ('citation_html', models.TextField(blank=True, editable=False)),
-                ('description', models.TextField(blank=True)),
-                ('file', models.FileField(blank=True, upload_to='courses/readings')),
-                ('url', models.URLField(blank=True)),
-                ('access_via_proxy', models.BooleanField(default=False)),
-                ('access_via_ereserves', models.BooleanField(default=False)),
-                ('ignore_citation_url', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("zotero_id", models.CharField(max_length=16)),
+                (
+                    "citation_text",
+                    models.CharField(blank=True, editable=False, max_length=128),
+                ),
+                ("citation_html", models.TextField(blank=True, editable=False)),
+                ("description", models.TextField(blank=True)),
+                ("file", models.FileField(blank=True, upload_to="courses/readings")),
+                ("url", models.URLField(blank=True)),
+                ("access_via_proxy", models.BooleanField(default=False)),
+                ("access_via_ereserves", models.BooleanField(default=False)),
+                ("ignore_citation_url", models.BooleanField(default=False)),
             ],
             options={
-                'ordering': ('citation_text',),
+                "ordering": ("citation_text",),
             },
         ),
         migrations.CreateModel(
-            name='ReadingAssignment',
+            name="ReadingAssignment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('order', models.IntegerField(blank=True, null=True)),
-                ('discussion_questions', models.TextField(blank=True)),
-                ('discussion_leader', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('meeting', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reading_assignments', to='courses.Meeting')),
-                ('reading', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='courses.Reading')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("order", models.IntegerField(blank=True, null=True)),
+                ("discussion_questions", models.TextField(blank=True)),
+                (
+                    "discussion_leader",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "meeting",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reading_assignments",
+                        to="courses.Meeting",
+                    ),
+                ),
+                (
+                    "reading",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="courses.Reading",
+                    ),
+                ),
             ],
             options={
-                'ordering': ('order',),
+                "ordering": ("order",),
             },
         ),
         migrations.CreateModel(
-            name='Submission',
+            name="Submission",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time_submitted', models.DateTimeField()),
-                ('zipfile', models.FileField(blank=True, upload_to=courses.models.submission_upload_to)),
-                ('grade', models.FloatField(default=0.0)),
-                ('letter_grade', models.CharField(blank=True, max_length=2)),
-                ('comments', models.TextField(blank=True)),
-                ('assignment', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='submissions', to='courses.Assignment')),
-                ('submitter', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='submissions', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("time_submitted", models.DateTimeField()),
+                (
+                    "zipfile",
+                    models.FileField(
+                        blank=True, upload_to=courses.models.submission_upload_to
+                    ),
+                ),
+                ("grade", models.FloatField(default=0.0)),
+                ("letter_grade", models.CharField(blank=True, max_length=2)),
+                ("comments", models.TextField(blank=True)),
+                (
+                    "assignment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="submissions",
+                        to="courses.Assignment",
+                    ),
+                ),
+                (
+                    "submitter",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="submissions",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='meeting',
-            name='readings',
-            field=models.ManyToManyField(blank=True, through='courses.ReadingAssignment', to='courses.Reading'),
+            model_name="meeting",
+            name="readings",
+            field=models.ManyToManyField(
+                blank=True, through="courses.ReadingAssignment", to="courses.Reading"
+            ),
         ),
         migrations.AddField(
-            model_name='course',
-            name='assistant',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='courses_assisting', to='courses.Instructor'),
+            model_name="course",
+            name="assistant",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="courses_assisting",
+                to="courses.Instructor",
+            ),
         ),
         migrations.AddField(
-            model_name='course',
-            name='department',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='courses', to='courses.Department'),
+            model_name="course",
+            name="department",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="courses",
+                to="courses.Department",
+            ),
         ),
         migrations.AddField(
-            model_name='course',
-            name='instructor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='courses', to='courses.Instructor'),
+            model_name="course",
+            name="instructor",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="courses",
+                to="courses.Instructor",
+            ),
         ),
         migrations.AddField(
-            model_name='course',
-            name='students',
-            field=models.ManyToManyField(related_name='courses', to=settings.AUTH_USER_MODEL),
+            model_name="course",
+            name="students",
+            field=models.ManyToManyField(
+                related_name="courses", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
-            model_name='assignment',
-            name='course',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='assignments', to='courses.Course'),
+            model_name="assignment",
+            name="course",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="assignments",
+                to="courses.Course",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='course',
-            unique_together={('slug', 'semester', 'year')},
+            name="course",
+            unique_together={("slug", "semester", "year")},
         ),
     ]

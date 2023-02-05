@@ -1,10 +1,8 @@
 Django==4.1.6
-bleach==6.0.0
-bleach-allowlist==1.0.3
-gdata==2.0.18
-isodate==0.6.1
-pip-tools==6.12.2
 Markdown==3.4.1
-pytz==2022.7.1
-smartypants==2.0.1
+bleach-allowlist==1.0.3
+bleach==6.0.0
+django-types==0.16.0
+isodate==0.6.1
 python-magic==0.4.27
+smartypants==2.0.1
