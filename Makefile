@@ -8,7 +8,7 @@ $(PYTHON):
 	$(PIP) install -r requirements.txt
 
 run: | $(PYTHON)
-	$(PYTHON) -Werror manage.py runserver --insecure
+	$(PYTHON) -Werror manage.py runserver
 
 migrations: | $(PYTHON)
 	$(PYTHON) manage.py makemigrations
