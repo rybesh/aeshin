@@ -5,6 +5,8 @@
 *.sqlite
 .DS_Store
 .env
+.git/
 /media/
 /static/
 /venv/
+fly.toml
