@@ -4,6 +4,7 @@ bleach-allowlist==1.0.3
 bleach==6.0.0
 django-environ==0.9.0
 django-types==0.17.0
+gunicorn==20.1.0
 isodate==0.6.1
 python-magic==0.4.27
 smartypants==2.0.1
