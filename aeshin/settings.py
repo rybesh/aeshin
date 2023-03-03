@@ -1,15 +1,15 @@
 import os
 import environ
 from pathlib import Path
+from django.db.models.query import QuerySet
 
 # environment variables -------------------------------------------------------
 
-# typing ----------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR / ".env")
 env = environ.Env(DEBUG=(bool, False))
 
-from django.db.models.query import QuerySet
+# typing ----------------------------------------------------------------------
 
 QuerySet.__class_getitem__ = classmethod(
     lambda cls, *args, **kwargs: cls  # pyright: ignore
