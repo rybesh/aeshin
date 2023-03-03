@@ -1,8 +1,13 @@
 import os
+import environ
+from pathlib import Path
 
-from .secrets import *  # noqa
+# environment variables -------------------------------------------------------
 
 # typing ----------------------------------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(BASE_DIR / ".env")
+env = environ.Env(DEBUG=(bool, False))
 
 from django.db.models.query import QuerySet
 
@@ -10,27 +15,15 @@ QuerySet.__class_getitem__ = classmethod(
     lambda cls, *args, **kwargs: cls  # pyright: ignore
 )
 
-# www root --------------------------------------------------------------------
-
-if os.getenv("DJANGO_DEV") == "true":
-    WWW_ROOT = "."
-else:
-    WWW_ROOT = "/var/www/aeshin.org"
-
 # database --------------------------------------------------------------------
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(WWW_ROOT, "db.sqlite3"),
-    }
-}
+DATABASES = {"default": env.db()}
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # debugging -------------------------------------------------------------------
 
-DEBUG = False
+DEBUG = env("DEBUG")
 TEMPLATE_DEBUG = False
 
 # logging ---------------------------------------------------------------------
@@ -69,14 +62,14 @@ DEFAULT_FROM_EMAIL = "aeshin.org <no-reply@aeshin.org>"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_HOST_USER = "postmaster@kimyuenikk.aeshin.org"
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # file uploads ----------------------------------------------------------------
 
-MEDIA_DIR = "media/"
-MEDIA_ROOT = os.path.join(WWW_ROOT, MEDIA_DIR)
-MEDIA_URL = "/files/"
+MEDIA_ROOT = env.path("MEDIA_ROOT", default=BASE_DIR / "media")
+MEDIA_URL = "files/"
 
 # globalization ---------------------------------------------------------------
 
@@ -116,11 +109,11 @@ INSTALLED_APPS = (
 
 # security --------------------------------------------------------------------
 
-ALLOWED_HOSTS = [
-    ".aeshin.org",
-    ".aeshin.org.",
-    "127.0.0.1",
-]
+env.escape_proxy = True  # secret key starts with a $
+SECRET_KEY = env("SECRET_KEY")
+env.escape_proxy = False
+
+ALLOWED_HOSTS = [".aeshin.org", ".localhost", "127.0.0.1", "[::1]"]
 
 # templates -------------------------------------------------------------------
 
@@ -158,7 +151,7 @@ SITE_ID = 1
 
 # django.contrib.staticfiles --------------------------------------------------
 
-STATIC_ROOT = os.path.join(WWW_ROOT, "static")
+STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "/static/"
 
 # shared ----------------------------------------------------------------------
