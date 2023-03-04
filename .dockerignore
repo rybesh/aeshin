@@ -4,7 +4,7 @@
 *.pyc
 *.sqlite
 .DS_Store
-.env
+.env*
 .git/
 /media/
 /static/
