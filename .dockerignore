@@ -9,4 +9,6 @@
 /media/
 /static/
 /venv/
+Makefile
 fly.toml
+pyproject.toml
