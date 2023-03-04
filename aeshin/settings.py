@@ -112,11 +112,20 @@ INSTALLED_APPS = (
 
 # security --------------------------------------------------------------------
 
-env.escape_proxy = True  # secret key starts with a $
 SECRET_KEY = env("SECRET_KEY")
-env.escape_proxy = False
 
-ALLOWED_HOSTS = [".aeshin.org", ".localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS = [
+    ".aeshin.org",
+    ".localhost",
+    "127.0.0.1",
+    "[::1]",
+    "aeshin.fly.dev",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.aeshin.org",
+    "https://aeshin.fly.dev",
+]
 
 # templates -------------------------------------------------------------------
 
