@@ -1,15 +1,22 @@
-# fly.toml file generated for aeshin on 2023-03-03T11:45:02-05:00
+# fly.toml file generated for aeshin on 2023-03-04T11:18:23-05:00
 
 app = "aeshin"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+[build]
+  dockerfile = "Dockerfile"
+
 [env]
   PORT = "8000"
 
 [experimental]
   auto_rollback = true
+
+[mounts]
+  destination = "/mnt/data"
+  source = "data"
 
 [[services]]
   http_checks = []
@@ -40,7 +47,3 @@ processes = []
 [[statics]]
   guest_path = "/code/static"
   url_prefix = "/static/"
-
-[mounts]
-  source="data"
-  destination="/mnt/data"
