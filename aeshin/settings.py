@@ -68,7 +68,7 @@ EMAIL_USE_TLS = True
 
 # file uploads ----------------------------------------------------------------
 
-MEDIA_ROOT = env.path("MEDIA_ROOT", default=BASE_DIR / "media")
+MEDIA_ROOT = env.path("MEDIA_ROOT", default=BASE_DIR / "media/")
 MEDIA_URL = "files/"
 
 # globalization ---------------------------------------------------------------
