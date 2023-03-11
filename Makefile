@@ -1,7 +1,7 @@
 PYTHON := ./venv/bin/python
 PIP := ./venv/bin/python -m pip
 APP := aeshin
-HOST := staging.aeshin.org
+HOST := aeshin.org
 REGION := iad
 READINGS := media/courses/readings
 .DEFAULT_GOAL := run
