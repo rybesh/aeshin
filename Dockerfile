@@ -26,6 +26,7 @@ COPY . /code/
 # dummy environment variables so collectstatic can run
 ENV SECRET_KEY "dummy-secret-key"
 ENV DATABASE_URL "sqlite:///dummy-database-url"
+ENV EMAIL_HOST_USER "dummy-email-host-user"
 ENV EMAIL_HOST_PASSWORD "dummy-email-host-password"
 
 RUN python manage.py collectstatic --noinput
