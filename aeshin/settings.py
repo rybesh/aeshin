@@ -82,6 +82,7 @@ USE_TZ = True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "aeshin.middleware.WWWRedirectMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
