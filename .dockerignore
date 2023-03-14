@@ -5,6 +5,10 @@
 *.sqlite
 .DS_Store
 .env*
+.git/
 /media/
 /static/
 /venv/
+Makefile
+fly.toml
+pyproject.toml

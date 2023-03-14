@@ -1,36 +1,29 @@
 import os
+import environ
+from pathlib import Path
+from django.db.models.query import QuerySet
 
-from .secrets import *  # noqa
+# environment variables -------------------------------------------------------
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(BASE_DIR / ".env")
+env = environ.Env(DEBUG=(bool, False))
 
 # typing ----------------------------------------------------------------------
-
-from django.db.models.query import QuerySet
 
 QuerySet.__class_getitem__ = classmethod(
     lambda cls, *args, **kwargs: cls  # pyright: ignore
 )
 
-# www root --------------------------------------------------------------------
-
-if os.getenv("DJANGO_DEV") == "true":
-    WWW_ROOT = "."
-else:
-    WWW_ROOT = "/var/www/aeshin.org"
-
 # database --------------------------------------------------------------------
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(WWW_ROOT, "db.sqlite3"),
-    }
-}
+DATABASES = {"default": env.db()}
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # debugging -------------------------------------------------------------------
 
-DEBUG = False
+DEBUG = env("DEBUG")
 TEMPLATE_DEBUG = False
 
 # logging ---------------------------------------------------------------------
@@ -67,16 +60,16 @@ ADMINS = (("Ryan Shaw", "rieyin@icloud.com"),)
 MANAGERS = ADMINS
 DEFAULT_FROM_EMAIL = "aeshin.org <no-reply@aeshin.org>"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_HOST_USER = "postmaster@kimyuenikk.aeshin.org"
+EMAIL_HOST = "email-smtp.us-east-1.amazonaws.com"
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # file uploads ----------------------------------------------------------------
 
-MEDIA_DIR = "media/"
-MEDIA_ROOT = os.path.join(WWW_ROOT, MEDIA_DIR)
-MEDIA_URL = "/files/"
+MEDIA_ROOT = env.path("MEDIA_ROOT", default=BASE_DIR / "media/")
+MEDIA_URL = "files/"
 
 # globalization ---------------------------------------------------------------
 
@@ -88,6 +81,9 @@ USE_TZ = True
 # http ------------------------------------------------------------------------
 
 MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "aeshin.middleware.WWWRedirectMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -110,16 +106,26 @@ INSTALLED_APPS = (
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.sites",
 )
 
 # security --------------------------------------------------------------------
 
+SECRET_KEY = env("SECRET_KEY")
+
 ALLOWED_HOSTS = [
     ".aeshin.org",
-    ".aeshin.org.",
+    ".localhost",
     "127.0.0.1",
+    "[::1]",
+    "aeshin.fly.dev",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.aeshin.org",
+    "https://aeshin.fly.dev",
 ]
 
 # templates -------------------------------------------------------------------
@@ -158,8 +164,9 @@ SITE_ID = 1
 
 # django.contrib.staticfiles --------------------------------------------------
 
-STATIC_ROOT = os.path.join(WWW_ROOT, "static")
+STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "/static/"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # shared ----------------------------------------------------------------------
 
