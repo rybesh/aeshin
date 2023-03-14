@@ -68,9 +68,6 @@ certs:
 	fly certs create $(HOST)
 	fly certs show $(HOST)
 
-destroy:
-	fly apps list --json | jq '.[] | .ID' | xargs -n 1 fly destroy --yes
-
 clean:
 	rm -rf venv static
 
