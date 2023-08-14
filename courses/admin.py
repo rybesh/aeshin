@@ -56,9 +56,8 @@ class CourseAdmin(admin.ModelAdmin):
     is_current.boolean = True
     is_current.admin_order_field = "is_archived"
 
-    def get_user_label(self, obj: Model) -> str:
-        user = User(obj)
-        return user.get_full_name() or user.username
+    def get_user_label(self, obj) -> str:
+        return obj.get_full_name() or obj.username
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.remote_field.model == User:
