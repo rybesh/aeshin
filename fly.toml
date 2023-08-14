@@ -1,15 +1,11 @@
-# fly.toml app configuration file generated for aeshin on 2023-07-25T11:40:18-04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = "aeshin"
-primary_region = "iad2"
+primary_region = "iad"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
-
-[experimental]
-  auto_rollback = true
 
 [build]
   dockerfile = "Dockerfile"
@@ -17,34 +13,32 @@ kill_timeout = "5s"
 [env]
   PORT = "8000"
 
-[[mounts]]
+[mounts]
   source = "data"
   destination = "/mnt/data"
   processes = ["app"]
 
-[[services]]
-  protocol = "tcp"
+[http_service]
   internal_port = 8000
-  processes = ["app"]
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
 
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
-    force_https = true
-
-  [[services.ports]]
-    port = 443
-    handlers = ["tls", "http"]
-  [services.concurrency]
+  [http_service.concurrency]
     type = "connections"
     hard_limit = 25
     soft_limit = 20
 
-  [[services.tcp_checks]]
-    interval = "15s"
-    timeout = "2s"
+  [[http_service.checks]]
     grace_period = "1s"
-    restart_limit = 0
+    interval = "15s"
+    method = "GET"
+    timeout = "2s"
+    path = "/"
+    protocol = "http"
+    [http_service.checks.headers]
+      Host = "aeshin.org"
 
 [[statics]]
   guest_path = "/code/static"
