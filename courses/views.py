@@ -33,7 +33,7 @@ def schedule(request, slug, year, semester):
     o["course"] = get_object_or_404(Course, slug=slug, year=year, semester=semester)
     o["meetings"] = list(o["course"].meetings.all())
 
-    o["milestones"] = o["course"].get_milestones()
+    o["milestones"] = o["course"].get_scheduled_items()
     o["in_flux"] = False
 
     schedule = o["milestones"] + o["meetings"]
@@ -56,7 +56,7 @@ def schedule(request, slug, year, semester):
 def milestones(request, slug, year, semester):
     o = {}
     o["course"] = get_object_or_404(Course, slug=slug, year=year, semester=semester)
-    o["milestones"] = o["course"].get_milestones()
+    o["milestones"] = o["course"].get_scheduled_items()
 
     return render(request, "milestones.html", context=o)
 

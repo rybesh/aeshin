@@ -1,7 +1,7 @@
 {% load markdown  %}
 
 <h4 id="on-{{ milestone.date|date:"m-d" }}">
-<span class="date">{{ milestone.date|date:"F j" }}</span><br/>
+<span class="date">{{ milestone.date_range }}</span><br/>
 {% if milestone.url and not milestone.passed %}
 <a href="{{ milestone.url }}">
   <span class="title">{{ milestone.name }}</span>

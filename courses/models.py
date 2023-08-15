@@ -6,24 +6,13 @@ from shared import bibutils
 from shared.templatetags.markdown import markdown
 from shared.utils import truncate
 from django.utils import timezone
-from types import SimpleNamespace
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
+from dataclasses import dataclass
 import datetime
 import re
 
 if TYPE_CHECKING:
     from django.db.models.manager import RelatedManager
-
-
-def milestone(date, name, url, passed, description=""):
-    m = SimpleNamespace()
-    m.date = date
-    m.name = name
-    m.url = url
-    m.passed = passed
-    m.description = description
-    m.is_milestone = True
-    return m
 
 
 class Department(models.Model):
@@ -48,6 +37,17 @@ class Instructor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+@dataclass
+class Scheduled:
+    date: datetime.date
+    date_range: str
+    name: str
+    passed: bool
+    url: Optional[str] = None
+    description: str = ""
+    is_milestone: bool = True
 
 
 class Course(models.Model):
@@ -117,43 +117,46 @@ class Course(models.Model):
         else:
             return mark_safe(markdown(f"{self.times}<br>{self.location}"))
 
-    def get_milestones(self):
-        milestones = []
+    def get_scheduled_items(self):
+        items = []
         today = datetime.date.today()
 
         for m in self.milestones.all():
-            milestones.append(
-                milestone(
+            items.append(
+                Scheduled(
                     m.date,
+                    m.get_date_range(),
                     m.name,
-                    None,
                     today > m.date,
-                    m.description,
+                    description=m.description,
                 )
             )
 
         for a in self.assignments.filter(due_date__isnull=False):
-            milestones.append(
-                milestone(
+            assert a.due_date is not None
+            items.append(
+                Scheduled(
                     a.due_date,
+                    a.due_date.strftime("%B %-d"),
                     f"{a.title}{'' if a.is_inclass else ' due'}",
+                    today > a.due_date,
                     a.get_absolute_url() if a.is_handed_out else None,
-                    today > a.due_date,  # type: ignore
                 )
             )
             if a.available_date is not None:
-                milestones.append(
-                    milestone(
+                items.append(
+                    Scheduled(
                         a.available_date,
+                        a.available_date.strftime("%B %-d"),
                         f"{a.title} handed out",
-                        a.get_absolute_url() if a.is_handed_out else None,
                         today > a.available_date,
+                        a.get_absolute_url() if a.is_handed_out else None,
                     )
                 )
 
-        milestones.sort(key=lambda x: x.date)
+        items.sort(key=lambda x: x.date)
 
-        return milestones
+        return items
 
     def get_absolute_url(self):
         return reverse(
@@ -263,8 +266,19 @@ class Milestone(models.Model):
         "Course", related_name="milestones", on_delete=models.CASCADE
     )
     date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     name = models.CharField(max_length=80)
     description = models.TextField(blank=True)
+
+    def get_date_range(self):
+        s = self.date.strftime("%B %-d")
+        if self.end_date:
+            if self.date.month == self.end_date.month:
+                return f"{s}–{self.end_date.strftime('%-d')}"
+            else:
+                return f"{s}–{self.end_date.strftime('%B %-d')}"
+        else:
+            return s
 
     def __str__(self):
         return "%s: %s" % (self.date.strftime("%m-%d"), self.name)
