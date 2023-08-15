@@ -1,6 +1,7 @@
 from .models import (
     Assignment,
     Course,
+    Department,
     Milestone,
     Instructor,
     Meeting,
@@ -151,3 +152,4 @@ admin.site.register(Reading, ReadingAdmin)
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Submission, SubmissionAdmin)
 admin.site.register(Instructor)
+admin.site.register(Department)
