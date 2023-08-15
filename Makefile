@@ -18,7 +18,7 @@ migrate: | $(PYTHON)
 	$(PYTHON) manage.py migrate
 
 collectstatic: | $(PYTHON)
-	$(PYTHON) manage.py collectstatic
+	$(PYTHON) manage.py collectstatic --noinput
 
 run: migrate collectstatic | $(PYTHON)
 	$(PYTHON) -Werror manage.py runserver
