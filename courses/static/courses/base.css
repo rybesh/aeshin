@@ -111,6 +111,10 @@ a:hover {
 .assignment-due {
     font-weight: bold;
 }
+.caps {
+    letter-spacing: 0.01em;
+    font-variant-caps: all-small-caps;
+}
 .error {
     color: #ef4300;
     font-weight: bold;
