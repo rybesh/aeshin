@@ -113,7 +113,7 @@ class Course(models.Model):
             milestones.append(
                 milestone(
                     a.due_date,
-                    f"{a.title} due",
+                    f"{a.title}{'' if a.is_inclass else ' due'}",
                     a.get_absolute_url() if a.is_handed_out else None,
                     today > a.due_date,  # type: ignore
                 )
@@ -249,6 +249,7 @@ class Assignment(models.Model):
     is_submitted_online = models.BooleanField(default=False)
     is_letter_graded = models.BooleanField(default=False)
     is_graded = models.BooleanField("has been graded", default=False)
+    is_inclass = models.BooleanField("given in class", default=False)
 
     if TYPE_CHECKING:
         submissions = RelatedManager["Submission"]()

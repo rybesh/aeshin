@@ -10,7 +10,9 @@
 <h4 id="{{ assignment.slug }}" class="assignment"><span class="title">{{ assignment.title }}</span></h4>
 <div>
 {% if assignment.due_date %}
-<p class="assignment-due">Due {{ assignment.due_date|date:"F j" }}.</p>
+<p class="assignment-due">
+{% if not assignment.is_inclass %}Due {% endif %}
+{{ assignment.due_date|date:"F j" }}.</p>
 {% endif %}
 {% if assignment.is_handed_out %}
 <div class="description">
