@@ -112,7 +112,7 @@ class Course(models.Model):
     def get_time_and_location(self) -> str:
         if self.building and self.room:
             return mark_safe(
-                f'<p>{self.times}<br><a href="{self.building.url}">{self.building.name}</a> {self.room}</p>'
+                f'<p>{self.times}<br><a target="_blank" href="{self.building.url}">{self.building.name}</a> {self.room}</p>'
             )
         else:
             return mark_safe(markdown(f"{self.times}<br>{self.location}"))

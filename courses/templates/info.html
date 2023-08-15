@@ -25,7 +25,7 @@
 <p>
 {{ recitation.number }} ({{ recitation.instructor.name }})<br>
 {{ recitation.times }}<br>
-<a href="{{ recitation.building.url }}">{{ recitation.building.name }}</a> {{ recitation.room }}
+<a target="_blank" href="{{ recitation.building.url }}">{{ recitation.building.name }}</a> {{ recitation.room }}
 </p>
 {% endfor %}
 {% endif %}
