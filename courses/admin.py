@@ -11,7 +11,6 @@ from .models import (
     Submission,
     User,
 )
-from django.db.models import Model
 from django.contrib import admin
 from django.forms import ModelForm, ChoiceField
 from shared import bibutils
