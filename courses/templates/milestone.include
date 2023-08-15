@@ -12,6 +12,7 @@
 {{ milestone.name }}
 </span>
 {% endif %}
+</h4>
 {% if show_description %}
 <div>
 {{ milestone.description|markdown:"unsanitized" }}

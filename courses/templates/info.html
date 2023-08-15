@@ -16,8 +16,7 @@
 <section id="course-info">
 <h4><span class="title">When &amp; Where It Is</span></h4>
 <p>
-{{ course.times }}<br/>
-{{ course.location|markdown }}
+{{ course.times }} {{ course.location|markdown }}
 </p>
 {% if course.recitations %}
 <h5>Recitations</h5>

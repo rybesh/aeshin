@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html>
 {% load static %}
   <head>
     <title>{{ course }}{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="initial-scale=1.0">
     <link rel="stylesheet" href="{% static "courses/base.css" %}" type="text/css"/>
     {% block links %}{% endblock %}
     {% block css %}{% endblock %}
   </head>
   <body>
-    <div class="fluid_grid_layout">
+    <div>
       {% load markdown typogrify %}
       <nav>
         <ul class="nav">
@@ -33,7 +34,7 @@
       <header>
         <h1>{{ course.title }}</h1>
         <h2>
-          {{ course.department }}, {{ course.number }},
+          <a href="{{ course.department.url }}">{{ course.department }}</a>, {{ course.number }},
           {{ course.get_semester_display }} {{ course.get_year_display }}
         </h2>
       </header>
