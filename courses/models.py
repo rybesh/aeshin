@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from shared import bibutils
+from shared.templatetags.markdown import markdown
 from shared.utils import truncate
 from django.utils import timezone
 from types import SimpleNamespace
@@ -26,6 +27,14 @@ def milestone(date, name, url, passed, description=""):
 
 
 class Department(models.Model):
+    name = models.CharField(max_length=80)
+    url = models.URLField()
+
+    def __str__(self):
+        return self.name
+
+
+class Building(models.Model):
     name = models.CharField(max_length=80)
     url = models.URLField()
 
@@ -57,6 +66,9 @@ class Course(models.Model):
         (2022, "2022"),
         (2023, "2023"),
         (2024, "2024"),
+        (2025, "2025"),
+        (2026, "2026"),
+        (2027, "2027"),
     )
     SEMESTER_CHOICES = (
         ("sp", "Spring"),
@@ -64,6 +76,9 @@ class Course(models.Model):
     )
     department = models.ForeignKey(
         "Department", related_name="courses", on_delete=models.PROTECT
+    )
+    building = models.ForeignKey(
+        "Building", on_delete=models.PROTECT, null=True, blank=True
     )
     instructors = models.ManyToManyField("Instructor", related_name="courses_teaching")
     students = models.ManyToManyField(User, related_name="courses")
@@ -74,7 +89,7 @@ class Course(models.Model):
     year = models.IntegerField(choices=YEAR_CHOICES)
     times = models.CharField(max_length=64)
     location = models.CharField(max_length=256)
-    recitations = models.TextField(blank=True)
+    room = models.CharField(max_length=20, blank=True)
     description = models.TextField()
     blurb = models.TextField(blank=True)
     evaluation = models.TextField(blank=True)
@@ -93,6 +108,14 @@ class Course(models.Model):
 
     def is_authorized(self, user):
         return user.is_staff or self.has_student(user)
+
+    def get_time_and_location(self) -> str:
+        if self.building and self.room:
+            return mark_safe(
+                f'<p>{self.times}<br><a href="{self.building.url}">{self.building.name}</a> {self.room}</p>'
+            )
+        else:
+            return mark_safe(markdown(f"{self.times}<br>{self.location}"))
 
     def get_milestones(self):
         milestones = []
@@ -149,6 +172,22 @@ class Course(models.Model):
     class Meta:
         unique_together = ("slug", "semester", "year")
         ordering = ("-year", "semester")
+
+
+class Recitation(models.Model):
+    course = models.ForeignKey(
+        "Course", related_name="recitations", on_delete=models.PROTECT
+    )
+    building = models.ForeignKey(
+        "Building", on_delete=models.PROTECT, null=True, blank=True
+    )
+    instructor = models.ForeignKey("Instructor", on_delete=models.PROTECT)
+    times = models.CharField(max_length=64)
+    number = models.CharField(max_length=20)
+    room = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.number} ({self.instructor})"
 
 
 def upload_slides_to(o, _):
@@ -339,7 +378,7 @@ class Linky:
         self.ignore_citation_url = ignore_citation_url
 
     def linkify(self, html):
-        html = re.sub(r" (https?://.+)\.", self.repl, html, 1)
+        html = re.sub(r" (https?://.+)\.", self.repl, html, count=1)
         if self.stored_url and not self.url == self.stored_url:
             if self.access_via_proxy:
                 anchor = self.stored_url[len(PROXY) :]
@@ -352,7 +391,7 @@ class Linky:
                 r' <a target="_blank" href="%s">%s</a>.</div>\n</div>'
                 % (self.stored_url, anchor),
                 html,
-                1,
+                count=1,
             )
         return mark_safe(html)
 

@@ -1,10 +1,12 @@
 from .models import (
     Assignment,
+    Building,
     Course,
     Department,
     Milestone,
     Instructor,
     Meeting,
+    Recitation,
     Unit,
     Reading,
     ReadingAssignment,
@@ -32,6 +34,11 @@ class ReadingForm(ModelForm):
         ]
 
 
+class RecitationInline(admin.StackedInline):
+    model = Recitation
+    extra = 0
+
+
 class MilestoneInline(admin.StackedInline):
     model = Milestone
     extra = 0
@@ -44,7 +51,7 @@ class ReadingAssignmentInline(admin.StackedInline):
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_current")
-    inlines = (MilestoneInline,)
+    inlines = (RecitationInline, MilestoneInline)
     prepopulated_fields = {"slug": ("number",)}
     filter_horizontal = ("students",)
     ordering = ("is_archived",)
@@ -152,3 +159,4 @@ admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Submission, SubmissionAdmin)
 admin.site.register(Instructor)
 admin.site.register(Department)
+admin.site.register(Building)

@@ -15,14 +15,19 @@
 </section>
 <section id="course-info">
 <h4><span class="title">When &amp; Where It Is</span></h4>
-<p>
-{{ course.times }} {{ course.location|markdown }}
-</p>
-{% if course.recitations %}
+{% if course.recitations.exists %}
+<h5>Lecture</h5>
+{% endif %}
+{{ course.get_time_and_location }}
+{% if course.recitations.exists %}
 <h5>Recitations</h5>
+{% for recitation in course.recitations.all %}
 <p>
-{{ course.recitations|markdown:"unsanitized" }}
+{{ recitation.number }} ({{ recitation.instructor.name }})<br>
+{{ recitation.times }}<br>
+<a href="{{ recitation.building.url }}">{{ recitation.building.name }}</a> {{ recitation.room }}
 </p>
+{% endfor %}
 {% endif %}
 </section>
 <section id="course-desc">
