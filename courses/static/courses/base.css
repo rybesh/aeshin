@@ -139,6 +139,9 @@ a:hover {
 .highlight h4 {
     margin: 0;
 }
+.highlight p {
+    margin-bottom: 0;
+}
 .posted-by { color: #666666; }
 img {
     display: block;
