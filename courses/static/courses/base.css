@@ -174,7 +174,10 @@ ul.nav li {
     margin: 0 3% 0 0;
 }
 blockquote { margin-left: 1.5em; }
-.tentative { background-color: #d4d4d4; }
+.tentative {
+    background-color: #d4d4d4;
+    padding: 0.5em 1em;
+}
 ul.errorlist {
     color: #ef4300;
     display: inline;
