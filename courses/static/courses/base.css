@@ -131,17 +131,6 @@ a:hover {
     color: #408000;
     font-weight: bold;
 }
-.highlight {
-    background-color: #fffd82;
-    padding: 1em;
-    margin-top: 1em;
-}
-.highlight h4 {
-    margin: 0;
-}
-.highlight p {
-    margin-bottom: 0;
-}
 .posted-by { color: #666666; }
 img {
     display: block;
@@ -174,6 +163,17 @@ ul.nav li {
     margin: 0 3% 0 0;
 }
 blockquote { margin-left: 1.5em; }
+.highlight {
+    background-color: #fffd82;
+    padding: 1em;
+    margin-top: 1em;
+}
+.highlight h4 {
+    margin: 0;
+}
+.highlight p {
+    margin-bottom: 0;
+}
 .tentative {
     background-color: #d4d4d4;
     padding: 0.5em 1em;
