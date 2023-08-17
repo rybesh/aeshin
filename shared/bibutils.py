@@ -8,7 +8,6 @@ from xml.etree.ElementTree import Element, ElementTree
 import json
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -27,7 +26,7 @@ def format_zotero_as_html(zotero_item_id):
     except ZoteroAPIException as e:
         msg = f"Loading Zotero item {zotero_item_id} failed"
         logger.warning(f"{msg}:")
-        logger.warning(e)
+        logger.warning(str(e))
         return mark_safe(msg)
 
 
@@ -37,7 +36,7 @@ def format_zotero_as_text(zotero_item_id):
     except ZoteroAPIException as e:
         msg = f"Loading Zotero item {zotero_item_id} failed"
         logger.warning(f"{msg}:")
-        logger.warning(e)
+        logger.warning(str(e))
         return msg
 
 
@@ -46,7 +45,7 @@ def load_zotero_library():
         return _load_zotero_atom("content=json&order=title&limit=99")
     except ZoteroAPIException as e:
         logger.warning("Loading Zotero library failed:")
-        logger.warning(e)
+        logger.warning(str(e))
         return []
 
 
@@ -58,7 +57,7 @@ def _zotero_api_request(query: str, zotero_item_id=None):
     try:
         return urlopen(url)
     except (URLError, HTTPError) as e:
-        raise ZoteroAPIException() from e
+        raise ZoteroAPIException(str(e)) from e
 
 
 def _zotero_item_to_text(item):
