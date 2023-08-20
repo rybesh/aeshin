@@ -1,6 +1,9 @@
+import json
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.admin.models import LogEntry, CHANGE
+from django.contrib.contenttypes.models import ContentType
 from django.utils.safestring import mark_safe
 from shared import bibutils
 from shared.templatetags.markdown import markdown
@@ -203,6 +206,7 @@ def upload_slides_to(o, _):
 
 
 class Meeting(models.Model):
+    id = models.AutoField(primary_key=True)
     course = models.ForeignKey(
         "Course", related_name="meetings", on_delete=models.PROTECT
     )
@@ -241,6 +245,28 @@ class Meeting(models.Model):
             return "{:,}".format(centiwords * 100)
         else:
             return None
+
+    def slides_updated_at(self) -> datetime.datetime:
+        if self.slides:
+            print("querying for update")
+            update = (
+                LogEntry.objects.filter(
+                    object_id=self.id,
+                    action_flag=CHANGE,
+                )
+                .order_by("-action_time")
+                .first()
+            )
+            if update:
+                if update.change_message:
+                    try:
+                        data = json.loads(update.change_message)
+                        if "Slides" in data[0]["changed"]["fields"]:
+                            print(update.action_time)
+                            return update.action_time
+                    except:
+                        pass
+        return datetime.datetime.now()
 
     def __str__(self):
         return "%s: %s" % (self.date.strftime("%m-%d"), self.title)

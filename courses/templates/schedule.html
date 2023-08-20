@@ -35,6 +35,10 @@
   </span><br/>
   <span class="title">{{ meeting.title|typogrify }}</span>
 </h4>
+{% if meeting.slides %}
+<a class="slides" href="{{ meeting.slides.url }}">View slides</a>
+<span class="slides-updated">Updated {{ meeting.slides_updated_at|date:"l n/j g:i A" }}</span>
+{% endif %}
 <div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">
   {% filter typogrify %}
   {% if meeting.word_count %}
@@ -46,9 +50,6 @@
   {% endif %}
   <div class="description">{{ meeting.description|markdown:"unsanitized" }}</div>
   {% if user_is_authorized %}
-  {% if meeting.slides %}
-  <p>Download <a href="{{ meeting.slides.url }}">slides</a> for this meeting.</p>
-  {% endif %}
   {% endif %}
   {% if meeting.has_readings %}
   <p>To read <strong>before</strong> this meeting:</p>

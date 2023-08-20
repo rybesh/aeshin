@@ -59,6 +59,7 @@ div + h3,
 h4 {
     font-size: 1.2em;
     margin-top: 2em;
+    margin-bottom: 1em;
 }
 h4 .date {
     color: #666666;
@@ -221,6 +222,22 @@ a.pushed:hover {
     background-color: #6299c5;
     border: 1px solid #6299c5;
     color: #ffffff;
+}
+a.slides {
+    display: inline-block;
+    color: #ffffff;
+    background-color: #ef4300;
+    font-size: 1.1em;
+    padding: 0.4em;
+}
+a.slides:hover {
+    border: none;
+    background-color: #ff4700;
+}
+.slides-updated {
+    margin-left: 0.5em;
+    color: #666666;
+    font-style: italic;
 }
 summary {
     color: #ef4300;
