@@ -100,6 +100,7 @@ class Course(models.Model):
     how_to_succeed = models.TextField(blank=True)
     is_archived = models.BooleanField(default=False)
     is_weekly = models.BooleanField(default=False)
+    slides_are_called_notes = models.BooleanField(default=False)
 
     if TYPE_CHECKING:
         meetings = RelatedManager["Meeting"]()

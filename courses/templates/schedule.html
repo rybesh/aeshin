@@ -36,7 +36,9 @@
   <span class="title">{{ meeting.title|typogrify }}</span>
 </h4>
 {% if meeting.slides %}
-<a class="slides" href="{{ meeting.slides.url }}">View slides</a>
+<a class="slides" href="{{ meeting.slides.url }}">View
+{% if course.slides_are_called_notes %}notes{% else %}slides{% endif %}
+</a>
 <span class="slides-updated">Updated {{ meeting.slides_updated_at|date:"l n/j g:i A" }}</span>
 {% endif %}
 <div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">
