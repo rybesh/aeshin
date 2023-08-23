@@ -216,6 +216,20 @@ a.button:hover {
     border: 1px solid #c2e1ef;
     color: #336699;
 }
+ul.nav form {
+    display: inline-block;
+}
+ul.nav button {
+    color: #ef4300;
+    background-color: #ffffff;
+    font-weight: bold;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 1em;
+    margin-bottom: -0.25em;
+}
 a.button:active,
 a.pushed,
 a.pushed:hover {
