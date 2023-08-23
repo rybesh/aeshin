@@ -12,3 +12,10 @@ def sendfile(request, path):
         return response
     except FileNotFoundError as e:
         raise Http404 from e
+
+
+def sendfile_nologin(_, path):
+    try:
+        return FileResponse(open(settings.MEDIA_ROOT + path, "rb"))
+    except FileNotFoundError as e:
+        raise Http404 from e

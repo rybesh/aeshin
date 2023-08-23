@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
+from django.core.files.storage import FileSystemStorage
 from django.utils.safestring import mark_safe
 from shared import bibutils
 from shared.templatetags.markdown import markdown
@@ -206,6 +207,23 @@ def upload_slides_to(o, _):
     )
 
 
+def upload_pptx_to(o, _):
+    return "courses/%s/%s/%s/slides/%s.pptx" % (
+        o.course.slug,
+        o.course.year,
+        o.course.semester,
+        o.date.strftime("%m-%d"),
+    )
+
+
+class FileSystemOverwriteStorage(FileSystemStorage):
+    """replace files instead of creating new ones"""
+
+    def get_available_name(self, name, max_length=None):
+        self.delete(name)
+        return super().get_available_name(name, max_length)
+
+
 class Meeting(models.Model):
     id = models.AutoField(primary_key=True)
     course = models.ForeignKey(
@@ -219,6 +237,12 @@ class Meeting(models.Model):
     )
     is_tentative = models.BooleanField(default=True)
     slides = models.FileField(upload_to=upload_slides_to, blank=True, null=True)
+    powerpoint = models.FileField(
+        upload_to=upload_pptx_to,
+        storage=FileSystemOverwriteStorage(),
+        blank=True,
+        null=True,
+    )
 
     is_milestone = False  # for sorting with milestones
 
