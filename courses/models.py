@@ -3,7 +3,6 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry, CHANGE
-from django.contrib.contenttypes.models import ContentType
 from django.core.files.storage import FileSystemStorage
 from django.utils.safestring import mark_safe
 from shared import bibutils
