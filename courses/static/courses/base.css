@@ -115,6 +115,7 @@ a:hover {
 .caps {
     letter-spacing: 0.01em;
     font-variant-caps: all-small-caps;
+    font-size: 1.2em;
 }
 .error {
     color: #ef4300;
