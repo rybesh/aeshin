@@ -272,7 +272,6 @@ class Meeting(models.Model):
 
     def slides_updated_at(self) -> datetime.datetime:
         if self.slides:
-            print("querying for update")
             update = (
                 LogEntry.objects.filter(
                     object_id=self.id,
