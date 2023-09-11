@@ -272,20 +272,15 @@ class Meeting(models.Model):
 
     def slides_updated_at(self) -> datetime.datetime:
         if self.slides:
-            update = (
-                LogEntry.objects.filter(
-                    object_id=self.id,
-                    action_flag=CHANGE,
-                )
-                .order_by("-action_time")
-                .first()
-            )
-            if update:
+            updates = LogEntry.objects.filter(
+                object_id=self.id,
+                action_flag=CHANGE,
+            ).order_by("-action_time")
+            for update in updates:
                 if update.change_message:
                     try:
                         data = json.loads(update.change_message)
                         if "Slides" in data[0]["changed"]["fields"]:
-                            print(update.action_time)
                             return update.action_time
                     except:
                         pass
