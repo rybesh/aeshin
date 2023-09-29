@@ -37,6 +37,7 @@ th {
 }
 td {
     text-align: left;
+    padding: 1em;
 }
 table,
 td { border: 1px solid #cccccc; }
