@@ -8,6 +8,7 @@ from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 
 import bleach
+from markdown import extensions
 
 markdown_tags = {
     "h1",
@@ -70,7 +71,7 @@ def markdown(value, arg=""):
             ) from e
         return force_str(value)
     else:
-        unsanitized_html = markdown.markdown(force_str(value))
+        unsanitized_html = markdown.markdown(force_str(value), extensions=["extra"])
 
         if arg == "unsanitized":
             return mark_safe(unsanitized_html)
