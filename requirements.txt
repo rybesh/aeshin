@@ -1,7 +1,7 @@
 Django==4.2.6
 Markdown==3.5
 bleach-allowlist==1.0.3
-bleach==6.0.0
+bleach==6.1.0
 django-environ==0.11.2
 django-types==0.18.0
 gunicorn==21.2.0
