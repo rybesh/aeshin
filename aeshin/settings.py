@@ -2,6 +2,7 @@ import os
 import environ
 from pathlib import Path
 from django.db.models.query import QuerySet
+from warnings import filterwarnings
 
 # environment variables -------------------------------------------------------
 
@@ -176,3 +177,10 @@ STORAGES = {
 # shared ----------------------------------------------------------------------
 
 ZOTERO_GROUP_ID = "51755"
+
+# django nonsense
+
+filterwarnings(
+    "ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated."
+)
+FORMS_URLFIELD_ASSUME_HTTPS = True
