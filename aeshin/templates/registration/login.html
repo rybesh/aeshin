@@ -7,12 +7,15 @@
 {% if form.errors %}
 <p class="error">
 Your username and password didn't match. Please try again.<br/>
-If you've forgotten your password, you can
-<a href="{% url 'password_reset' %}">reset</a> it.
 </p>
 {% endif %}
 
-<p>Note: your username should be the part of your email address before the @.</p>
+<p>Your username is based on the email address that you have
+ registered in Connect Carolina. It is the part of your email address
+ before the <code>@</code>. This is probably the same as your
+ <a href="https://account.itsapps.unc.edu/onyen">ONYEN</a>.</p>
+<p>If you've forgotten your password, you can
+<a href="{% url 'password_reset' %}">reset</a> it.</p>
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 <h4><span class="title">{{ form.username.label_tag }}</span></h4>
