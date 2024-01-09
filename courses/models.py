@@ -234,6 +234,9 @@ class Meeting(models.Model):
     readings = models.ManyToManyField(
         "Reading", through="ReadingAssignment", blank=True
     )
+    viewings = models.ManyToManyField(
+        "Viewing", through="ViewingAssignment", blank=True
+    )
     is_tentative = models.BooleanField(default=True)
     slides = models.FileField(upload_to=upload_slides_to, blank=True, null=True)
     powerpoint = models.FileField(
@@ -248,6 +251,9 @@ class Meeting(models.Model):
     def has_readings(self):
         return len(self.readings.all()) > 0
 
+    def has_viewings(self):
+        return len(self.viewings.all()) > 0
+
     def required_reading_list(self):
         return self.readings.filter(readingassignment__is_optional=False).order_by(
             "readingassignment__order"
@@ -256,6 +262,16 @@ class Meeting(models.Model):
     def optional_reading_list(self):
         return self.readings.filter(readingassignment__is_optional=True).order_by(
             "readingassignment__order"
+        )
+
+    def required_viewing_list(self):
+        return self.viewings.filter(viewingassignment__is_optional=False).order_by(
+            "viewingassignment__order"
+        )
+
+    def optional_viewing_list(self):
+        return self.viewings.filter(viewingassignment__is_optional=True).order_by(
+            "viewingassignment__order"
         )
 
     def word_count(self):
@@ -267,6 +283,17 @@ class Meeting(models.Model):
                 centiwords += reading.centiwords
         if centiwords > 0:
             return "{:,}".format(centiwords * 100)
+        else:
+            return None
+
+    def minute_count(self):
+        if not self.has_viewings():
+            return None
+        minutes = 0
+        for viewing in self.required_viewing_list():
+            minutes += viewing.minutes()
+        if minutes > 0:
+            return "{}".format(minutes)
         else:
             return None
 
@@ -517,6 +544,61 @@ class ReadingAssignment(models.Model):
 
     def get_absolute_url(self):
         return reverse("course_discussion_view", kwargs={"discussion_id": self.id})
+
+    class Meta:
+        ordering = ("order",)
+
+
+class Viewing(models.Model):
+    description = models.TextField()
+    tips = models.TextField(blank=True)
+
+    if TYPE_CHECKING:
+        parts = RelatedManager["ViewingPart"]()
+
+    def has_multiple_parts(self):
+        return len(self.parts.all()) > 1
+
+    def minutes(self) -> int:
+        minutes = 0
+        for part in self.parts.all():
+            if part.minutes:
+                minutes += part.minutes
+        return minutes
+
+    def minute_count(self) -> str | None:
+        minutes = self.minutes()
+        if minutes == 0:
+            return None
+        return "{}".format(minutes)
+
+    def __str__(self):
+        return self.description
+
+
+class ViewingPart(models.Model):
+    viewing = models.ForeignKey(
+        "Viewing", related_name="parts", on_delete=models.CASCADE
+    )
+    order = models.PositiveSmallIntegerField()
+    minutes = models.PositiveSmallIntegerField()
+    url = models.URLField()
+
+    def __str__(self):
+        return self.url
+
+    class Meta:
+        ordering = ("order",)
+
+
+class ViewingAssignment(models.Model):
+    id = models.AutoField(primary_key=True)
+    meeting = models.ForeignKey(
+        "Meeting", related_name="viewing_assignments", on_delete=models.CASCADE
+    )
+    viewing = models.ForeignKey("Viewing", on_delete=models.PROTECT)
+    order = models.IntegerField(blank=True, null=True)
+    is_optional = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("order",)

@@ -1,0 +1,30 @@
+{% load markdown  %}
+
+    <li class="viewing">
+      <div>
+        {% if optional %}
+        <span class="optional">Optional</span>
+        {% endif %}
+        {{ viewing.description|markdown }}
+        {% if viewing.has_multiple_parts %}
+        <ol class="viewing-parts">
+        {% for part in viewing.parts.all %}
+          <li><a href="{{ part }}" title="link to part {{ forloop.counter }}">View part {{ forloop.counter }}</a>.</li>
+        {% endfor %}
+        </ol>
+        {% else %}
+        <a href="{{ viewing.parts.first }}" title="link to video">View</a>.
+        {% endif %}
+        {% if viewing.minute_count %}
+        <span class="minute-count">{{ viewing.minute_count }} minutes</span>
+        {% endif %}
+      </div>
+      {% if viewing.tips %}
+      <details>
+        <summary><span class="tips">Viewing tips</span></summary>
+        <div class="tips">
+        {{ viewing.tips|markdown }}
+        </div>
+      </details>
+      {% endif %}
+    </li>

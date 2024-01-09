@@ -43,6 +43,13 @@
 {% endif %}
 <div class="meeting{% if meeting.is_tentative %} tentative{% endif %}">
   {% filter typogrify %}
+  {% if meeting.minute_count %}
+  <p class="minute-count">
+  Total amount of required viewing for this
+  {% if course.is_weekly %}week{% else %}meeting{% endif %}:
+  {{ meeting.minute_count }} minutes
+  </p>
+  {% endif %}
   {% if meeting.word_count %}
   <p class="word-count">
   Total amount of required reading for this
@@ -51,10 +58,19 @@
   </p>
   {% endif %}
   <div class="description">{{ meeting.description|markdown:"unsanitized" }}</div>
-  {% if user_is_authorized %}
+  {% if meeting.has_viewings %}
+  <p>📺 To view <strong>before</strong> this meeting:</p>
+  <ol class="readings">
+    {% for viewing in meeting.required_viewing_list %}
+    {% include "viewing_assignment.include" %}
+    {% endfor %}
+    {% for viewing in meeting.optional_viewing_list %}
+    {% include "viewing_assignment.include" with optional=True %}
+    {% endfor %}
+  </ol>
   {% endif %}
   {% if meeting.has_readings %}
-  <p>To read <strong>before</strong> this meeting:</p>
+  <p>📖 To read <strong>before</strong> this meeting:</p>
   <ol class="readings">
     {% for reading in meeting.required_reading_list %}
     {% include "reading_assignment.include" %}

@@ -3,15 +3,18 @@ from .models import (
     Building,
     Course,
     Department,
-    Milestone,
     Instructor,
     Meeting,
-    Recitation,
-    Unit,
+    Milestone,
     Reading,
     ReadingAssignment,
+    Recitation,
     Submission,
+    Unit,
     User,
+    Viewing,
+    ViewingAssignment,
+    ViewingPart,
 )
 from django.contrib import admin
 from django.forms import ModelForm, ChoiceField
@@ -49,6 +52,16 @@ class ReadingAssignmentInline(admin.StackedInline):
     extra = 0
 
 
+class ViewingAssignmentInline(admin.StackedInline):
+    model = ViewingAssignment
+    extra = 0
+
+
+class ViewingPartInline(admin.StackedInline):
+    model = ViewingPart
+    extra = 3
+
+
 class CourseAdmin(admin.ModelAdmin):
     list_display = ("__str__", "is_current")
     inlines = (RecitationInline, MilestoneInline)
@@ -80,7 +93,7 @@ class CourseAdmin(admin.ModelAdmin):
 class MeetingAdmin(admin.ModelAdmin):
     list_display = ("course", "__str__", "is_tentative")
     list_filter = ("course",)
-    inlines = (ReadingAssignmentInline,)
+    inlines = (ReadingAssignmentInline, ViewingAssignmentInline)
     save_as = True
     actions = ["make_tentative", "finalize"]
 
@@ -138,6 +151,10 @@ class ReadingAdmin(admin.ModelAdmin):
     readonly_fields = ("citation_text", "citation_html")
 
 
+class ViewingAdmin(admin.ModelAdmin):
+    inlines = (ViewingPartInline,)
+
+
 class SubmissionAdmin(admin.ModelAdmin):
     list_display = ("assignment", "submitter", "time_submitted", "get_grade")
     list_filter = ("assignment",)
@@ -151,12 +168,14 @@ class SubmissionAdmin(admin.ModelAdmin):
         )
 
 
-admin.site.register(Course, CourseAdmin)
-admin.site.register(Meeting, MeetingAdmin)
-admin.site.register(Unit, UnitAdmin)
-admin.site.register(Reading, ReadingAdmin)
 admin.site.register(Assignment, AssignmentAdmin)
-admin.site.register(Submission, SubmissionAdmin)
-admin.site.register(Instructor)
-admin.site.register(Department)
 admin.site.register(Building)
+admin.site.register(Course, CourseAdmin)
+admin.site.register(Department)
+admin.site.register(Instructor)
+admin.site.register(Meeting, MeetingAdmin)
+admin.site.register(Reading, ReadingAdmin)
+admin.site.register(Submission, SubmissionAdmin)
+admin.site.register(Unit, UnitAdmin)
+admin.site.register(Viewing, ViewingAdmin)
+admin.site.register(ViewingPart)
