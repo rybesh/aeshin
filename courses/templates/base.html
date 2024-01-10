@@ -35,10 +35,10 @@
           {% endif %}
           {% endwith %}
           {% if course.zulip_url %}
-          <li><a class="nohover" href="{{ course.zulip_url }}"><img class="mark" alt="Zulip chat server" src="{% static "courses/zulip.svg" %}"></a></li>
+          <li><a class="nohover" target="_blank" href="{{ course.zulip_url }}"><img class="mark" alt="Zulip chat server" src="{% static "courses/zulip.svg" %}"></a></li>
           {% endif %}
           {% if course.github_url %}
-          <li><a class="nohover" href="{{ course.github_url }}"><img class="mark" alt="GitHub organization" src="{% static "courses/github.svg" %}"></a></li>
+          <li><a class="nohover" target="_blank" href="{{ course.github_url }}"><img class="mark" alt="GitHub organization" src="{% static "courses/github.svg" %}"></a></li>
           {% endif %}
         </ul>
       </nav>
