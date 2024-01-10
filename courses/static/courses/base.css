@@ -98,6 +98,9 @@ a:hover {
     border-bottom: 1px solid #ef4300;
     color: #ef4300;
 }
+a.nohover:hover {
+    border-bottom: none;
+}
 .amp {
     color: #666666;
     font-family: "Warnock Pro", "Goudy Old Style", Palatino, "Book Antiqua", Georgia, serif;
@@ -163,7 +166,13 @@ ul.nav {
 }
 ul.nav li {
     display: inline;
-    margin: 0 3% 0 0;
+    margin: 0 2% 0 0;
+}
+ul.nav li .mark {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    margin-bottom: -0.25rem;
 }
 blockquote { margin-left: 1.5em; }
 .highlight {

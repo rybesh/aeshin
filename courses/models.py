@@ -101,6 +101,8 @@ class Course(models.Model):
     is_archived = models.BooleanField(default=False)
     is_weekly = models.BooleanField(default=False)
     slides_are_called_notes = models.BooleanField(default=False)
+    zulip_url = models.URLField(blank=True)
+    github_url = models.URLField(blank=True)
 
     if TYPE_CHECKING:
         meetings = RelatedManager["Meeting"]()
