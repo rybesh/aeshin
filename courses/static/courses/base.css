@@ -12,7 +12,7 @@ body {
         "Helvetica Neue",
         sans-serif;
     max-width: 980px;
-    padding: 10px;
+    margin: 0;
 }
 ol,
 ul { list-style-type: none; }
@@ -159,6 +159,16 @@ li ul + p,
 li ol + p,
 li pre + p { margin-top: 8px; }
 table p + p { margin-top: 4px; }
+nav {
+    background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid #ebebeb;
+    padding: 5px 15px;
+}
+.main {
+    margin: 0 15px;
+}
 ul.nav {
     padding: 0;
     margin: 0;
