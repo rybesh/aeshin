@@ -12,7 +12,7 @@ body {
         "Helvetica Neue",
         sans-serif;
     max-width: 980px;
-    margin: 0;
+    padding: 10px;
 }
 ol,
 ul { list-style-type: none; }
