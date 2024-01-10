@@ -3,7 +3,7 @@ from .models import Course, Assignment, Submission, User
 from django import forms
 from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -20,6 +20,13 @@ def index(request):
     o = {}
     o["courses"] = Course.objects.order_by("title", "-year", "semester")
     return render(request, "courses.html", context=o)
+
+
+def course(_, slug):
+    courses = list(Course.objects.filter(slug=slug).order_by("-year", "semester"))
+    if len(courses) == 0:
+        raise Course.DoesNotExist
+    return redirect(courses[0])
 
 
 def info(request, slug, year, semester):
@@ -168,13 +175,6 @@ def submit_assignment(request, assignment_id):
 
     o["form"] = form
     return render(request, "submit_assignment.html", context=o)
-
-
-def get_current_course(slug):
-    courses = list(Course.objects.filter(blog_slug=slug).order_by("id"))
-    if len(courses) == 0:
-        raise Course.DoesNotExist
-    return courses[-1]
 
 
 def median(pool):

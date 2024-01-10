@@ -12,6 +12,7 @@ course_patterns = [
 
 urlpatterns = [
     re_path(r"^$", views.index, name="courses_index_view"),
+    re_path(r"^(?P<slug>[a-z]+(?:-\d+)+)/$", views.course, name="courses_course_view"),
     re_path(
         r"^(?P<slug>[a-z]+(?:-\d+)+)/(?P<year>\d{4})/(?P<semester>sp|su|fa)/",
         include(course_patterns),
