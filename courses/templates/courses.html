@@ -19,11 +19,19 @@
       <div class="sweet-justice">
         {{ title.list.0.blurb|typogrify }}
       </div>
-      {% for course in title.list %}
-      <h3><a href="{{ course.get_absolute_url }}">
-        {{ course.get_semester_display }} {{ course.year }}
+      <h3><a href="{{ title.list.0.get_absolute_url }}">
+        {{ title.list.0.get_semester_display }} {{ title.list.0.year }}
       </a></h3>
-      {% endfor %}
+      {% if title.list|length > 1 %}
+      <details>
+        <summary>Previous offerings</summary>
+        {% for course in title.list|slice:"1:" %}
+        <h3><a href="{{ course.get_absolute_url }}">
+          {{ course.get_semester_display }} {{ course.year }}
+        </a></h3>
+        {% endfor %}
+      </details>
+      {% endif %}
     </li>
     {% endfor %}
   </ul>

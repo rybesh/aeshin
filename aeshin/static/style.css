@@ -171,16 +171,23 @@ li.course {
     max-width: 550px;
 }
 li.course h2 {
+    color: #073642;
     margin-bottom: 5px;
 }
 li.course h3 {
     margin-top: 5px;
 }
+li.course details {
+    margin-top: 5px;
+}
+li.course details summary {
+    color: #586e75;
+}
 li hgroup {
     padding-bottom: 10px;
 }
 h3 a {
-    color: #073642;
+    color: #d33682;
     text-decoration: none;
 }
 nav {
@@ -233,8 +240,7 @@ a:hover,
 a:active,
 a.active { outline: none; }
 a:link { -webkit-tap-highlight-color: #ef0081; }
-h3 a:active,
-h3 a:visited {
+h3 a:active {
     color: #073642;
     text-decoration: none;
 }
