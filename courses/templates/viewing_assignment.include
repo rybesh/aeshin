@@ -22,7 +22,7 @@
       {% if viewing.tips %}
       <details>
         <summary><span class="tips">Viewing tips</span></summary>
-        <div class="tips">
+        <div>
         {{ viewing.tips|markdown }}
         </div>
       </details>

@@ -13,7 +13,7 @@
       {% if reading.description %}
       <details>
         <summary><span class="tips">Reading tips</span></summary>
-        <div class="description">
+        <div>
         {{ reading.description|markdown }}
         </div>
       </details>
