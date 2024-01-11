@@ -97,6 +97,7 @@ class Course(models.Model):
     blurb = models.TextField(blank=True)
     evaluation = models.TextField(blank=True)
     participation = models.TextField(blank=True)
+    communication = models.TextField(blank=True)
     how_to_succeed = models.TextField(blank=True)
     is_archived = models.BooleanField(default=False)
     is_weekly = models.BooleanField(default=False)

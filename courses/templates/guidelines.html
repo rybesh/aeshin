@@ -26,9 +26,13 @@
 {% endif %}
 <section id="communicating">
 <h4><span class="title">Communicating with me</span></h4>
+{% if course.communication %}
+{{ course.communication|markdown }}
+{% else %}
 <p><a href="mailto:ryanshaw@unc.edu">Email</a> is the best way to communicate with me outside of class. It is particularly well-suited for short-answer and clarification questions.</p>
 <p>I will try my best to respond to you within a 24-hour period, but in some cases it may take 2 to 3 days. Please keep this in mind when you are scheduling your own activities, especially those related to exam or assignment preparation.  If you wait until the day before an exam or assignment due date to ask me a clarification question, there is a good chance that you will not receive a response in time.</p>
 <p>If you need assistance understanding a concept or an assignment, or have another potentially complicated question, then please <a target="_blank" href="https://fantastical.app/ryanshaw/office-hours">make an appointment for my office hours</a>. If you ask a question via email that I believe is better suited for in-person discussion, then I will ask you to make an office hours appointment. If you have questions about how your assignment was evaluated, then you must make an office hours appointment. <strong>I will not discuss your grades or my evaluation of your work via email.</strong></p>
+{% endif %}
 </section>
 <section id="honor">
 <h4><span class="title">Honor Code</span></h4>
