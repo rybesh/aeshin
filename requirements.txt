@@ -1,5 +1,5 @@
 Django==5.0.1
-Markdown==3.5.1
+Markdown==3.5.2
 bleach-allowlist==1.0.3
 bleach==6.1.0
 django-environ==0.11.2
