@@ -285,9 +285,7 @@ p + p {
     padding: 20px 0;
 }
 dl {
-    float: left;
-    margin-right: 40px;
-    max-width: 160px;
+    float: right;
     font-size: 15px;
 }
 dd {
