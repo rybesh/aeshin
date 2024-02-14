@@ -287,6 +287,10 @@ p + p {
 dl {
     float: right;
     font-size: 15px;
+    margin-right: 1em;
+}
+.bio dl {
+    float: left;
 }
 dd {
     line-height: 1.6;
