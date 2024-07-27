@@ -4,19 +4,19 @@
 
 {% block description %}A panel to be held at the 2012 iConference, Thursday, February 9th, 8:30-10AM.{% endblock %}
 
+{% load static %}
+
 {% block style %}
-<style> 
-iframe {
-  width: 850px;
-  height: 1800px;
-  border: 1px solid #586E75;
-  margin-top: 45px;
-}
-</style>
+<link rel="stylesheet" href="{% static "styles/dhmeetsi.css" %}"/>
 {% endblock %}
 
 {% block main %}
 <article id="main">
-<iframe src="https://docs.google.com/document/pub?id=1aVhhuhcl4QIVWvt4EZJZaCY3IljbuyGDR86oaL46nGo&amp;embedded=true" scrolling="no"></iframe>
+<div id="frame">
+<img
+  src="{% static "dhmeetsi.png" %}"
+  alt="Digital humanities research and teaching is a growing part of the activity at many iSchools. Some iSchools have gone as far as to offer specialized degrees in digital humanities, while others are core members of multidisciplinary digital humanities centers. iSchool students and faculty have become a noticeable presence at both scholarly digital humanities conferences and the proliferating “unconferences.” The time is ripe to examine the relationship between iSchools and the humanities and to ask what the future holds for both communities. To begin this conversation, we have assembled a stellar panel of humanists currently affiliated with iSchools: Johanna Drucker, Alan Galey, Patricia Galloway, Dave Lester, Bonnie Mak, Jeffrey Pomerantz, and Amanda Visconti. Some of the questions we plan to consider are: (1) What are the advantages and disadvantages of the various different approaches to and levels of engagement with the humanities? (2) A traditional approach to organizing multidisciplinary work on university campuses is to create a “center.” This approach has been successful for many digital humanities centers, yet it is an increasingly difficult one to take in a time of extreme budget shortfalls. What alternatives exist for iSchools that wish to launch digital humanities initiatives? (3) It is becoming common for humanities PhDs interested in digital humanities work to follow up with a Master's degree at an iSchool, or vice versa. How might we offer alternative routes to these kinds of students that might require less time spent in school? What options are available for students just beginning graduate education who are interested in a career that combines the two fields? (4) What are the differences from and overlaps with the areas where iSchools are involved in new media centers (e.g. the Berkeley I-School's involvement in the Berkeley Center for New Media)? (5) Most digital humanities work has focused on transferring technologies and expertise from computer science and information science to the humanities. What is the potential for digital humanities work to “reverse the flow,” bringing a revival of humanist perspectives and methods to a field that has tended to strive for recognition as a science?"
+/>
+</div>
 </article>
 {% endblock %}

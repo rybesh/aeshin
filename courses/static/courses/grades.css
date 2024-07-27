@@ -1,0 +1,13 @@
+blockquote {
+    font-style: italic;
+}
+ul {
+    list-style-type: disc;
+}
+table p {
+    margin-top: 4px;
+}
+a.download {
+    display:block;
+    margin-top: 1em;
+}

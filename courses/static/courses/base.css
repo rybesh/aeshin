@@ -294,6 +294,9 @@ ol.viewing-parts {
     display: inline;
 }
 ol.viewing-parts li { display: inline; }
+.footer {
+    height: 1000px;
+}
 
 @media print {
     nav { display: none; }

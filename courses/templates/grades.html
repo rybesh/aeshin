@@ -5,17 +5,7 @@
 {% block title %}: {{ student.get_full_name }}{% endblock %}
 
 {% block css %}
-<style>
-blockquote {
-    font-style: italic;
-}
-ul {
-    list-style-type: disc;
-}
-table p {
-    margin-top: 4px;
-}
-</style>
+<link rel="stylesheet" href="{% static "courses/grades.css" %}"/>
 {% endblock %}
 
 {% block content %}
@@ -44,7 +34,7 @@ table p {
       <td colspan="3">
         {{ assignment.comments|markdown:"unsanitized"|typogrify }}
         {% if assignment.zipfile_url %}
-        <a style="display:block; margin-top: 1em"
+        <a class="download"
            href="{{ assignment.zipfile_url }}">Download files.</a>
         {% endif %}
       </td>

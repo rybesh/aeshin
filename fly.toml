@@ -17,6 +17,10 @@ primary_region = "iad"
   auto_stop_machines = false
   auto_start_machines = false
 
+[http_service.http_options.response.headers]
+  Content-Security-Policy = "default-src 'self' ; upgrade-insecure-requests"
+  Strict-Transport-Security = "max-age=63072000 ; includeSubDomains ; preload"
+
 [[statics]]
   guest_path = "/code/static"
   url_prefix = "/static/"

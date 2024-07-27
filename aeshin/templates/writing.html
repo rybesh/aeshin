@@ -8,19 +8,8 @@
 {% load typogrify %}
 
 {% block style %}
-<style>
-    .item {
-        margin-left: 2em;
-        text-indent: -2em !important;
-    }
-    .title {
-        font-family: CharisSILBold, 'Palatino Linotype', Palatino, 'URW Palladio L', serif;
-    }
-</style>
+<link rel="stylesheet" href="{% static "styles/writing.css" %}"/>
 {% endblock %}
-
-{% block links %}
-  <link rel="shortlink" href="http://aesh.in/pubs"/>{% endblock %}
 
 {% block main %}
 <article id="main">

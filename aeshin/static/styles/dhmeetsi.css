@@ -1,0 +1,9 @@
+#frame {
+    width: 850px;
+    height: 1997px;
+    border: 1px solid #586E75;
+    margin-top: 45px;
+}
+#frame img {
+    width: 100%;
+}
