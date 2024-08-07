@@ -15,7 +15,7 @@
 {% if course.evaluation %}
 <section id="evaluation">
 <h4><span class="title">Evaluation &amp; Grading</span></h4>
-{{ course.evaluation|markdown }}
+{{ course.evaluation|markdown:"unsanitized" }}
 </section>
 {% endif %}
 {% if course.participation %}
