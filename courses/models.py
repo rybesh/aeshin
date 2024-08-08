@@ -51,6 +51,7 @@ class Scheduled:
     url: Optional[str] = None
     description: str = ""
     is_milestone: bool = True
+    priority: int = 1
 
 
 class Course(models.Model):
@@ -136,6 +137,7 @@ class Course(models.Model):
                     m.name,
                     today > m.date,
                     description=m.description,
+                    priority=0,
                 )
             )
 
@@ -148,6 +150,7 @@ class Course(models.Model):
                     f"{a.title}{'' if a.is_inclass else ' due'}",
                     today > a.due_date,
                     a.get_absolute_url() if a.is_handed_out else None,
+                    priority=2,
                 )
             )
             if a.available_date is not None:
@@ -158,6 +161,7 @@ class Course(models.Model):
                         f"{a.title} handed out",
                         today > a.available_date,
                         a.get_absolute_url() if a.is_handed_out else None,
+                        priority=2,
                     )
                 )
 
@@ -248,8 +252,7 @@ class Meeting(models.Model):
         blank=True,
         null=True,
     )
-
-    is_milestone = False  # for sorting with milestones
+    priority = 1  # sorting order in schedule
 
     def has_readings(self):
         return len(self.readings.all()) > 0
