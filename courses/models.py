@@ -78,6 +78,7 @@ class Course(models.Model):
         ("sp", "Spring"),
         ("fa", "Fall"),
     )
+    id = models.AutoField(primary_key=True)
     department = models.ForeignKey(
         "Department", related_name="courses", on_delete=models.PROTECT
     )
