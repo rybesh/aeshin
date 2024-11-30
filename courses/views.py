@@ -192,7 +192,8 @@ def grades_csv(course):
     assignments = course.assignments.filter(is_graded=True)
     header = ["Name", "Username"]
     for a in assignments:
-        header.extend([f"{a.title}|{a.id}|Grade", f"{a.title}|{a.id}|Comment"])
+        prefix = f"{a.title} | {a.id} | "
+        header.extend([f"{prefix}Grade", f"{prefix}Comment"])
     table = [header]
     for s in course.students.filter(is_active=True).order_by("last_name"):
         row = [s.get_full_name(), s.username]
