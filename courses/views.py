@@ -189,22 +189,26 @@ def median(pool):
 
 
 def grades_csv(course):
-    assignments = course.assignments.filter(is_graded=True)
     header = ["Name", "Username"]
-    for a in assignments:
+    for a in course.assignments:
         prefix = f"{a.title} | {a.id} | "
         header.extend([f"{prefix}Grade", f"{prefix}Comment"])
     table = [header]
     for s in course.students.filter(is_active=True).order_by("last_name"):
         row = [s.get_full_name(), s.username]
-        for a in assignments:
-            try:
-                submission = a.submissions.get(submitter=s)
-                grade = (
-                    submission.letter_grade if a.is_letter_graded else submission.grade
-                )
-                row.extend([grade, submission.comments])
-            except Submission.DoesNotExist:
+        for a in course.assignments:
+            if a.is_graded:
+                try:
+                    submission = a.submissions.get(submitter=s)
+                    grade = (
+                        submission.letter_grade
+                        if a.is_letter_graded
+                        else submission.grade
+                    )
+                    row.extend([grade, submission.comments])
+                except Submission.DoesNotExist:
+                    row.extend(["", ""])
+            else:
                 row.extend(["", ""])
         table.append(row)
     buf = StringIO()
