@@ -208,7 +208,7 @@ def grades_csv(course):
                 row.extend(["", ""])
         table.append(row)
     buf = StringIO()
-    csv.writer(buf, lineterminator="\n").writerows(table)
+    csv.writer(buf).writerows(table)
     response = HttpResponse(buf.getvalue(), content_type="text/csv")
     response["Content-Disposition"] = 'attachment; filename="grades.csv"'
     return response
