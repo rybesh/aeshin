@@ -190,13 +190,13 @@ def median(pool):
 
 def grades_csv(course):
     header = ["Name", "Username"]
-    for a in course.assignments:
+    for a in course.assignments.all():
         prefix = f"{a.title} | {a.id} | "
         header.extend([f"{prefix}Grade", f"{prefix}Comment"])
     table = [header]
     for s in course.students.filter(is_active=True).order_by("last_name"):
         row = [s.get_full_name(), s.username]
-        for a in course.assignments:
+        for a in course.assignments.all():
             if a.is_graded:
                 try:
                     submission = a.submissions.get(submitter=s)
