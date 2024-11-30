@@ -14,13 +14,13 @@ class Command(MyBaseCommand):
         parser.add_argument("grades")
 
     @transaction.atomic
-    def handle(self, *args, **options):
+    def handle(self, *_, **options):
         course = self.input_course()
 
         with open(options["grades"], newline="") as csvfile:
             reader = csv.DictReader(csvfile)
             assert reader.fieldnames is not None
-            assignment_ids = [f.split(" | ")[1] for f in reader.fieldnames]
+            assignment_ids = set([f.split(" | ")[1] for f in reader.fieldnames[2:]])
             for row in reader:
                 try:
                     submitter = User.objects.get(username=row["Username"])
@@ -47,15 +47,14 @@ class Command(MyBaseCommand):
                             submission.grade = 0.0
                             submission.letter_grade = grade
                         else:
-                            submission.grade = float(grade)
+                            submission.grade = 0.0 if grade == "" else float(grade)
                             submission.letter_grade = ""
 
                         submission.comments = comment
                         submission.save()
 
-                    print(
-                        f"{submitter.get_full_name()}: updated {counts['updated']} assignments and created {counts['created']} new ones.",
-                        file=self.stderr,
+                    self.stderr.write(
+                        f"{submitter.get_full_name()}: updated {counts['updated']} assignments and created {counts['created']} new ones."
                     )
 
                 except User.DoesNotExist:
