@@ -20,7 +20,9 @@ class Command(MyBaseCommand):
         with open(options["grades"], newline="") as csvfile:
             reader = csv.DictReader(csvfile)
             assert reader.fieldnames is not None
-            assignment_ids = set([f.split(" | ")[1] for f in reader.fieldnames[2:]])
+            assignment_ids = set(
+                [f.split(" | ")[1] for f in reader.fieldnames[2:] if " | " in f]
+            )
             for row in reader:
                 try:
                     submitter = User.objects.get(username=row["Username"])
