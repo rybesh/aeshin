@@ -54,6 +54,34 @@ class Scheduled:
     priority: int = 1
 
 
+class ExternalCourse(models.Model):
+    YEAR_CHOICES = (
+        (2025, "2025"),
+        (2026, "2026"),
+        (2027, "2027"),
+    )
+    SEMESTER_CHOICES = (
+        ("sp", "Spring"),
+        ("fa", "Fall"),
+    )
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=80)
+    blurb = models.TextField(blank=True)
+    semester = models.CharField(max_length=2, choices=SEMESTER_CHOICES)
+    year = models.IntegerField(choices=YEAR_CHOICES)
+    url = models.URLField()
+
+    def get_absolute_url(self):
+        return self.url
+
+    def __str__(self):
+        return "%s, %s %s" % (
+            self.title,
+            self.get_semester_display(),  # type: ignore
+            self.get_year_display(),  # type: ignore
+        )
+
+
 class Course(models.Model):
     YEAR_CHOICES = (
         (2011, "2011"),

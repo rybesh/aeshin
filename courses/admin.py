@@ -3,6 +3,7 @@ from .models import (
     Building,
     Course,
     Department,
+    ExternalCourse,
     Instructor,
     Meeting,
     Milestone,
@@ -171,6 +172,7 @@ class SubmissionAdmin(admin.ModelAdmin):
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Building)
 admin.site.register(Course, CourseAdmin)
+admin.site.register(ExternalCourse)
 admin.site.register(Department)
 admin.site.register(Instructor)
 admin.site.register(Meeting, MeetingAdmin)

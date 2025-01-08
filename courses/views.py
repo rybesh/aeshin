@@ -1,5 +1,5 @@
 from typing import Optional
-from .models import Course, Assignment, Submission, User
+from .models import Course, ExternalCourse, Assignment, Submission, User
 from django import forms
 from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.http import Http404
@@ -18,7 +18,12 @@ import functools
 
 def index(request):
     o = {}
-    o["courses"] = Course.objects.order_by("title", "-year", "semester")
+    courses = list(Course.objects.all())
+    external_courses = list(ExternalCourse.objects.all())
+    o["courses"] = sorted(
+        courses + external_courses, key=lambda c: (c.title, -c.year, c.semester)
+    )
+
     return render(request, "courses.html", context=o)
 
 
