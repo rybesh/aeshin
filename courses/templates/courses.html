@@ -16,6 +16,9 @@
     {% for title in course_list %}
     <li class="course group">
       <h2>{{ title.grouper }}</h2>
+      {% if title.list.0.subtitle %}
+      <h2>{{ title.list.0.subtitle }}</h2>
+      {% endif %}
       <div class="sweet-justice">
         {{ title.list.0.blurb|typogrify }}
       </div>

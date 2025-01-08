@@ -66,6 +66,7 @@ class ExternalCourse(models.Model):
     )
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=80)
+    subtitle = models.CharField(max_length=80, blank=True)
     blurb = models.TextField(blank=True)
     semester = models.CharField(max_length=2, choices=SEMESTER_CHOICES)
     year = models.IntegerField(choices=YEAR_CHOICES)
