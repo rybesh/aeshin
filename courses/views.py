@@ -202,18 +202,13 @@ def grades_csv(course):
     for s in course.students.filter(is_active=True).order_by("last_name"):
         row = [s.get_full_name(), s.username]
         for a in course.assignments.all():
-            if a.is_graded:
-                try:
-                    submission = a.submissions.get(submitter=s)
-                    grade = (
-                        submission.letter_grade
-                        if a.is_letter_graded
-                        else submission.grade
-                    )
-                    row.extend([grade, submission.comments])
-                except Submission.DoesNotExist:
-                    row.extend(["", ""])
-            else:
+            try:
+                submission = a.submissions.get(submitter=s)
+                grade = (
+                    submission.letter_grade if a.is_letter_graded else submission.grade
+                )
+                row.extend([grade, submission.comments])
+            except Submission.DoesNotExist:
                 row.extend(["", ""])
         table.append(row)
     buf = StringIO()
