@@ -7,5 +7,5 @@ django-types==0.20.0
 gunicorn==23.0.0
 isodate==0.7.2
 python-magic==0.4.27
-smartypants==2.0.1
+smartypants==2.0.2
 whitenoise==6.9.0
