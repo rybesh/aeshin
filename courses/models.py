@@ -188,7 +188,7 @@ class Course(models.Model):
                     Scheduled(
                         a.available_date,
                         a.available_date.strftime("%B %-d"),
-                        f"{a.title} handed out",
+                        f"{a.title} available",
                         today > a.available_date,
                         a.get_absolute_url() if a.is_handed_out else None,
                         priority=2,
