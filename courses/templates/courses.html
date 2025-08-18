@@ -15,10 +15,12 @@
     {% regroup courses by title as course_list %}
     {% for title in course_list %}
     <li class="course group">
-      <h2>{{ title.grouper }}</h2>
-      {% if title.list.0.subtitle %}
-      <h2>{{ title.list.0.subtitle }}</h2>
-      {% endif %}
+      <h2>
+        {{ title.grouper }}
+        {% if title.list.0.subtitle %}
+        <span class="subtitle">{{ title.list.0.subtitle }}</span>
+        {% endif %}
+      </h2>
       <div class="sweet-justice">
         {{ title.list.0.blurb|typogrify }}
       </div>

@@ -119,6 +119,7 @@ class Course(models.Model):
     number = models.CharField(max_length=20)
     slug = models.CharField(max_length=20)
     title = models.CharField(max_length=80)
+    subtitle = models.CharField(max_length=80, blank=True)
     semester = models.CharField(max_length=2, choices=SEMESTER_CHOICES)
     year = models.IntegerField(choices=YEAR_CHOICES)
     times = models.CharField(max_length=64)
