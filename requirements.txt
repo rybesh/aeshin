@@ -1,4 +1,4 @@
-Django==5.2.2
+Django==5.2.6
 Markdown==3.9
 bleach-allowlist==1.0.3
 bleach==6.2.0
