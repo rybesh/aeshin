@@ -59,7 +59,7 @@ LOGGING = {
 
 ADMINS = (("Ryan Shaw", "rieyin@icloud.com"),)
 MANAGERS = ADMINS
-DEFAULT_FROM_EMAIL = "aeshin.org <no-reply@aeshin.org>"
+DEFAULT_FROM_EMAIL = '"aeshin.org" <no-reply@aeshin.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 EMAIL_HOST = "email-smtp.us-east-1.amazonaws.com"
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
