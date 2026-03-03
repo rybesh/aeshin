@@ -8,4 +8,4 @@ gunicorn==25.1.0
 isodate==0.7.2
 python-magic==0.4.27
 smartypants==2.0.2
-whitenoise==6.11.0
+whitenoise==6.12.0
